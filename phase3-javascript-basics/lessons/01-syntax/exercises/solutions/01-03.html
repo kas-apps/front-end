@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題1-3: 基本的な計算</title>
+  </head>
+  <body>
+    <h1>問題1-3: 基本的な計算</h1>
+    <p>F12キーを押してConsoleタブを開いて、出力結果を確認してください。</p>
+
+    <script>
+      // 変数を宣言
+      const price = 800;
+      const quantity = 5;
+      const taxRate = 0.1;
+
+      // 計算
+      const subtotal = price * quantity;
+      const tax = subtotal * taxRate;
+      const total = subtotal + tax;
+
+      // 結果を出力
+      console.log(`商品価格: ${price}円`);
+      console.log(`購入数量: ${quantity}個`);
+      console.log(`小計: ${subtotal}円`);
+      console.log(`消費税: ${tax}円`);
+      console.log(`合計金額: ${total}円`);
+    </script>
+  </body>
+</html>

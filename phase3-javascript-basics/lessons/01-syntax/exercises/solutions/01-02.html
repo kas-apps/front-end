@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題1-2: データ型の確認</title>
+  </head>
+  <body>
+    <h1>問題1-2: データ型の確認</h1>
+    <p>F12キーを押してConsoleタブを開いて、出力結果を確認してください。</p>
+
+    <script>
+      // さまざまなデータ型の変数を宣言
+      const num = 100;
+      const str = "100";
+      const bool = true;
+      const emptyValue = null;
+      let notAssigned; // 値を代入しない
+
+      // 値と型を出力
+      console.log(`値: ${num}, 型: ${typeof num}`);
+      console.log(`値: ${str}, 型: ${typeof str}`);
+      console.log(`値: ${bool}, 型: ${typeof bool}`);
+      console.log(`値: ${emptyValue}, 型: ${typeof emptyValue}`);
+      console.log(`値: ${notAssigned}, 型: ${typeof notAssigned}`);
+    </script>
+  </body>
+</html>

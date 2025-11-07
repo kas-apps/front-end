@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>問題3-5</title>
+</head>
+<body>
+<h1>問題3-5: デフォルト引数を使う</h1>
+<p>F12キーを押してConsoleタブを開いて、出力結果を確認してください。</p>
+<script>
+const calculatePrice = (price, taxRate = 0.1) => {
+  return price + price * taxRate;
+};
+console.log(calculatePrice(1000));
+console.log(calculatePrice(1000, 0.08));
+console.log(calculatePrice(5000));
+</script>
+</body>
+</html>

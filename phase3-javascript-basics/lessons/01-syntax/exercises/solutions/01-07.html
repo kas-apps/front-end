@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題1-7: 買い物の明細書を作る</title>
+  </head>
+  <body>
+    <h1>問題1-7: 買い物の明細書を作る</h1>
+    <p>F12キーを押してConsoleタブを開いて、出力結果を確認してください。</p>
+
+    <script>
+      // 商品情報
+      const item1Name = "りんご";
+      const item1Price = 100;
+      const item1Quantity = 3;
+
+      const item2Name = "バナナ";
+      const item2Price = 100;
+      const item2Quantity = 2;
+
+      const item3Name = "オレンジ";
+      const item3Price = 100;
+      const item3Quantity = 5;
+
+      // 各商品の小計を計算
+      const item1Total = item1Price * item1Quantity;
+      const item2Total = item2Price * item2Quantity;
+      const item3Total = item3Price * item3Quantity;
+
+      // 合計金額を計算
+      const subtotal = item1Total + item2Total + item3Total;
+      const taxRate = 0.1;
+      const tax = subtotal * taxRate;
+      const total = subtotal + tax;
+
+      // 明細を出力
+      console.log("=== 買い物明細 ===");
+      console.log(`${item1Name} × ${item1Quantity}個: ${item1Total}円`);
+      console.log(`${item2Name} × ${item2Quantity}個: ${item2Total}円`);
+      console.log(`${item3Name} × ${item3Quantity}個: ${item3Total}円`);
+      console.log("---");
+      console.log(`小計: ${subtotal}円`);
+      console.log(`消費税(10%): ${tax}円`);
+      console.log("---");
+      console.log(`合計金額: ${total}円`);
+    </script>
+  </body>
+</html>

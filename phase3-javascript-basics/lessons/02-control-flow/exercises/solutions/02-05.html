@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題2-5: 合計を計算</title>
+  </head>
+  <body>
+    <h1>問題2-5: 合計を計算</h1>
+    <p>F12キーを押してConsoleタブを開いて、出力結果を確認してください。</p>
+
+    <script>
+      let sum = 0;
+
+      for (let i = 1; i <= 100; i++) {
+        sum += i; // sum = sum + i と同じ
+
+        // 10の倍数の時に途中経過を表示
+        if (i % 10 === 0) {
+          console.log(`${i}までの合計: ${sum}`);
+        }
+      }
+    </script>
+  </body>
+</html>

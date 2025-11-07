@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>問題5-7</title>
+<style>
+#count { font-size: 48px; text-align: center; margin: 20px; }
+button { font-size: 20px; padding: 10px 20px; margin: 5px; }
+</style>
+</head>
+<body>
+<h1>問題5-7: シンプルなカウンター</h1>
+<div id="count">0</div>
+<div style="text-align: center">
+  <button id="increment">+1</button>
+  <button id="decrement">-1</button>
+  <button id="reset">リセット</button>
+</div>
+<script>
+let count = 0;
+const display = document.querySelector('#count');
+document.querySelector('#increment').addEventListener('click', () => {
+  count++;
+  display.textContent = count;
+});
+document.querySelector('#decrement').addEventListener('click', () => {
+  count--;
+  display.textContent = count;
+});
+document.querySelector('#reset').addEventListener('click', () => {
+  count = 0;
+  display.textContent = count;
+});
+</script>
+</body>
+</html>
