@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題 4-7: 完全なTODOアプリ（CRUD操作）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      header {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: #8e2de2;
+        margin-bottom: 10px;
+        font-size: 36px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 16px;
+      }
+
+      /* 追加フォーム */
+      .add-section {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        margin-bottom: 25px;
+      }
+
+      .add-form {
+        display: flex;
+        gap: 10px;
+      }
+
+      #todoInput {
+        flex: 1;
+        padding: 15px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      #todoInput:focus {
+        outline: none;
+        border-color: #8e2de2;
+      }
+
+      #addBtn {
+        background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      #addBtn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(142, 45, 226, 0.4);
+      }
+
+      #addBtn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* フィルターとカウント */
+      .controls {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        margin-bottom: 25px;
+      }
+
+      .filter-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        flex: 1;
+        min-width: 100px;
+        padding: 10px 20px;
+        border: 2px solid #ddd;
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: all 0.3s;
+      }
+
+      .filter-btn:hover {
+        border-color: #8e2de2;
+        color: #8e2de2;
+      }
+
+      .filter-btn.active {
+        background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+        color: white;
+        border-color: transparent;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-around;
+        padding-top: 15px;
+        border-top: 2px solid #f5f5f5;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 28px;
+        font-weight: bold;
+        color: #8e2de2;
+      }
+
+      .stat-label {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+      }
+
+      /* TODOリスト */
+      .todo-section {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        min-height: 300px;
+      }
+
+      #todoList {
+        display: grid;
+        gap: 12px;
+      }
+
+      .todo-item {
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.3s;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .todo-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .todo-item.completed {
+        background: #e8f5e9;
+        border-color: #4caf50;
+      }
+
+      .todo-checkbox {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        accent-color: #8e2de2;
+      }
+
+      .todo-title {
+        flex: 1;
+        font-size: 16px;
+        color: #333;
+        transition: all 0.3s;
+      }
+
+      .todo-item.completed .todo-title {
+        text-decoration: line-through;
+        color: #999;
+      }
+
+      .delete-btn {
+        background: #ff5252;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.3s;
+      }
+
+      .delete-btn:hover {
+        background: #d32f2f;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 60px;
+        color: #8e2de2;
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #8e2de2;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #999;
+      }
+
+      .empty-state h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .error {
+        background: #ff5252;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 28px;
+        }
+
+        .add-form {
+          flex-direction: column;
+        }
+
+        .filter-buttons {
+          flex-direction: column;
+        }
+
+        .filter-btn {
+          min-width: auto;
+        }
+
+        .stats {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>✅ TODO アプリ</h1>
+        <p class="subtitle">CRUD操作を完全実装したTODOアプリ</p>
+      </header>
+
+      <!-- 追加フォーム -->
+      <div class="add-section">
+        <form class="add-form" id="addForm">
+          <input
+            type="text"
+            id="todoInput"
+            placeholder="新しいTODOを入力..."
+            required
+          />
+          <button type="submit" id="addBtn">追加 ➕</button>
+        </form>
+      </div>
+
+      <!-- フィルターとカウント -->
+      <div class="controls">
+        <div class="filter-buttons">
+          <button class="filter-btn active" onclick="setFilter('all')">
+            全て
+          </button>
+          <button class="filter-btn" onclick="setFilter('incomplete')">
+            未完了
+          </button>
+          <button class="filter-btn" onclick="setFilter('completed')">
+            完了
+          </button>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-number" id="totalCount">0</div>
+            <div class="stat-label">全TODO</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="incompleteCount">0</div>
+            <div class="stat-label">未完了</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="completedCount">0</div>
+            <div class="stat-label">完了</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TODOリスト -->
+      <div class="todo-section">
+        <div id="todoList"></div>
+      </div>
+    </div>
+
+    <script>
+      // グローバル変数
+      let todos = []; // TODO一覧を保存
+      let currentFilter = "all"; // 現在のフィルター
+
+      // HTML要素を取得
+      const addForm = document.getElementById("addForm");
+      const todoInput = document.getElementById("todoInput");
+      const addBtn = document.getElementById("addBtn");
+      const todoList = document.getElementById("todoList");
+      const totalCount = document.getElementById("totalCount");
+      const incompleteCount = document.getElementById("incompleteCount");
+      const completedCount = document.getElementById("completedCount");
+
+      // ページ読み込み時にTODOを取得
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("TODOアプリを起動します！");
+        fetchTodos();
+      });
+
+      // 1. 取得（Read） - GET
+      async function fetchTodos() {
+        console.log("--- TODOを取得します ---");
+
+        try {
+          // ローディング表示
+          todoList.innerHTML = `
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>TODOを読み込み中...</p>
+            </div>
+          `;
+
+          // JSONPlaceholder API からTODO一覧を取得
+          const response = await fetch(
+            "https://jsonplaceholder.typicode.com/todos?userId=1"
+          );
+
+          console.log("レスポンスステータス:", response.status);
+
+          if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // 最初の10件だけ使用
+          todos = data.slice(0, 10);
+
+          console.log(`取得したTODO数: ${todos.length}`);
+          console.log("TODOデータ:", todos);
+
+          // TODO一覧を表示
+          displayTodos();
+
+          console.log("✅ TODO取得完了");
+        } catch (error) {
+          console.error("❌ エラー:", error);
+          todoList.innerHTML = `
+            <div class="error">
+              TODOの取得に失敗しました: ${error.message}
+            </div>
+          `;
+        }
+      }
+
+      // 2. 作成（Create） - POST
+      addForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const title = todoInput.value.trim();
+        if (!title) return;
+
+        console.log("--- 新しいTODOを作成します ---");
+        console.log("タイトル:", title);
+
+        try {
+          // ボタンを無効化
+          addBtn.disabled = true;
+          addBtn.textContent = "追加中...";
+
+          // POSTリクエストを送信
+          const response = await fetch(
+            "https://jsonplaceholder.typicode.com/todos",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                title: title,
+                completed: false,
+                userId: 1,
+              }),
+            }
+          );
+
+          console.log("レスポンスステータス:", response.status);
+
+          if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+          }
+
+          const newTodo = await response.json();
+
+          console.log("作成されたTODO:", newTodo);
+
+          // ローカルのデータに追加（一覧の先頭に）
+          todos.unshift(newTodo);
+
+          // 画面を更新
+          displayTodos();
+
+          // フォームをリセット
+          addForm.reset();
+
+          console.log("✅ TODO作成完了");
+        } catch (error) {
+          console.error("❌ エラー:", error);
+          alert(`TODOの追加に失敗しました: ${error.message}`);
+        } finally {
+          // ボタンを元に戻す
+          addBtn.disabled = false;
+          addBtn.textContent = "追加 ➕";
+        }
+      });
+
+      // 3. 更新（Update） - PUT
+      async function toggleTodo(id) {
+        console.log("--- TODOの状態を更新します ---");
+        console.log("TODO ID:", id);
+
+        // 対象のTODOを探す
+        const todo = todos.find((t) => t.id === id);
+        if (!todo) {
+          console.error("TODOが見つかりません");
+          return;
+        }
+
+        console.log("現在の状態:", todo.completed ? "完了" : "未完了");
+        console.log("変更後の状態:", todo.completed ? "未完了" : "完了");
+
+        try {
+          // PUTリクエストを送信
+          const response = await fetch(
+            `https://jsonplaceholder.typicode.com/todos/${id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                ...todo,
+                completed: !todo.completed, // 状態を反転
+              }),
+            }
+          );
+
+          console.log("レスポンスステータス:", response.status);
+
+          if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+          }
+
+          const updatedTodo = await response.json();
+
+          console.log("更新されたTODO:", updatedTodo);
+
+          // ローカルのデータを更新
+          todo.completed = !todo.completed;
+
+          // 画面を更新
+          displayTodos();
+
+          console.log("✅ TODO更新完了");
+        } catch (error) {
+          console.error("❌ エラー:", error);
+          alert(`TODOの更新に失敗しました: ${error.message}`);
+        }
+      }
+
+      // 4. 削除（Delete） - DELETE
+      async function deleteTodo(id) {
+        console.log("--- TODOを削除します ---");
+        console.log("TODO ID:", id);
+
+        // 確認ダイアログ
+        if (!confirm("このTODOを削除しますか？")) {
+          console.log("削除をキャンセルしました");
+          return;
+        }
+
+        try {
+          // DELETEリクエストを送信
+          const response = await fetch(
+            `https://jsonplaceholder.typicode.com/todos/${id}`,
+            {
+              method: "DELETE",
+            }
+          );
+
+          console.log("レスポンスステータス:", response.status);
+
+          if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+          }
+
+          console.log("サーバーからのレスポンス:", await response.json());
+
+          // ローカルのデータから削除
+          todos = todos.filter((t) => t.id !== id);
+
+          // 画面を更新
+          displayTodos();
+
+          console.log("✅ TODO削除完了");
+        } catch (error) {
+          console.error("❌ エラー:", error);
+          alert(`TODOの削除に失敗しました: ${error.message}`);
+        }
+      }
+
+      // フィルター設定
+      function setFilter(filter) {
+        console.log(`フィルターを変更: ${filter}`);
+
+        currentFilter = filter;
+
+        // ボタンのアクティブ状態を更新
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        event.target.classList.add("active");
+
+        // 画面を更新
+        displayTodos();
+      }
+
+      // TODO一覧を表示
+      function displayTodos() {
+        console.log("--- TODO一覧を表示します ---");
+
+        // フィルタリング
+        let filteredTodos = todos;
+        if (currentFilter === "completed") {
+          filteredTodos = todos.filter((t) => t.completed);
+        } else if (currentFilter === "incomplete") {
+          filteredTodos = todos.filter((t) => !t.completed);
+        }
+
+        console.log(`フィルター: ${currentFilter}`);
+        console.log(`表示するTODO数: ${filteredTodos.length}`);
+
+        // カウントを更新
+        const completed = todos.filter((t) => t.completed).length;
+        const incomplete = todos.length - completed;
+
+        totalCount.textContent = todos.length;
+        completedCount.textContent = completed;
+        incompleteCount.textContent = incomplete;
+
+        // TODOがない場合
+        if (filteredTodos.length === 0) {
+          let message = "";
+          if (currentFilter === "all") {
+            message = "TODOがありません<br>新しいTODOを追加してください！";
+          } else if (currentFilter === "completed") {
+            message = "完了したTODOがありません";
+          } else {
+            message = "未完了のTODOがありません<br>全て完了しました！🎉";
+          }
+
+          todoList.innerHTML = `
+            <div class="empty-state">
+              <h3>📝</h3>
+              <p>${message}</p>
+            </div>
+          `;
+          return;
+        }
+
+        // TODO一覧のHTMLを生成
+        const html = filteredTodos
+          .map(
+            (todo) => `
+              <div class="todo-item ${todo.completed ? "completed" : ""}">
+                <input
+                  type="checkbox"
+                  class="todo-checkbox"
+                  ${todo.completed ? "checked" : ""}
+                  onchange="toggleTodo(${todo.id})"
+                />
+                <span class="todo-title">${todo.title}</span>
+                <button class="delete-btn" onclick="deleteTodo(${todo.id})">
+                  削除
+                </button>
+              </div>
+            `
+          )
+          .join("");
+
+        todoList.innerHTML = html;
+
+        console.log("✅ 表示完了");
+      }
+
+      // ページ読み込み時にコンソールにメッセージを表示
+      console.log("=".repeat(50));
+      console.log("問題 4-7: 完全なTODOアプリ（CRUD操作）");
+      console.log("=".repeat(50));
+      console.log("このアプリは以下の機能を実装しています：");
+      console.log("📖 Read   (GET)    - TODOの取得");
+      console.log("➕ Create (POST)   - TODOの作成");
+      console.log("✏️  Update (PUT)    - TODOの更新");
+      console.log("🗑️  Delete (DELETE) - TODOの削除");
+      console.log("=".repeat(50));
+      console.log(
+        "F12キーを押して、開発者ツールのコンソールを開くと、各操作の詳細が見られるよ！"
+      );
+    </script>
+  </body>
+</html>

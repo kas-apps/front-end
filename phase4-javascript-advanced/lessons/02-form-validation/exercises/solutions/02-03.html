@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題3: エラーメッセージの表示</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* エラー状態 */
+      input.error {
+        border-color: #ff6b6b;
+        background-color: #fff5f5;
+      }
+
+      /* エラーメッセージ */
+      .error-message {
+        display: none;
+        margin-top: 8px;
+        padding: 10px;
+        background-color: #ffe0e0;
+        border-left: 4px solid #ff6b6b;
+        border-radius: 4px;
+        color: #c92a2a;
+        font-size: 14px;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      /* 成功メッセージ */
+      .success-message {
+        display: none;
+        margin-top: 24px;
+        padding: 16px;
+        background: #d4edda;
+        border: 2px solid #c3e6cb;
+        border-left: 4px solid #28a745;
+        border-radius: 6px;
+        color: #155724;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      .success-message.show {
+        display: block;
+      }
+
+      .success-message h3 {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔐 ログインフォーム</h1>
+      <p class="description">
+        問題3の解答例：具体的なエラーメッセージを表示して、ユーザーに分かりやすくフィードバックします。
+      </p>
+
+      <form id="loginForm">
+        <!-- メールアドレス -->
+        <div class="form-group">
+          <label for="email">メールアドレス</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="example@domain.com"
+          />
+          <div class="error-message" id="emailError"></div>
+        </div>
+
+        <!-- パスワード -->
+        <div class="form-group">
+          <label for="password">パスワード</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="8文字以上のパスワード"
+          />
+          <div class="error-message" id="passwordError"></div>
+        </div>
+
+        <button type="submit">ログイン</button>
+      </form>
+
+      <!-- 成功メッセージ -->
+      <div class="success-message" id="successMessage">
+        <h3>
+          <span>🎉</span>
+          <span>ログイン成功！</span>
+        </h3>
+        <p>全ての入力が正しく検証されました。</p>
+      </div>
+    </div>
+
+    <script>
+      // ===== 要素を取得 =====
+      const form = document.getElementById("loginForm");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const successMessage = document.getElementById("successMessage");
+
+      // ===== エラーメッセージを表示する関数 =====
+      function showError(inputId, errorId, message) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(errorId);
+
+        // 入力フィールドにerrorクラスを追加（赤い枠線）
+        input.classList.add("error");
+
+        // エラーメッセージを設定して表示
+        errorDiv.textContent = message;
+        errorDiv.classList.add("show");
+
+        console.log(`❌ エラー [${inputId}]: ${message}`);
+      }
+
+      // ===== エラーメッセージをクリアする関数 =====
+      function clearError(inputId, errorId) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(errorId);
+
+        // errorクラスを削除
+        input.classList.remove("error");
+
+        // エラーメッセージを非表示
+        errorDiv.classList.remove("show");
+      }
+
+      // ===== 全てのエラーをクリアする関数 =====
+      function clearAllErrors() {
+        clearError("email", "emailError");
+        clearError("password", "passwordError");
+        successMessage.classList.remove("show");
+        console.log("🧹 全てのエラーをクリアしました");
+      }
+
+      // ===== メールアドレスのバリデーション関数 =====
+      function validateEmail(email) {
+        // 空チェック
+        if (email.trim().length === 0) {
+          return {
+            valid: false,
+            message: "メールアドレスを入力してください",
+          };
+        }
+
+        // メールアドレスの形式チェック（簡易的な正規表現）
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          return {
+            valid: false,
+            message: "有効なメールアドレスを入力してください（例: user@example.com）",
+          };
+        }
+
+        // バリデーション成功
+        return { valid: true };
+      }
+
+      // ===== パスワードのバリデーション関数 =====
+      function validatePassword(password) {
+        // 空チェック
+        if (password.length === 0) {
+          return {
+            valid: false,
+            message: "パスワードを入力してください",
+          };
+        }
+
+        // 最小文字数チェック
+        if (password.length < 8) {
+          return {
+            valid: false,
+            message: `パスワードは8文字以上で入力してください（現在: ${password.length}文字）`,
+          };
+        }
+
+        // バリデーション成功
+        return { valid: true };
+      }
+
+      // ===== フォーム送信イベント =====
+      form.addEventListener("submit", function (event) {
+        // デフォルトの送信動作を防ぐ
+        event.preventDefault();
+
+        console.log("=== ログインフォームが送信されました ===");
+
+        // 既存のエラーをクリア
+        clearAllErrors();
+
+        // エラーフラグ
+        let hasError = false;
+
+        // ===== メールアドレスのバリデーション =====
+        const email = emailInput.value;
+        const emailResult = validateEmail(email);
+
+        if (!emailResult.valid) {
+          showError("email", "emailError", emailResult.message);
+          hasError = true;
+        } else {
+          console.log("✓ メールアドレス: OK");
+        }
+
+        // ===== パスワードのバリデーション =====
+        const password = passwordInput.value;
+        const passwordResult = validatePassword(password);
+
+        if (!passwordResult.valid) {
+          showError("password", "passwordError", passwordResult.message);
+          hasError = true;
+        } else {
+          console.log("✓ パスワード: OK");
+        }
+
+        // ===== 結果判定 =====
+        if (hasError) {
+          console.log("\n❌ バリデーションエラーがあります");
+          console.log("エラーメッセージを確認して、修正してください");
+        } else {
+          // バリデーション成功
+          console.log("\n🎉 全てのバリデーションに成功しました！");
+          console.log("ログインデータ:");
+          console.log("  - メールアドレス:", email);
+          console.log("  - パスワード:", "********");
+
+          // 成功メッセージを表示
+          successMessage.classList.add("show");
+
+          // スムーズにスクロール
+          successMessage.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          });
+        }
+      });
+
+      // ===== 入力を始めたらエラーをクリア（UX向上） =====
+      emailInput.addEventListener("input", function () {
+        // 既にエラーが表示されている場合のみクリア
+        if (emailInput.classList.contains("error")) {
+          clearError("email", "emailError");
+          console.log("メールアドレスの入力を開始 - エラーをクリアしました");
+        }
+      });
+
+      passwordInput.addEventListener("input", function () {
+        if (passwordInput.classList.contains("error")) {
+          clearError("password", "passwordError");
+          console.log("パスワードの入力を開始 - エラーをクリアしました");
+        }
+      });
+
+      // ===== ページ読み込み時のメッセージ =====
+      console.log("🔐 ログインフォームが読み込まれました");
+      console.log("\n【学習ポイント】");
+      console.log("1. JavaScriptで独自のバリデーションロジックを実装");
+      console.log("2. 具体的で分かりやすいエラーメッセージを表示");
+      console.log("3. エラー状態を視覚的に表現（赤い枠線）");
+      console.log("4. 入力を始めたらエラーをクリア（良いUX）");
+      console.log("\n【バリデーション関数の構造】");
+      console.log("- 各フィールドごとに独立した関数を作成");
+      console.log("- 戻り値: { valid: boolean, message: string }");
+      console.log("- 再利用可能で保守しやすい");
+      console.log("\n試してみてください:");
+      console.log("1. 何も入力せずに送信 → 両方エラー");
+      console.log("2. メールに 'abc' だけ入力 → メール形式エラー");
+      console.log("3. パスワードに '1234' だけ入力 → 文字数エラー");
+      console.log("4. 正しく入力 → 成功メッセージ表示");
+    </script>
+  </body>
+</html>

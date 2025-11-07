@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>演習 5-5: オブジェクト操作</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .subtitle {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 30px;
+      font-size: 1.1em;
+    }
+    .demo-section {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .demo-section h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1em;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      margin: 5px;
+    }
+    button:hover { transform: translateY(-2px); }
+    .code-display {
+      background: #2d3748;
+      color: #68d391;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-family: 'Courier New', monospace;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    .user-box {
+      background: #f8f9fa;
+      border: 2px solid #667eea;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+    .user-box h3 { color: #667eea; margin-bottom: 10px; }
+    .property { padding: 8px 0; border-bottom: 1px solid #e0e0e0; }
+    .property:last-child { border-bottom: none; }
+    .label { font-weight: bold; color: #666; display: inline-block; width: 150px; }
+    .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+    .before { background: #fff1f0; border: 2px solid #ff4d4f; padding: 15px; border-radius: 8px; }
+    .after { background: #f6ffed; border: 2px solid #52c41a; padding: 15px; border-radius: 8px; }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 2px solid #d9d9d9;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 オブジェクト操作</h1>
+    <p class="subtitle">スプレッド構文と分割代入を組み合わせよう！</p>
+
+    <div class="demo-section">
+      <h2>1. ユーザー情報の更新</h2>
+      <button onclick="demoUpdate()">実行</button>
+      <div id="updateResult"></div>
+    </div>
+
+    <div class="demo-section">
+      <h2>2. ネストされたオブジェクトの更新</h2>
+      <button onclick="demoNestedUpdate()">実行</button>
+      <div id="nestedResult"></div>
+    </div>
+
+    <div class="demo-section">
+      <h2>3. プロパティの除外</h2>
+      <button onclick="demoExclude()">実行</button>
+      <div id="excludeResult"></div>
+    </div>
+
+    <div class="demo-section">
+      <h2>4. インタラクティブな更新フォーム</h2>
+      <div style="margin: 20px 0;">
+        <input type="text" id="nameInput" placeholder="名前">
+        <input type="number" id="ageInput" placeholder="年齢">
+        <input type="text" id="cityInput" placeholder="都市">
+        <button onclick="updateUser()">✏️ 更新</button>
+        <button onclick="resetUser()">🔄 リセット</button>
+      </div>
+      <div id="formResult"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = {
+      id: 1,
+      name: '太郎',
+      age: 25,
+      email: 'taro@example.com',
+      password: 'secret123',
+      profile: {
+        city: '東京',
+        bio: 'エンジニアです',
+        hobbies: ['読書', 'ゲーム']
+      }
+    };
+
+    function displayUser(user, title = 'ユーザー情報') {
+      return `
+        <div class="user-box">
+          <h3>${title}</h3>
+          ${Object.entries(user).map(([key, value]) => {
+            const displayValue = typeof value === 'object' ? JSON.stringify(value, null, 2) : value;
+            return `<div class="property"><span class="label">${key}:</span> ${displayValue}</div>`;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function demoUpdate() {
+      console.clear();
+      console.log('=== ユーザー情報の更新 ===');
+
+      const original = { ...currentUser };
+
+      // 年齢だけ更新
+      const updated1 = { ...original, age: 26 };
+
+      // 複数更新
+      const updated2 = { ...original, age: 26, email: 'taro.new@example.com' };
+
+      console.log('元:', original);
+      console.log('年齢のみ更新:', updated1);
+      console.log('複数更新:', updated2);
+
+      const code = `const user = { id: 1, name: '太郎', age: 25, email: 'taro@example.com' };
+
+// 年齢だけ更新
+const updated1 = { ...user, age: 26 };
+
+// 複数のプロパティを更新
+const updated2 = { ...user, age: 26, email: 'taro.new@example.com' };
+
+// ✅ 元のオブジェクトは変更されない！`;
+
+      document.getElementById('updateResult').innerHTML = `
+        <div class="code-display">${code}</div>
+        <div class="comparison">
+          <div class="before">
+            <h4>🔴 元のユーザー</h4>
+            ${displayUser({ id: original.id, name: original.name, age: original.age, email: original.email }, '')}
+          </div>
+          <div class="after">
+            <h4>🟢 更新後</h4>
+            ${displayUser({ id: updated2.id, name: updated2.name, age: updated2.age, email: updated2.email }, '')}
+          </div>
+        </div>
+        <p style="padding: 15px; background: #e6f7ff; border-radius: 8px; margin-top: 15px;">
+          <strong>✅ ポイント:</strong> 元のオブジェクトは変更されず、新しいオブジェクトが作られる（イミュータブル）
+        </p>
+      `;
+    }
+
+    function demoNestedUpdate() {
+      console.clear();
+      console.log('=== ネストされたオブジェクトの更新 ===');
+
+      const original = { ...currentUser, profile: { ...currentUser.profile } };
+
+      // プロフィールの都市だけ更新
+      const updated = {
+        ...original,
+        profile: {
+          ...original.profile,
+          city: '大阪'
+        }
+      };
+
+      console.log('元:', original);
+      console.log('都市更新後:', updated);
+
+      const code = `const user = {
+  id: 1,
+  name: '太郎',
+  profile: { city: '東京', bio: 'エンジニアです' }
+};
+
+// ❌ 間違い：profileが上書きされる
+const wrong = {
+  ...user,
+  profile: { city: '大阪' }  // bioが消える！
+};
+
+// ✅ 正しい：profileもスプレッド
+const correct = {
+  ...user,
+  profile: {
+    ...user.profile,  // 既存のprofileをコピー
+    city: '大阪'      // cityだけ上書き
+  }
+};`;
+
+      document.getElementById('nestedResult').innerHTML = `
+        <div class="code-display">${code}</div>
+        <div class="comparison">
+          <div class="before">
+            <h4>🔴 元のデータ</h4>
+            <pre style="background: white; padding: 10px; border-radius: 5px;">${JSON.stringify(original, null, 2)}</pre>
+          </div>
+          <div class="after">
+            <h4>🟢 都市を大阪に更新</h4>
+            <pre style="background: white; padding: 10px; border-radius: 5px;">${JSON.stringify(updated, null, 2)}</pre>
+          </div>
+        </div>
+      `;
+    }
+
+    function demoExclude() {
+      console.clear();
+      console.log('=== プロパティの除外 ===');
+
+      const user = { ...currentUser };
+
+      // パスワードを除外
+      const { password, ...userWithoutPassword } = user;
+
+      // パスワードとIDを除外
+      const { password: pw, id, ...publicUser } = user;
+
+      console.log('元:', user);
+      console.log('パスワード除外:', userWithoutPassword);
+      console.log('パスワード&ID除外:', publicUser);
+
+      const code = `const user = {
+  id: 1,
+  name: '太郎',
+  email: 'taro@example.com',
+  password: 'secret123'
+};
+
+// パスワードを除外
+const { password, ...userWithoutPassword } = user;
+// → { id, name, email }
+
+// 複数のプロパティを除外
+const { password: pw, id, ...publicUser } = user;
+// → { name, email }`;
+
+      document.getElementById('excludeResult').innerHTML = `
+        <div class="code-display">${code}</div>
+        ${displayUser(user, '🔴 元のデータ（パスワード含む）')}
+        ${displayUser(userWithoutPassword, '🟢 パスワード除外')}
+        ${displayUser(publicUser, '🟢 パスワード&ID除外（公開用）')}
+        <p style="padding: 15px; background: #fff7e6; border-left: 4px solid #fa8c16; border-radius: 8px; margin-top: 15px;">
+          <strong>🎯 使いどころ:</strong> APIレスポンスからパスワードなどの機密情報を除外してクライアントに返す
+        </p>
+      `;
+    }
+
+    function updateUser() {
+      const name = document.getElementById('nameInput').value;
+      const age = parseInt(document.getElementById('ageInput').value);
+      const city = document.getElementById('cityInput').value;
+
+      const original = { ...currentUser };
+
+      // 空でない値だけで更新オブジェクトを作成
+      const updates = {};
+      if (name) updates.name = name;
+      if (age) updates.age = age;
+      if (city) {
+        updates.profile = {
+          ...currentUser.profile,
+          city: city
+        };
+      }
+
+      // 更新を適用
+      currentUser = { ...currentUser, ...updates };
+
+      console.log('更新:', updates);
+      console.log('新しいユーザー:', currentUser);
+
+      document.getElementById('formResult').innerHTML = `
+        <div class="comparison">
+          <div class="before">
+            <h4>🔴 更新前</h4>
+            <pre style="background: white; padding: 10px; border-radius: 5px;">${JSON.stringify(original, null, 2)}</pre>
+          </div>
+          <div class="after">
+            <h4>🟢 更新後</h4>
+            <pre style="background: white; padding: 10px; border-radius: 5px;">${JSON.stringify(currentUser, null, 2)}</pre>
+          </div>
+        </div>
+      `;
+    }
+
+    function resetUser() {
+      currentUser = {
+        id: 1,
+        name: '太郎',
+        age: 25,
+        email: 'taro@example.com',
+        password: 'secret123',
+        profile: {
+          city: '東京',
+          bio: 'エンジニアです',
+          hobbies: ['読書', 'ゲーム']
+        }
+      };
+      document.getElementById('formResult').innerHTML = '<p style="color: #52c41a; font-weight: bold;">✅ リセットしました</p>';
+      document.getElementById('nameInput').value = '';
+      document.getElementById('ageInput').value = '';
+      document.getElementById('cityInput').value = '';
+    }
+
+    console.log('🔧 オブジェクト操作の練習へようこそ！');
+  </script>
+</body>
+</html>

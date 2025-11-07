@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題 3-1: setTimeout でカウントダウン</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .timer-display {
+        font-size: 72px;
+        font-weight: bold;
+        color: #667eea;
+        margin: 30px 0;
+        font-family: "Courier New", monospace;
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .status {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 20px;
+        min-height: 30px;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      button {
+        padding: 15px 30px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex: 1;
+        max-width: 200px;
+      }
+
+      #startButton {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      #startButton:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      #cancelButton {
+        background: #ff6b6b;
+        color: white;
+      }
+
+      #cancelButton:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .info-box {
+        background: #f8f9fa;
+        border-left: 4px solid #667eea;
+        padding: 15px;
+        margin-top: 30px;
+        text-align: left;
+        border-radius: 5px;
+      }
+
+      .info-box h3 {
+        color: #667eea;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .info-box ul {
+        margin-left: 20px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      .pulsing {
+        animation: pulse 1s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>⏱️ setTimeout でカウントダウン</h1>
+      <p class="subtitle">問題 3-1: 基礎編</p>
+
+      <div class="timer-display" id="timerDisplay">--</div>
+
+      <div class="status" id="status">ボタンをクリックしてスタート</div>
+
+      <div class="button-group">
+        <button id="startButton">3秒後にアラート</button>
+        <button id="cancelButton" disabled>キャンセル</button>
+      </div>
+
+      <div class="info-box">
+        <h3>💡 学習ポイント</h3>
+        <ul>
+          <li>setTimeout() で指定時間後に処理を実行</li>
+          <li>clearTimeout() でタイマーをキャンセル</li>
+          <li>タイマーIDを変数に保存して管理</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // 要素の取得
+      // ==========================================
+      const startButton = document.getElementById("startButton");
+      const cancelButton = document.getElementById("cancelButton");
+      const timerDisplay = document.getElementById("timerDisplay");
+      const status = document.getElementById("status");
+
+      // タイマーIDを保存する変数（キャンセルするために必要）
+      let timerId = null;
+
+      // カウントダウン表示用の変数
+      let countdown = 3;
+
+      // ==========================================
+      // 開始ボタンのクリックイベント
+      // ==========================================
+      startButton.addEventListener("click", function () {
+        console.log("========================================");
+        console.log("タイマー開始！");
+
+        // ボタンの状態を変更
+        startButton.disabled = true;
+        cancelButton.disabled = false;
+
+        // カウントダウンをリセット
+        countdown = 3;
+        timerDisplay.textContent = countdown;
+        timerDisplay.classList.add("pulsing");
+        status.textContent = "カウントダウン中...";
+
+        // カウントダウン処理（毎秒実行）
+        const countdownInterval = setInterval(function () {
+          countdown--;
+          timerDisplay.textContent = countdown;
+          console.log(`残り ${countdown} 秒`);
+
+          if (countdown <= 0) {
+            clearInterval(countdownInterval);
+          }
+        }, 1000);
+
+        // 3秒後にアラート表示（setTimeout の使用例）
+        timerId = setTimeout(function () {
+          console.log("3秒経過しました！");
+          console.log("========================================");
+
+          // アラート表示
+          alert("⏰ 時間になりました！");
+
+          // 画面の状態をリセット
+          resetDisplay();
+        }, 3000);
+
+        console.log("タイマーID:", timerId);
+        console.log("3秒後にアラートが表示されます");
+      });
+
+      // ==========================================
+      // キャンセルボタンのクリックイベント
+      // ==========================================
+      cancelButton.addEventListener("click", function () {
+        console.log("========================================");
+        console.log("タイマーをキャンセルしました");
+        console.log("キャンセルしたタイマーID:", timerId);
+        console.log("========================================");
+
+        // clearTimeout でタイマーをキャンセル
+        // タイマーIDを使って、どのタイマーをキャンセルするか指定する
+        clearTimeout(timerId);
+
+        // 画面の状態をリセット
+        timerDisplay.textContent = "🚫";
+        timerDisplay.classList.remove("pulsing");
+        status.textContent = "キャンセルされました";
+        status.style.color = "#ff6b6b";
+
+        // 1秒後に完全にリセット
+        setTimeout(resetDisplay, 1000);
+      });
+
+      // ==========================================
+      // 画面の状態をリセットする関数
+      // ==========================================
+      function resetDisplay() {
+        timerDisplay.textContent = "--";
+        timerDisplay.classList.remove("pulsing");
+        status.textContent = "ボタンをクリックしてスタート";
+        status.style.color = "";
+
+        startButton.disabled = false;
+        cancelButton.disabled = true;
+
+        console.log("画面をリセットしました");
+      }
+
+      // ==========================================
+      // ページ読み込み時のログ
+      // ==========================================
+      console.log("========================================");
+      console.log("問題 3-1: setTimeout でカウントダウン");
+      console.log("========================================");
+      console.log("【学習ポイント】");
+      console.log("1. setTimeout() で指定時間後に処理を実行");
+      console.log("2. clearTimeout() でタイマーをキャンセル");
+      console.log("3. タイマーIDを変数に保存して管理");
+      console.log("========================================");
+      console.log("「3秒後にアラート」ボタンをクリックしてみよう！");
+      console.log("カウントダウン中に「キャンセル」もできるよ！");
+      console.log("========================================");
+    </script>
+  </body>
+</html>

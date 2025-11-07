@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題1: 簡単なお問い合わせフォーム</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: inherit;
+        transition: border-color 0.3s;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      /* 結果表示エリア */
+      #result {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 4px solid #667eea;
+        display: none;
+      }
+
+      #result.show {
+        display: block;
+      }
+
+      #result h2 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+
+      .result-item {
+        margin-bottom: 12px;
+        padding: 10px;
+        background: white;
+        border-radius: 4px;
+      }
+
+      .result-label {
+        font-weight: 600;
+        color: #667eea;
+        margin-bottom: 4px;
+      }
+
+      .result-value {
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📝 お問い合わせフォーム</h1>
+      <p class="description">
+        問題1の解答例：FormData APIを使ってフォームデータを取得し、コンソールとページに表示します。
+      </p>
+
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">お名前</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="山田太郎"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">メールアドレス</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="taro@example.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="message">お問い合わせ内容</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="お問い合わせ内容をご記入ください"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit">送信する</button>
+      </form>
+
+      <!-- 結果表示エリア -->
+      <div id="result">
+        <h2>📬 送信内容</h2>
+        <div id="resultContent"></div>
+      </div>
+    </div>
+
+    <script>
+      // ===== 要素を取得 =====
+      const form = document.getElementById("contactForm");
+      const result = document.getElementById("result");
+      const resultContent = document.getElementById("resultContent");
+
+      // ===== フォーム送信イベント =====
+      form.addEventListener("submit", function (event) {
+        // デフォルトの送信動作を防ぐ（ページがリロードされないようにする）
+        event.preventDefault();
+
+        console.log("=== フォームが送信されました ===");
+
+        // ===== 方法1: FormDataオブジェクトを作成 =====
+        const formData = new FormData(form);
+
+        // ===== 方法2: 個別に値を取得 =====
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const message = formData.get("message");
+
+        // コンソールに個別の値を出力
+        console.log("お名前:", name);
+        console.log("メールアドレス:", email);
+        console.log("お問い合わせ内容:", message);
+
+        // ===== 方法3: 全てのデータをループで取得 =====
+        console.log("\n=== 全データ（entries） ===");
+        for (const [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);
+        }
+
+        // ===== 方法4: オブジェクトに変換（便利！） =====
+        const data = Object.fromEntries(formData);
+        console.log("\n=== オブジェクト形式 ===");
+        console.log(data);
+        // → { name: "山田太郎", email: "taro@example.com", message: "..." }
+
+        // ===== ページに結果を表示 =====
+        displayResult(name, email, message);
+      });
+
+      // ===== 結果を表示する関数 =====
+      function displayResult(name, email, message) {
+        // HTMLを生成
+        const html = `
+          <div class="result-item">
+            <div class="result-label">お名前</div>
+            <div class="result-value">${escapeHtml(name)}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">メールアドレス</div>
+            <div class="result-value">${escapeHtml(email)}</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">お問い合わせ内容</div>
+            <div class="result-value">${escapeHtml(message)}</div>
+          </div>
+        `;
+
+        // 結果エリアに表示
+        resultContent.innerHTML = html;
+        result.classList.add("show");
+
+        // スムーズにスクロール
+        result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+        console.log("\n✓ 結果をページに表示しました");
+      }
+
+      // ===== HTMLエスケープ関数（セキュリティ対策） =====
+      // ユーザー入力をそのままHTMLに表示すると、XSS攻撃のリスクがあるため
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // ===== ページ読み込み時のメッセージ =====
+      console.log("📝 お問い合わせフォームが読み込まれました");
+      console.log("フォームに入力して「送信する」ボタンをクリックしてください");
+      console.log("\n【学習ポイント】");
+      console.log("1. FormData APIでフォーム全体のデータを簡単に取得");
+      console.log("2. event.preventDefault()でページリロードを防ぐ");
+      console.log("3. コンソールとページの両方に結果を表示");
+    </script>
+  </body>
+</html>

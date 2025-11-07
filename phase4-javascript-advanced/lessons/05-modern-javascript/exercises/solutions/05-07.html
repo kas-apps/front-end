@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>演習 5-7: ユーザープロフィールエディタ</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .subtitle {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 30px;
+      font-size: 1.1em;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .panel {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .panel h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+    .user-grid {
+      display: grid;
+      gap: 15px;
+    }
+    .user-card {
+      background: #f8f9fa;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 15px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .user-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-color: #667eea;
+    }
+    .user-card.selected {
+      border-color: #667eea;
+      background: #f0f5ff;
+    }
+    .user-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .user-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #262626;
+    }
+    .user-info {
+      font-size: 0.9em;
+      color: #666;
+      line-height: 1.6;
+    }
+    .actions {
+      display: flex;
+      gap: 5px;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: transform 0.2s;
+    }
+    button:hover { transform: translateY(-1px); }
+    button.danger {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    }
+    button.secondary {
+      background: #95a5a6;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #666;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #d9d9d9;
+      border-radius: 5px;
+      font-size: 1em;
+      font-family: inherit;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .stat-box {
+      background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+      border: 2px solid #667eea;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 2em;
+      font-weight: bold;
+      color: #667eea;
+      margin: 5px 0;
+    }
+    .stat-label {
+      color: #666;
+      font-size: 0.9em;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .filter-bar select, .filter-bar input {
+      padding: 8px;
+      border: 2px solid #d9d9d9;
+      border-radius: 5px;
+      font-size: 0.9em;
+    }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .tag {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      margin-right: 5px;
+    }
+    @media (max-width: 1000px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>👥 ユーザープロフィールエディタ</h1>
+    <p class="subtitle">モダンJavaScriptの全機能を使った実践アプリ</p>
+
+    <!-- 統計パネル -->
+    <div class="panel">
+      <h2>📊 統計情報</h2>
+      <div class="stats-grid" id="stats"></div>
+    </div>
+
+    <div class="layout">
+      <!-- ユーザーリスト -->
+      <div class="panel">
+        <h2>👥 ユーザー一覧</h2>
+
+        <!-- フィルター -->
+        <div class="filter-bar">
+          <select id="cityFilter" onchange="render()">
+            <option value="all">すべての都市</option>
+          </select>
+          <input type="number" id="minAge" placeholder="最低年齢" onchange="render()" style="width: 120px;">
+          <input type="text" id="searchQuery" placeholder="検索..." oninput="render()" style="flex: 1;">
+        </div>
+
+        <!-- ツールバー -->
+        <div class="toolbar">
+          <button onclick="showAddForm()">➕ 新規追加</button>
+          <button onclick="exportData()" class="secondary">📤 エクスポート</button>
+          <button onclick="importData()" class="secondary">📥 インポート</button>
+        </div>
+
+        <!-- ユーザーカード -->
+        <div class="user-grid" id="userList"></div>
+      </div>
+
+      <!-- 編集フォーム -->
+      <div class="panel">
+        <h2 id="formTitle">✏️ ユーザー編集</h2>
+        <div id="formContainer">
+          <p style="color: #999; text-align: center; padding: 40px;">ユーザーを選択してください</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 初期データ
+    const initialUsers = [
+      { id: 1, name: '太郎', age: 25, email: 'taro@example.com', profile: { city: '東京', bio: 'エンジニアです' } },
+      { id: 2, name: '花子', age: 30, email: 'hanako@example.com', profile: { city: '大阪', bio: 'デザイナーです' } },
+      { id: 3, name: '次郎', age: 28, email: 'jiro@example.com', profile: { city: '福岡', bio: '営業職です' } },
+      { id: 4, name: '三郎', age: 35, email: 'saburo@example.com', profile: { city: '東京', bio: 'マネージャーです' } },
+      { id: 5, name: '四郎', age: 22, email: 'shiro@example.com', profile: { city: '名古屋', bio: '学生です' } },
+    ];
+
+    // 状態管理（イミュータブル）
+    let usersData = [...initialUsers];
+    let selectedUserId = null;
+
+    // フィルター済みユーザーを取得
+    function getFilteredUsers() {
+      const cityFilter = document.getElementById('cityFilter')?.value || 'all';
+      const minAge = parseInt(document.getElementById('minAge')?.value) || 0;
+      const searchQuery = document.getElementById('searchQuery')?.value.toLowerCase() || '';
+
+      return usersData.filter(user => {
+        // 都市フィルター
+        const cityMatch = cityFilter === 'all' || user.profile?.city === cityFilter;
+
+        // 年齢フィルター
+        const ageMatch = user.age >= minAge;
+
+        // 検索フィルター
+        const searchMatch = searchQuery === '' ||
+          user.name.toLowerCase().includes(searchQuery) ||
+          user.email.toLowerCase().includes(searchQuery) ||
+          user.profile?.city?.toLowerCase().includes(searchQuery);
+
+        return cityMatch && ageMatch && searchMatch;
+      });
+    }
+
+    // 統計情報を計算
+    function calculateStats() {
+      const filtered = getFilteredUsers();
+
+      // 平均年齢
+      const avgAge = filtered.length > 0
+        ? filtered.reduce((sum, u) => sum + u.age, 0) / filtered.length
+        : 0;
+
+      // 都市別の人数
+      const cityCounts = filtered.reduce((acc, user) => {
+        const city = user.profile?.city ?? '未登録';
+        acc[city] = (acc[city] || 0) + 1;
+        return acc;
+      }, {});
+
+      return {
+        total: filtered.length,
+        avgAge: Math.round(avgAge),
+        cityCounts
+      };
+    }
+
+    // ユーザーカードを生成
+    function renderUserCard(user) {
+      const { id, name, age, email } = user;
+      const city = user.profile?.city ?? '未登録';
+      const bio = user.profile?.bio ?? '';
+      const isSelected = id === selectedUserId;
+
+      return `
+        <div class="user-card ${isSelected ? 'selected' : ''}" onclick="selectUser(${id})">
+          <div class="user-header">
+            <div class="user-name">${name}</div>
+            <div class="actions" onclick="event.stopPropagation()">
+              <button onclick="editUser(${id})">編集</button>
+              <button class="danger" onclick="deleteUser(${id})">削除</button>
+            </div>
+          </div>
+          <div class="user-info">
+            📧 ${email}<br>
+            🎂 ${age}歳 | 📍 ${city}<br>
+            ${bio ? `💬 ${bio}` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // 編集フォームを表示
+    function showEditForm(user) {
+      const { id, name, age, email } = user;
+      const city = user.profile?.city ?? '';
+      const bio = user.profile?.bio ?? '';
+
+      document.getElementById('formTitle').textContent = user ? '✏️ ユーザー編集' : '➕ 新規ユーザー';
+      document.getElementById('formContainer').innerHTML = `
+        <div class="form-group">
+          <label>名前</label>
+          <input type="text" id="editName" value="${name}" placeholder="名前を入力">
+        </div>
+        <div class="form-group">
+          <label>年齢</label>
+          <input type="number" id="editAge" value="${age}" placeholder="年齢を入力">
+        </div>
+        <div class="form-group">
+          <label>メール</label>
+          <input type="email" id="editEmail" value="${email}" placeholder="メールアドレス">
+        </div>
+        <div class="form-group">
+          <label>都市</label>
+          <input type="text" id="editCity" value="${city}" placeholder="都市名">
+        </div>
+        <div class="form-group">
+          <label>自己紹介</label>
+          <textarea id="editBio" rows="3" placeholder="自己紹介">${bio}</textarea>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="saveUser(${id})" style="flex: 1;">💾 保存</button>
+          <button onclick="cancelEdit()" class="secondary">✖️ キャンセル</button>
+        </div>
+      `;
+    }
+
+    // 新規追加フォーム
+    function showAddForm() {
+      selectedUserId = null;
+      showEditForm({ id: null, name: '', age: '', email: '', profile: {} });
+    }
+
+    // ユーザーを選択
+    function selectUser(id) {
+      selectedUserId = id;
+      render();
+    }
+
+    // ユーザーを編集
+    function editUser(id) {
+      const user = usersData.find(u => u.id === id);
+      if (user) {
+        selectedUserId = id;
+        showEditForm(user);
+      }
+    }
+
+    // ユーザーを保存（追加または更新）
+    function saveUser(id) {
+      const name = document.getElementById('editName').value;
+      const age = parseInt(document.getElementById('editAge').value);
+      const email = document.getElementById('editEmail').value;
+      const city = document.getElementById('editCity').value;
+      const bio = document.getElementById('editBio').value;
+
+      // バリデーション
+      if (!name || !age || !email) {
+        alert('名前、年齢、メールは必須です');
+        return;
+      }
+
+      if (id) {
+        // 更新（イミュータブル）
+        usersData = usersData.map(user =>
+          user.id === id
+            ? {
+                ...user,
+                name,
+                age,
+                email,
+                profile: {
+                  ...user.profile,
+                  city,
+                  bio
+                }
+              }
+            : user
+        );
+        console.log('✅ ユーザーを更新:', { id, name });
+      } else {
+        // 新規追加
+        const newUser = {
+          id: Date.now(),
+          name,
+          age,
+          email,
+          profile: { city, bio }
+        };
+        usersData = [...usersData, newUser];
+        console.log('✅ ユーザーを追加:', newUser);
+      }
+
+      selectedUserId = null;
+      render();
+    }
+
+    // ユーザーを削除
+    function deleteUser(id) {
+      const user = usersData.find(u => u.id === id);
+      if (!confirm(`${user?.name}を削除しますか？`)) return;
+
+      // フィルターで削除（イミュータブル）
+      usersData = usersData.filter(u => u.id !== id);
+      console.log('🗑️ ユーザーを削除:', id);
+
+      if (selectedUserId === id) {
+        selectedUserId = null;
+      }
+      render();
+    }
+
+    // 編集をキャンセル
+    function cancelEdit() {
+      selectedUserId = null;
+      render();
+    }
+
+    // データをエクスポート
+    function exportData() {
+      const json = JSON.stringify(usersData, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'users.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      console.log('📤 データをエクスポート');
+    }
+
+    // データをインポート
+    function importData() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'application/json';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const imported = JSON.parse(event.target.result);
+            usersData = [...imported];
+            render();
+            console.log('📥 データをインポート:', imported.length, '件');
+          } catch (error) {
+            alert('JSONファイルの読み込みに失敗しました');
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    // 画面を再描画
+    function render() {
+      const filtered = getFilteredUsers();
+      const stats = calculateStats();
+
+      // 統計情報
+      document.getElementById('stats').innerHTML = `
+        <div class="stat-box">
+          <div class="stat-label">総ユーザー数</div>
+          <div class="stat-value">${stats.total}</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">平均年齢</div>
+          <div class="stat-value">${stats.avgAge}歳</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">都市数</div>
+          <div class="stat-value">${Object.keys(stats.cityCounts).length}</div>
+        </div>
+      `;
+
+      // 都市フィルターのオプションを更新
+      const cities = [...new Set(usersData.map(u => u.profile?.city).filter(Boolean))];
+      const cityFilter = document.getElementById('cityFilter');
+      if (cityFilter) {
+        const currentValue = cityFilter.value;
+        cityFilter.innerHTML = `
+          <option value="all">すべての都市</option>
+          ${cities.map(city => `<option value="${city}">${city}</option>`).join('')}
+        `;
+        cityFilter.value = currentValue;
+      }
+
+      // ユーザーリスト
+      document.getElementById('userList').innerHTML = filtered.length > 0
+        ? filtered.map(renderUserCard).join('')
+        : '<p style="color: #999; text-align: center; padding: 20px;">該当するユーザーがいません</p>';
+
+      // 選択されたユーザーがいる場合
+      if (selectedUserId) {
+        const user = usersData.find(u => u.id === selectedUserId);
+        if (user) {
+          document.getElementById('formContainer').innerHTML = `
+            <div class="user-card" style="cursor: default;">
+              <h3 style="margin-bottom: 15px;">${user.name}</h3>
+              <div class="user-info" style="font-size: 1em; line-height: 2;">
+                <strong>年齢:</strong> ${user.age}歳<br>
+                <strong>メール:</strong> ${user.email}<br>
+                <strong>都市:</strong> ${user.profile?.city ?? '未登録'}<br>
+                <strong>自己紹介:</strong> ${user.profile?.bio ?? 'なし'}
+              </div>
+              <div style="margin-top: 20px;">
+                <button onclick="editUser(${user.id})" style="width: 100%;">✏️ 編集する</button>
+              </div>
+            </div>
+          `;
+        }
+      }
+    }
+
+    // 初期化
+    console.log('👥 ユーザープロフィールエディタを起動');
+    console.log('🎯 モダンJavaScriptの全機能を使った実践アプリです！');
+    console.log('✨ 使用している機能:');
+    console.log('  ✅ スプレッド構文（配列・オブジェクト）');
+    console.log('  ✅ 分割代入');
+    console.log('  ✅ オプショナルチェイニング（?.）');
+    console.log('  ✅ Nullish合体演算子（??）');
+    console.log('  ✅ テンプレートリテラル');
+    console.log('  ✅ 配列メソッド（map、filter、reduce）');
+    console.log('  ✅ アロー関数');
+    console.log('  ✅ イミュータブルな状態管理');
+
+    render();
+  </script>
+</body>
+</html>

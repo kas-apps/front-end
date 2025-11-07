@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 5-4: 配列メソッドを使ったデータ変換</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        color: white;
+        margin-bottom: 10px;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 30px;
+        font-size: 1.1em;
+      }
+
+      .demo-section {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .demo-section h2 {
+        color: #fa709a;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+        border-bottom: 3px solid #fa709a;
+        padding-bottom: 10px;
+      }
+
+      button {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1em;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4);
+        margin: 5px;
+        font-weight: bold;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(250, 112, 154, 0.6);
+      }
+
+      .code-display {
+        background: #2d3748;
+        color: #fee140;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-family: 'Courier New', monospace;
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+
+      .product-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-table th {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: bold;
+      }
+
+      .product-table td {
+        padding: 12px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .product-table tr:hover {
+        background: #fff7e6;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stat-box {
+        background: linear-gradient(135deg, #fa709a15 0%, #fee14015 100%);
+        border: 2px solid #fa709a;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2em;
+        font-weight: bold;
+        color: #fa709a;
+        margin: 10px 0;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .product-card {
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .product-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #fa709a;
+      }
+
+      .price {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #fa709a;
+      }
+
+      .discount-badge {
+        background: #52c41a;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        font-weight: bold;
+      }
+
+      @media (max-width: 768px) {
+        .product-table {
+          font-size: 0.9em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔄 配列メソッドを使ったデータ変換</h1>
+      <p class="subtitle">
+        map, filter, reduce でデータを自在に操る！
+      </p>
+
+      <div class="demo-section">
+        <h2>🛍️ 商品データ</h2>
+        <div id="productsDisplay"></div>
+      </div>
+
+      <div class="demo-section">
+        <h2>🎯 操作メニュー</h2>
+        <div>
+          <button onclick="showMapExamples()">📦 map で変換</button>
+          <button onclick="showFilterExamples()">🔍 filter で絞り込み</button>
+          <button onclick="showReduceExamples()">📊 reduce で集計</button>
+          <button onclick="showMethodChain()">⛓️ メソッドチェイン</button>
+          <button onclick="runAll()">🚀 すべて実行</button>
+        </div>
+        <div id="result"></div>
+      </div>
+    </div>
+
+    <script>
+      // 商品データ
+      const products = [
+        {
+          id: 1,
+          name: 'ノートPC',
+          price: 120000,
+          stock: 5,
+          category: '電子機器',
+        },
+        { id: 2, name: 'マウス', price: 3000, stock: 20, category: '周辺機器' },
+        {
+          id: 3,
+          name: 'キーボード',
+          price: 8000,
+          stock: 15,
+          category: '周辺機器',
+        },
+        {
+          id: 4,
+          name: 'モニター',
+          price: 35000,
+          stock: 8,
+          category: '電子機器',
+        },
+        {
+          id: 5,
+          name: 'USBケーブル',
+          price: 500,
+          stock: 50,
+          category: '周辺機器',
+        },
+        {
+          id: 6,
+          name: 'Webカメラ',
+          price: 12000,
+          stock: 0,
+          category: '周辺機器',
+        },
+      ];
+
+      // 商品テーブルを表示
+      function displayProducts(productsToShow = products, title = '全商品') {
+        const tableHtml = `
+          <h3>${title}（${productsToShow.length}件）</h3>
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>在庫</th>
+                <th>カテゴリ</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${productsToShow
+                .map(
+                  (p) => `
+                <tr>
+                  <td>${p.id}</td>
+                  <td>${p.name}</td>
+                  <td>${p.price.toLocaleString()}円</td>
+                  <td>${p.stock}個</td>
+                  <td>${p.category}</td>
+                </tr>
+              `
+                )
+                .join('')}
+            </tbody>
+          </table>
+        `;
+        document.getElementById('productsDisplay').innerHTML = tableHtml;
+      }
+
+      // 初期表示
+      displayProducts();
+
+      // map の例
+      function showMapExamples() {
+        console.clear();
+        console.log('=== map で変換 ===');
+
+        // 1. 10%割引を適用
+        const discounted = products.map((product) => ({
+          ...product,
+          price: Math.floor(product.price * 0.9),
+          originalPrice: product.price,
+        }));
+
+        console.log('10%割引適用後:', discounted);
+
+        // 2. 商品名と価格だけ
+        const simplified = products.map((p) => ({
+          name: p.name,
+          price: p.price,
+        }));
+
+        console.log('簡略版:', simplified);
+
+        // 3. 価格を文字列にフォーマット
+        const formatted = products.map((p) => ({
+          ...p,
+          priceText: `${p.price.toLocaleString()}円`,
+        }));
+
+        console.log('フォーマット済み:', formatted);
+
+        const code = `// 1. 10%割引を適用
+const discounted = products.map(product => ({
+  ...product,
+  price: Math.floor(product.price * 0.9),
+  originalPrice: product.price
+}));
+
+// 2. 商品名と価格だけを取り出す
+const simplified = products.map(p => ({
+  name: p.name,
+  price: p.price
+}));
+
+// 3. 価格を文字列にフォーマット
+const formatted = products.map(p => ({
+  ...p,
+  priceText: \`\${p.price.toLocaleString()}円\`
+}));`;
+
+        let resultHtml = `
+          <div class="code-display">${code}</div>
+          <h3>📦 map: 配列の各要素を変換</h3>
+          <p><strong>特徴:</strong> 元の配列と同じ長さの新しい配列を返す</p>
+
+          <h4 style="margin-top: 20px;">1️⃣ 10%割引を適用</h4>
+          ${discounted
+            .map(
+              (p) => `
+            <div class="product-card">
+              <div>
+                <strong>${p.name}</strong><br>
+                <small style="color: #999;">元の価格: ${p.originalPrice.toLocaleString()}円</small>
+              </div>
+              <div>
+                <span class="discount-badge">10% OFF</span>
+                <span class="price">${p.price.toLocaleString()}円</span>
+              </div>
+            </div>
+          `
+            )
+            .join('')}
+
+          <h4 style="margin-top: 20px;">2️⃣ 商品名と価格だけ</h4>
+          <div style="padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            ${simplified.map((p) => `<div>• ${p.name}: ${p.price.toLocaleString()}円</div>`).join('')}
+          </div>
+        `;
+
+        document.getElementById('result').innerHTML = resultHtml;
+        displayProducts(discounted, '10%割引適用後の商品');
+      }
+
+      // filter の例
+      function showFilterExamples() {
+        console.clear();
+        console.log('=== filter で絞り込み ===');
+
+        // 1. 価格が10000円以上
+        const expensive = products.filter((p) => p.price >= 10000);
+        console.log('10000円以上:', expensive);
+
+        // 2. 在庫がある商品
+        const inStock = products.filter((p) => p.stock > 0);
+        console.log('在庫あり:', inStock);
+
+        // 3. 電子機器カテゴリ
+        const electronics = products.filter((p) => p.category === '電子機器');
+        console.log('電子機器:', electronics);
+
+        // 4. 複数条件
+        const condition = products.filter(
+          (p) => p.price >= 5000 && p.stock > 10
+        );
+        console.log('5000円以上 かつ 在庫10個以上:', condition);
+
+        const code = `// 1. 価格が10000円以上の商品
+const expensive = products.filter(p => p.price >= 10000);
+
+// 2. 在庫がある商品
+const inStock = products.filter(p => p.stock > 0);
+
+// 3. 電子機器カテゴリの商品
+const electronics = products.filter(
+  p => p.category === '電子機器'
+);
+
+// 4. 複数条件（価格5000円以上 かつ 在庫10個以上）
+const condition = products.filter(
+  p => p.price >= 5000 && p.stock > 10
+);`;
+
+        const resultHtml = `
+          <div class="code-display">${code}</div>
+          <h3>🔍 filter: 条件に合う要素だけを抽出</h3>
+          <p><strong>特徴:</strong> 元の配列以下の長さの新しい配列を返す</p>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-label">全商品</div>
+              <div class="stat-value">${products.length}件</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">10000円以上</div>
+              <div class="stat-value">${expensive.length}件</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">在庫あり</div>
+              <div class="stat-value">${inStock.length}件</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">電子機器</div>
+              <div class="stat-value">${electronics.length}件</div>
+            </div>
+          </div>
+
+          <h4>💰 10000円以上の商品</h4>
+          ${expensive.map((p) => `<div class="product-card"><span><strong>${p.name}</strong></span><span class="price">${p.price.toLocaleString()}円</span></div>`).join('')}
+        `;
+
+        document.getElementById('result').innerHTML = resultHtml;
+        displayProducts(expensive, '10000円以上の商品');
+      }
+
+      // reduce の例
+      function showReduceExamples() {
+        console.clear();
+        console.log('=== reduce で集計 ===');
+
+        // 1. 合計金額
+        const total = products.reduce((sum, p) => sum + p.price, 0);
+        console.log('合計金額:', total);
+
+        // 2. 平均価格
+        const average = total / products.length;
+        console.log('平均価格:', average);
+
+        // 3. 最高価格の商品
+        const mostExpensive = products.reduce((max, p) =>
+          p.price > max.price ? p : max
+        );
+        console.log('最高価格の商品:', mostExpensive);
+
+        // 4. カテゴリ別の商品数
+        const categoryCount = products.reduce((acc, p) => {
+          acc[p.category] = (acc[p.category] || 0) + 1;
+          return acc;
+        }, {});
+        console.log('カテゴリ別商品数:', categoryCount);
+
+        // 5. カテゴリ別の合計金額
+        const categoryTotal = products.reduce((acc, p) => {
+          acc[p.category] = (acc[p.category] || 0) + p.price;
+          return acc;
+        }, {});
+        console.log('カテゴリ別合計金額:', categoryTotal);
+
+        const code = `// 1. 合計金額
+const total = products.reduce(
+  (sum, p) => sum + p.price,
+  0
+);
+
+// 2. 平均価格
+const average = total / products.length;
+
+// 3. 最高価格の商品
+const mostExpensive = products.reduce(
+  (max, p) => p.price > max.price ? p : max
+);
+
+// 4. カテゴリ別の商品数
+const categoryCount = products.reduce((acc, p) => {
+  acc[p.category] = (acc[p.category] || 0) + 1;
+  return acc;
+}, {});
+
+// 5. カテゴリ別の合計金額
+const categoryTotal = products.reduce((acc, p) => {
+  acc[p.category] = (acc[p.category] || 0) + p.price;
+  return acc;
+}, {});`;
+
+        const resultHtml = `
+          <div class="code-display">${code}</div>
+          <h3>📊 reduce: 配列を1つの値にまとめる</h3>
+          <p><strong>特徴:</strong> 配列を任意の値（数値、オブジェクト、配列など）に変換</p>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-label">合計金額</div>
+              <div class="stat-value">${total.toLocaleString()}円</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">平均価格</div>
+              <div class="stat-value">${Math.floor(average).toLocaleString()}円</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">商品数</div>
+              <div class="stat-value">${products.length}件</div>
+            </div>
+          </div>
+
+          <h4>💎 最高価格の商品</h4>
+          <div class="product-card" style="border: 3px solid #fa709a;">
+            <span><strong>${mostExpensive.name}</strong></span>
+            <span class="price">${mostExpensive.price.toLocaleString()}円</span>
+          </div>
+
+          <h4>📂 カテゴリ別の商品数</h4>
+          <div style="padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            ${Object.entries(categoryCount)
+              .map(([cat, count]) => `<div>• ${cat}: ${count}件</div>`)
+              .join('')}
+          </div>
+
+          <h4>💰 カテゴリ別の合計金額</h4>
+          <div style="padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            ${Object.entries(categoryTotal)
+              .map(
+                ([cat, total]) =>
+                  `<div>• ${cat}: ${total.toLocaleString()}円</div>`
+              )
+              .join('')}
+          </div>
+        `;
+
+        document.getElementById('result').innerHTML = resultHtml;
+      }
+
+      // メソッドチェインの例
+      function showMethodChain() {
+        console.clear();
+        console.log('=== メソッドチェイン ===');
+
+        // 在庫がある商品で、価格が安い順にソートして、上位3つを取得
+        const top3 = products
+          .filter((p) => p.stock > 0) // 在庫がある
+          .sort((a, b) => a.price - b.price) // 価格が安い順
+          .slice(0, 3) // 上位3つ
+          .map((p) => ({ name: p.name, price: p.price })); // 名前と価格だけ
+
+        console.log('在庫あり・低価格TOP3:', top3);
+
+        // 電子機器で、在庫10個以下の商品の平均価格
+        const electronicAvg =
+          products
+            .filter((p) => p.category === '電子機器' && p.stock <= 10)
+            .reduce((sum, p) => sum + p.price, 0) /
+          products.filter((p) => p.category === '電子機器' && p.stock <= 10)
+            .length;
+
+        console.log('電子機器（在庫10個以下）の平均価格:', electronicAvg);
+
+        // 10%割引を適用して、10000円以上の商品
+        const discountedExpensive = products
+          .map((p) => ({ ...p, price: Math.floor(p.price * 0.9) })) // 10%割引
+          .filter((p) => p.price >= 10000); // 10000円以上
+
+        console.log('10%割引後、10000円以上:', discountedExpensive);
+
+        const code = `// 1. 在庫がある商品で、価格が安い順にソートして、上位3つ
+const top3 = products
+  .filter(p => p.stock > 0)        // 在庫がある
+  .sort((a, b) => a.price - b.price)  // 安い順
+  .slice(0, 3)                     // 上位3つ
+  .map(p => ({ name: p.name, price: p.price })); // 名前と価格
+
+// 2. 電子機器で在庫10個以下の商品の平均価格
+const electronicAvg = products
+  .filter(p => p.category === '電子機器' && p.stock <= 10)
+  .reduce((sum, p) => sum + p.price, 0) /
+  products.filter(...).length;
+
+// 3. 10%割引を適用して、10000円以上の商品
+const discountedExpensive = products
+  .map(p => ({ ...p, price: Math.floor(p.price * 0.9) }))
+  .filter(p => p.price >= 10000);`;
+
+        const resultHtml = `
+          <div class="code-display">${code}</div>
+          <h3>⛓️ メソッドチェイン: 複数のメソッドを組み合わせる</h3>
+          <p><strong>ポイント:</strong> 各メソッドは新しい配列を返すので、続けて次のメソッドを呼べる</p>
+
+          <h4>🏆 在庫あり・低価格TOP3</h4>
+          ${top3
+            .map(
+              (p, i) => `
+            <div class="product-card">
+              <span><strong>${i + 1}位: ${p.name}</strong></span>
+              <span class="price">${p.price.toLocaleString()}円</span>
+            </div>
+          `
+            )
+            .join('')}
+
+          <h4>📊 電子機器（在庫10個以下）の平均価格</h4>
+          <div class="stat-box" style="max-width: 300px; margin: 10px 0;">
+            <div class="stat-value">${Math.floor(electronicAvg).toLocaleString()}円</div>
+          </div>
+
+          <h4>💰 10%割引後、10000円以上の商品</h4>
+          ${discountedExpensive
+            .map(
+              (p) => `
+            <div class="product-card">
+              <span><strong>${p.name}</strong></span>
+              <div>
+                <span class="discount-badge">10% OFF</span>
+                <span class="price">${p.price.toLocaleString()}円</span>
+              </div>
+            </div>
+          `
+            )
+            .join('')}
+
+          <div style="margin-top: 20px; padding: 15px; background: #fff7e6; border-left: 4px solid #fa709a; border-radius: 5px;">
+            <strong>💡 メソッドチェインのコツ</strong>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+              <li>処理の順番が重要（filterしてからsortする）</li>
+              <li>1行に1メソッドずつ書くと読みやすい</li>
+              <li>各メソッドは元の配列を変更しない</li>
+            </ul>
+          </div>
+        `;
+
+        document.getElementById('result').innerHTML = resultHtml;
+        displayProducts(top3, '在庫あり・低価格TOP3');
+      }
+
+      // すべて実行
+      function runAll() {
+        showMapExamples();
+        setTimeout(() => {
+          alert('map の例を表示しました！次は filter の例を見てみよう');
+        }, 100);
+      }
+
+      console.log('🔄 配列メソッドの練習へようこそ！');
+      console.log('ボタンをクリックして、各メソッドの動作を確認してみよう！');
+    </script>
+  </body>
+</html>

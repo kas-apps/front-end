@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問題 1-7: 高度な TODO リスト</title>
+  <style>
+    /* ページ全体のスタイル */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    /* コンテナのスタイル */
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 見出しのスタイル */
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* 説明文のスタイル */
+    .description {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #667eea;
+    }
+
+    /* 統計情報のスタイル */
+    .stats {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+    }
+
+    .stat-item {
+      flex: 1;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: bold;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    /* 入力エリアのスタイル */
+    .input-area {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .add-button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .add-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .add-button:active {
+      transform: translateY(0);
+    }
+
+    /* タスクリストのスタイル */
+    #taskList {
+      list-style: none;
+      padding: 0;
+    }
+
+    #taskList li {
+      background: #f8f9fa;
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+      animation: slideIn 0.3s;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    #taskList li:hover {
+      background: #e9ecef;
+      transform: translateX(5px);
+    }
+
+    /* 完了済みタスクのスタイル */
+    #taskList li.completed {
+      background: #d4edda;
+      opacity: 0.8;
+    }
+
+    #taskList li.completed .task-text {
+      text-decoration: line-through;
+      color: #666;
+    }
+
+    .task-text {
+      flex: 1;
+      margin-right: 10px;
+      word-break: break-word;
+    }
+
+    /* ボタングループ */
+    .button-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* 完了ボタンのスタイル */
+    .toggle {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .toggle:hover {
+      background: #218838;
+    }
+
+    /* 完了済みタスクの完了ボタン */
+    li.completed .toggle {
+      background: #6c757d;
+    }
+
+    li.completed .toggle:hover {
+      background: #5a6268;
+    }
+
+    /* 削除ボタンのスタイル */
+    .delete {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .delete:hover {
+      background: #c82333;
+    }
+
+    /* 空の状態のメッセージ */
+    .empty-message {
+      text-align: center;
+      color: #999;
+      padding: 40px;
+      font-style: italic;
+    }
+
+    /* ヒント表示 */
+    .hint {
+      background: #fff3cd;
+      color: #856404;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 高度な TODO リスト</h1>
+    <p class="subtitle">すべての機能を実装した本格的な TODO アプリ！</p>
+
+    <div class="description">
+      <p><strong>実装されている機能：</strong></p>
+      <ul>
+        <li>✅ タスクの追加（ボタン・Enter キー）</li>
+        <li>✅ タスクの削除</li>
+        <li>✅ 完了/未完了の切り替え</li>
+        <li>✅ イベント委譲（親要素に1つだけリスナー）</li>
+        <li>✅ 空欄チェック</li>
+        <li>✅ タスク数の表示（全体・完了）</li>
+      </ul>
+    </div>
+
+    <!-- 統計情報 -->
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-number" id="totalCount">0</span>
+        <span class="stat-label">全タスク数</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="completedCount">0</span>
+        <span class="stat-label">完了</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="remainingCount">0</span>
+        <span class="stat-label">未完了</span>
+      </div>
+    </div>
+
+    <!-- タスク追加の入力エリア -->
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="新しいタスクを入力...（Enter キーでも追加できます）">
+      <button class="add-button" id="addButton">追加</button>
+    </div>
+
+    <!-- タスクリスト -->
+    <ul id="taskList">
+      <li class="empty-message">まだタスクがありません。上の入力欄からタスクを追加してね！</li>
+    </ul>
+
+    <div class="hint">
+      💡 Enter キーでも追加できるよ！完了ボタンをクリックすると取り消し線が付くよ！
+    </div>
+  </div>
+
+  <script>
+    // 要素を取得
+    const taskInput = document.getElementById('taskInput');
+    const addButton = document.getElementById('addButton');
+    const taskList = document.getElementById('taskList');
+    const totalCount = document.getElementById('totalCount');
+    const completedCount = document.getElementById('completedCount');
+    const remainingCount = document.getElementById('remainingCount');
+
+    // タスク数を更新する関数
+    function updateCount() {
+      // 全タスク数を取得（空メッセージは除外）
+      const allTasks = taskList.querySelectorAll('li:not(.empty-message)');
+      const total = allTasks.length;
+
+      // 完了済みタスク数を取得
+      const completed = taskList.querySelectorAll('li.completed').length;
+
+      // 未完了タスク数を計算
+      const remaining = total - completed;
+
+      // 統計情報を更新
+      totalCount.textContent = total;
+      completedCount.textContent = completed;
+      remainingCount.textContent = remaining;
+
+      console.log(`📊 タスク数更新: 全${total}件、完了${completed}件、未完了${remaining}件`);
+    }
+
+    // タスクを追加する関数
+    function addTask() {
+      // 入力値を取得（前後の空白を削除）
+      const taskText = taskInput.value.trim();
+
+      // 【重要！】空欄チェック
+      if (taskText === '') {
+        alert('タスクを入力してください');
+        return;
+      }
+
+      // 最初のタスクなら、空メッセージを削除
+      const emptyMessage = taskList.querySelector('.empty-message');
+      if (emptyMessage) {
+        emptyMessage.remove();
+      }
+
+      // 新しいタスクのli要素を作成
+      const li = document.createElement('li');
+
+      // タスクのテキスト部分
+      const span = document.createElement('span');
+      span.className = 'task-text';
+      span.textContent = taskText;
+
+      // ボタングループを作成
+      const buttonGroup = document.createElement('div');
+      buttonGroup.className = 'button-group';
+
+      // 完了ボタンを作成
+      const toggleButton = document.createElement('button');
+      toggleButton.className = 'toggle';
+      toggleButton.textContent = '完了';
+
+      // 削除ボタンを作成
+      const deleteButton = document.createElement('button');
+      deleteButton.className = 'delete';
+      deleteButton.textContent = '削除';
+
+      // ボタンをボタングループに追加
+      buttonGroup.appendChild(toggleButton);
+      buttonGroup.appendChild(deleteButton);
+
+      // li要素にテキストとボタングループを追加
+      li.appendChild(span);
+      li.appendChild(buttonGroup);
+
+      // リストに追加
+      taskList.appendChild(li);
+
+      // 入力欄をクリア
+      taskInput.value = '';
+      taskInput.focus();
+
+      // タスク数を更新
+      updateCount();
+
+      console.log('✅ タスクを追加しました:', taskText);
+    }
+
+    // 追加ボタンのクリックイベント
+    addButton.addEventListener('click', addTask);
+
+    // Enter キーでも追加できるようにする
+    taskInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        addTask();
+      }
+    });
+
+    // 【重要！】イベント委譲：親要素（ul）に1つだけイベントリスナーを設定
+    taskList.addEventListener('click', (event) => {
+      // クリックされた要素が削除ボタンかどうかチェック
+      if (event.target.classList.contains('delete')) {
+        // 削除ボタンの親の親要素（li）を取得
+        const li = event.target.closest('li');
+        const taskText = li.querySelector('.task-text').textContent;
+
+        // タスクを削除
+        li.remove();
+
+        console.log('🗑️ タスクを削除しました:', taskText);
+
+        // すべてのタスクが削除されたら、空メッセージを表示
+        if (taskList.children.length === 0) {
+          const emptyLi = document.createElement('li');
+          emptyLi.className = 'empty-message';
+          emptyLi.textContent = 'すべてのタスクが完了しました！新しいタスクを追加してね！';
+          taskList.appendChild(emptyLi);
+        }
+
+        // タスク数を更新
+        updateCount();
+      }
+
+      // クリックされた要素が完了ボタンかどうかチェック
+      else if (event.target.classList.contains('toggle')) {
+        // 完了ボタンの親の親要素（li）を取得
+        const li = event.target.closest('li');
+        const taskText = li.querySelector('.task-text').textContent;
+
+        // 【重要！】classList.toggle で completed クラスを切り替え
+        li.classList.toggle('completed');
+
+        // ボタンのテキストを変更
+        if (li.classList.contains('completed')) {
+          event.target.textContent = '未完了';
+          console.log('✔️ タスクを完了にしました:', taskText);
+        } else {
+          event.target.textContent = '完了';
+          console.log('↩️ タスクを未完了に戻しました:', taskText);
+        }
+
+        // タスク数を更新
+        updateCount();
+      }
+    });
+
+    // ページ読み込み時のメッセージ
+    console.log('✅ 高度なTODOリストが起動しました！');
+    console.log('💡 以下の機能が実装されています：');
+    console.log('  1. タスクの追加（ボタン・Enterキー）');
+    console.log('  2. タスクの削除');
+    console.log('  3. 完了/未完了の切り替え');
+    console.log('  4. イベント委譲（親要素に1つだけリスナー）');
+    console.log('  5. 空欄チェック');
+    console.log('  6. タスク数の表示');
+    console.log('');
+    console.log('📝 実際に使ってみて、すべての機能を試してね！');
+  </script>
+</body>
+</html>

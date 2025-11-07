@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題 3-4: Promise チェーンで順番に処理</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 700px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+        text-align: center;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .cooking-steps {
+        margin: 30px 0;
+      }
+
+      .step {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 15px;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s;
+      }
+
+      .step.active {
+        background: linear-gradient(135deg, #fff5e6 0%, #ffe9cc 100%);
+        border-color: #ffa500;
+        transform: scale(1.02);
+      }
+
+      .step.completed {
+        background: linear-gradient(135deg, #d4f7e8 0%, #c7f9e3 100%);
+        border-color: #38ef7d;
+      }
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e9ecef;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+
+      .step.active .step-number {
+        background: #ffa500;
+        color: white;
+        animation: pulse 1s infinite;
+      }
+
+      .step.completed .step-number {
+        background: #38ef7d;
+        color: white;
+      }
+
+      .step-content {
+        flex: 1;
+      }
+
+      .step-title {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .step-description {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .step-icon {
+        font-size: 30px;
+        margin-left: 15px;
+      }
+
+      .control-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin: 30px 0;
+      }
+
+      button {
+        padding: 15px 30px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      #startButton {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: white;
+      }
+
+      #startButton:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(250, 112, 154, 0.4);
+      }
+
+      #resetButton {
+        background: #6c757d;
+        color: white;
+      }
+
+      #resetButton:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .log-box {
+        background: #2d3748;
+        color: #f7fafc;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+      }
+
+      .log-entry {
+        margin-bottom: 8px;
+        line-height: 1.6;
+      }
+
+      .log-entry.success {
+        color: #38ef7d;
+      }
+
+      .log-entry.info {
+        color: #ffa500;
+      }
+
+      .log-entry.complete {
+        color: #ffd93d;
+      }
+
+      .info-box {
+        background: #f8f9fa;
+        border-left: 4px solid #fa709a;
+        padding: 15px;
+        margin-top: 30px;
+        text-align: left;
+        border-radius: 5px;
+      }
+
+      .info-box h3 {
+        color: #fa709a;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .info-box ul {
+        margin-left: 20px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🍕 Promise チェーンで料理</h1>
+      <p class="subtitle">問題 3-4: 応用編</p>
+
+      <div class="cooking-steps">
+        <div class="step" id="step1">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <div class="step-title">材料を買う</div>
+            <div class="step-description">トマト、チーズ、生地を購入</div>
+          </div>
+          <div class="step-icon">🛒</div>
+        </div>
+
+        <div class="step" id="step2">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <div class="step-title">材料を切る</div>
+            <div class="step-description">購入した材料を準備</div>
+          </div>
+          <div class="step-icon">🔪</div>
+        </div>
+
+        <div class="step" id="step3">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="step-title">料理する</div>
+            <div class="step-description">オーブンで焼く</div>
+          </div>
+          <div class="step-icon">🔥</div>
+        </div>
+
+        <div class="step" id="step4">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <div class="step-title">盛り付ける</div>
+            <div class="step-description">お皿に美しく盛り付け</div>
+          </div>
+          <div class="step-icon">🍽️</div>
+        </div>
+      </div>
+
+      <div class="control-buttons">
+        <button id="startButton">料理を始める</button>
+        <button id="resetButton">リセット</button>
+      </div>
+
+      <div class="log-box" id="logBox"></div>
+
+      <div class="info-box">
+        <h3>💡 学習ポイント</h3>
+        <ul>
+          <li>Promise チェーンで複数の非同期処理を順番に実行</li>
+          <li>各 .then() で次の Promise を返すことでチェーンが続く</li>
+          <li>エラーは最後の .catch() 1つで全部キャッチできる</li>
+          <li>コールバック地獄より読みやすく、メンテナンスしやすい</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // 要素の取得
+      // ==========================================
+      const startButton = document.getElementById("startButton");
+      const resetButton = document.getElementById("resetButton");
+      const logBox = document.getElementById("logBox");
+
+      const steps = {
+        step1: document.getElementById("step1"),
+        step2: document.getElementById("step2"),
+        step3: document.getElementById("step3"),
+        step4: document.getElementById("step4"),
+      };
+
+      // ==========================================
+      // ログ出力関数
+      // ==========================================
+      function log(message, type = "info") {
+        const logEntry = document.createElement("div");
+        logEntry.className = `log-entry ${type}`;
+        const timestamp = new Date().toLocaleTimeString("ja-JP");
+        logEntry.textContent = `[${timestamp}] ${message}`;
+        logBox.appendChild(logEntry);
+
+        // 自動スクロール
+        logBox.scrollTop = logBox.scrollHeight;
+
+        console.log(message);
+      }
+
+      // ==========================================
+      // ステップの状態を更新する関数
+      // ==========================================
+      function setStepActive(stepId) {
+        // すべてのステップから active を削除
+        Object.values(steps).forEach((step) => {
+          step.classList.remove("active");
+        });
+
+        // 指定されたステップを active にする
+        steps[stepId].classList.add("active");
+      }
+
+      function setStepCompleted(stepId) {
+        steps[stepId].classList.remove("active");
+        steps[stepId].classList.add("completed");
+      }
+
+      // ==========================================
+      // Promise を返す料理関数
+      // ==========================================
+
+      // ステップ1: 材料を買う
+      function buyIngredients() {
+        return new Promise(function (resolve) {
+          log("🛒 材料を買いに行く...", "info");
+          setStepActive("step1");
+
+          setTimeout(function () {
+            const ingredients = "トマト、チーズ、生地";
+            log(`✅ 材料を買ってきた！（${ingredients}）`, "success");
+            setStepCompleted("step1");
+            resolve(ingredients);
+          }, 1000);
+        });
+      }
+
+      // ステップ2: 材料を切る
+      function cutIngredients(ingredients) {
+        return new Promise(function (resolve) {
+          log(`🔪 材料を切る（${ingredients}）...`, "info");
+          setStepActive("step2");
+
+          setTimeout(function () {
+            const prepared = "切った" + ingredients;
+            log(`✅ 材料を切り終えた！`, "success");
+            setStepCompleted("step2");
+            resolve(prepared);
+          }, 1000);
+        });
+      }
+
+      // ステップ3: 料理する
+      function cook(preparedIngredients) {
+        return new Promise(function (resolve) {
+          log(`🔥 料理する（${preparedIngredients}）...`, "info");
+          setStepActive("step3");
+
+          setTimeout(function () {
+            const food = "美味しいピザ🍕";
+            log(`✅ 料理ができた！`, "success");
+            setStepCompleted("step3");
+            resolve(food);
+          }, 2000);
+        });
+      }
+
+      // ステップ4: 盛り付ける
+      function serve(food) {
+        return new Promise(function (resolve) {
+          log(`🍽️ 盛り付ける（${food}）...`, "info");
+          setStepActive("step4");
+
+          setTimeout(function () {
+            const message = `${food}を提供します`;
+            log(`✅ 完成！🍽️`, "success");
+            setStepCompleted("step4");
+            resolve(message);
+          }, 1000);
+        });
+      }
+
+      // ==========================================
+      // Promise チェーンで料理を作る
+      // ==========================================
+      function makePizza() {
+        log("========================================", "info");
+        log("🎯 料理スタート！", "complete");
+        log("========================================", "info");
+
+        // ボタンを無効化
+        startButton.disabled = true;
+
+        // Promise チェーン
+        buyIngredients()
+          .then(function (ingredients) {
+            // ステップ1が完了したら、ステップ2へ
+            // cutIngredients は Promise を返す
+            return cutIngredients(ingredients);
+          })
+          .then(function (preparedIngredients) {
+            // ステップ2が完了したら、ステップ3へ
+            return cook(preparedIngredients);
+          })
+          .then(function (food) {
+            // ステップ3が完了したら、ステップ4へ
+            return serve(food);
+          })
+          .then(function (message) {
+            // すべて完了！
+            log("========================================", "complete");
+            log(`🎉 ${message}`, "complete");
+            log("いただきます！", "complete");
+            log("========================================", "complete");
+
+            // ボタンを有効化
+            startButton.disabled = false;
+          })
+          .catch(function (error) {
+            // エラーが発生した時（今回は発生しないけど、本来は必要）
+            log("========================================", "complete");
+            log(`❌ エラーが発生: ${error}`, "complete");
+            log("========================================", "complete");
+
+            // ボタンを有効化
+            startButton.disabled = false;
+          });
+      }
+
+      // ==========================================
+      // リセット関数
+      // ==========================================
+      function reset() {
+        // すべてのステップをリセット
+        Object.values(steps).forEach((step) => {
+          step.classList.remove("active", "completed");
+        });
+
+        // ログをクリア
+        logBox.innerHTML = "";
+
+        log("リセットしました", "info");
+
+        console.log("========================================");
+        console.log("リセット完了");
+        console.log("========================================");
+      }
+
+      // ==========================================
+      // イベントリスナー
+      // ==========================================
+      startButton.addEventListener("click", makePizza);
+      resetButton.addEventListener("click", reset);
+
+      // ==========================================
+      // ページ読み込み時のログ
+      // ==========================================
+      console.log("========================================");
+      console.log("問題 3-4: Promise チェーンで順番に処理");
+      console.log("========================================");
+      console.log("【学習ポイント】");
+      console.log("1. Promise チェーンで複数の非同期処理を順番に実行");
+      console.log("2. 各 .then() で次の Promise を返すことでチェーンが続く");
+      console.log("3. エラーは最後の .catch() 1つで全部キャッチできる");
+      console.log("========================================");
+      console.log("【Promise チェーンの構造】");
+      console.log("buyIngredients()");
+      console.log("  .then(ingredients => cutIngredients(ingredients))");
+      console.log("  .then(prepared => cook(prepared))");
+      console.log("  .then(food => serve(food))");
+      console.log("  .then(message => console.log(message))");
+      console.log("  .catch(error => console.error(error))");
+      console.log("========================================");
+      console.log("「料理を始める」ボタンをクリックしてみよう！");
+      console.log("========================================");
+
+      log("準備完了！「料理を始める」ボタンをクリックしてね", "info");
+    </script>
+  </body>
+</html>

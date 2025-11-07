@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題4: リアルタイムバリデーション</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 550px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .info-box {
+        background: #e7f5ff;
+        border-left: 4px solid #4facfe;
+        padding: 12px;
+        margin-bottom: 24px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #1971c2;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #4facfe;
+      }
+
+      /* バリデーション状態 */
+      input.valid {
+        border-color: #51cf66;
+        background-color: #f0fdf4;
+      }
+
+      input.invalid {
+        border-color: #ff6b6b;
+        background-color: #fff5f5;
+      }
+
+      /* エラーメッセージ */
+      .error-message {
+        display: none;
+        margin-top: 8px;
+        padding: 10px;
+        background-color: #ffe0e0;
+        border-left: 4px solid #ff6b6b;
+        border-radius: 4px;
+        color: #c92a2a;
+        font-size: 13px;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      /* 成功メッセージ */
+      .success-message {
+        display: none;
+        margin-top: 8px;
+        padding: 10px;
+        background-color: #d4edda;
+        border-left: 4px solid #51cf66;
+        border-radius: 4px;
+        color: #155724;
+        font-size: 13px;
+        font-weight: 600;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .success-message.show {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
+      }
+
+      button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+      }
+
+      button:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      button:disabled {
+        background: #adb5bd;
+        cursor: not-allowed;
+      }
+
+      /* 最終結果 */
+      .result {
+        display: none;
+        margin-top: 24px;
+        padding: 20px;
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        border: 2px solid #28a745;
+        border-radius: 8px;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .result.show {
+        display: block;
+      }
+
+      .result h3 {
+        color: #155724;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>⚡ リアルタイムバリデーション</h1>
+      <p class="description">
+        問題4の解答例：入力中または入力完了後に即座にバリデーションを行い、リアルタイムでフィードバックします。
+      </p>
+
+      <div class="info-box">
+        💡 <strong>ポイント</strong>: フィールドからフォーカスが外れた時（blur）にバリデーションを実行し、
+        入力中（input）もリアルタイムでチェックします。
+      </div>
+
+      <form id="registrationForm">
+        <!-- ユーザー名 -->
+        <div class="form-group">
+          <label for="username">ユーザー名（3文字以上）</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="例: yamada_taro"
+          />
+          <div class="error-message" id="usernameError"></div>
+          <div class="success-message" id="usernameSuccess">
+            <span>✓</span>
+            <span>OK!</span>
+          </div>
+        </div>
+
+        <!-- メールアドレス -->
+        <div class="form-group">
+          <label for="email">メールアドレス</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="例: taro@example.com"
+          />
+          <div class="error-message" id="emailError"></div>
+          <div class="success-message" id="emailSuccess">
+            <span>✓</span>
+            <span>OK!</span>
+          </div>
+        </div>
+
+        <!-- パスワード -->
+        <div class="form-group">
+          <label for="password">パスワード（8文字以上）</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="8文字以上のパスワード"
+          />
+          <div class="error-message" id="passwordError"></div>
+          <div class="success-message" id="passwordSuccess">
+            <span>✓</span>
+            <span>OK!</span>
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn">登録する</button>
+      </form>
+
+      <!-- 登録成功の結果 -->
+      <div class="result" id="result">
+        <h3>
+          <span>🎉</span>
+          <span>登録成功！</span>
+        </h3>
+        <p>全てのフィールドが正しく検証されました。</p>
+      </div>
+    </div>
+
+    <script>
+      // ===== 要素を取得 =====
+      const form = document.getElementById("registrationForm");
+      const usernameInput = document.getElementById("username");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const submitBtn = document.getElementById("submitBtn");
+      const result = document.getElementById("result");
+
+      // ===== エラーメッセージを表示する関数 =====
+      function showError(inputId, errorId, message) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(errorId);
+        const successDiv = document.getElementById(inputId + "Success");
+
+        input.classList.add("invalid");
+        input.classList.remove("valid");
+        errorDiv.textContent = message;
+        errorDiv.classList.add("show");
+        successDiv.classList.remove("show");
+      }
+
+      // ===== 成功メッセージを表示する関数 =====
+      function showSuccess(inputId, successId) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(inputId + "Error");
+        const successDiv = document.getElementById(successId);
+
+        input.classList.add("valid");
+        input.classList.remove("invalid");
+        errorDiv.classList.remove("show");
+        successDiv.classList.add("show");
+      }
+
+      // ===== バリデーションをクリアする関数 =====
+      function clearValidation(inputId) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(inputId + "Error");
+        const successDiv = document.getElementById(inputId + "Success");
+
+        input.classList.remove("valid", "invalid");
+        errorDiv.classList.remove("show");
+        successDiv.classList.remove("show");
+      }
+
+      // ===== ユーザー名のバリデーション =====
+      function validateUsername() {
+        const value = usernameInput.value.trim();
+
+        if (value.length === 0) {
+          clearValidation("username");
+          return false;
+        }
+
+        if (value.length < 3) {
+          showError(
+            "username",
+            "usernameError",
+            `3文字以上で入力してください（現在: ${value.length}文字）`
+          );
+          return false;
+        }
+
+        showSuccess("username", "usernameSuccess");
+        console.log("✓ ユーザー名: OK");
+        return true;
+      }
+
+      // ===== メールアドレスのバリデーション =====
+      function validateEmail() {
+        const value = emailInput.value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (value.length === 0) {
+          clearValidation("email");
+          return false;
+        }
+
+        if (!emailPattern.test(value)) {
+          showError(
+            "email",
+            "emailError",
+            "有効なメールアドレスを入力してください（例: user@example.com）"
+          );
+          return false;
+        }
+
+        showSuccess("email", "emailSuccess");
+        console.log("✓ メールアドレス: OK");
+        return true;
+      }
+
+      // ===== パスワードのバリデーション =====
+      function validatePassword() {
+        const value = passwordInput.value;
+
+        if (value.length === 0) {
+          clearValidation("password");
+          return false;
+        }
+
+        if (value.length < 8) {
+          showError(
+            "password",
+            "passwordError",
+            `8文字以上で入力してください（現在: ${value.length}文字）`
+          );
+          return false;
+        }
+
+        showSuccess("password", "passwordSuccess");
+        console.log("✓ パスワード: OK");
+        return true;
+      }
+
+      // ===== 送信ボタンの有効/無効を制御 =====
+      function updateSubmitButton() {
+        const allValid =
+          usernameInput.classList.contains("valid") &&
+          emailInput.classList.contains("valid") &&
+          passwordInput.classList.contains("valid");
+
+        submitBtn.disabled = !allValid;
+      }
+
+      // ===== ユーザー名のイベントリスナー =====
+      // blur: フォーカスが外れた時にチェック
+      usernameInput.addEventListener("blur", function () {
+        validateUsername();
+        updateSubmitButton();
+      });
+
+      // input: 入力中にもチェック（ただし、何か入力されている場合のみ）
+      usernameInput.addEventListener("input", function () {
+        if (usernameInput.value.length > 0) {
+          validateUsername();
+          updateSubmitButton();
+        }
+      });
+
+      // ===== メールアドレスのイベントリスナー =====
+      emailInput.addEventListener("blur", function () {
+        validateEmail();
+        updateSubmitButton();
+      });
+
+      emailInput.addEventListener("input", function () {
+        if (emailInput.value.length > 0) {
+          validateEmail();
+          updateSubmitButton();
+        }
+      });
+
+      // ===== パスワードのイベントリスナー =====
+      passwordInput.addEventListener("blur", function () {
+        validatePassword();
+        updateSubmitButton();
+      });
+
+      passwordInput.addEventListener("input", function () {
+        if (passwordInput.value.length > 0) {
+          validatePassword();
+          updateSubmitButton();
+        }
+      });
+
+      // ===== フォーム送信イベント =====
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        console.log("=== フォームが送信されました ===");
+
+        // 最終チェック
+        const usernameValid = validateUsername();
+        const emailValid = validateEmail();
+        const passwordValid = validatePassword();
+
+        if (usernameValid && emailValid && passwordValid) {
+          console.log("\n🎉 全てのバリデーションに成功！");
+
+          // FormDataで全データを取得
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData);
+
+          console.log("登録データ:", data);
+
+          // 結果を表示
+          result.classList.add("show");
+          result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          console.log("\n❌ バリデーションエラーがあります");
+        }
+      });
+
+      // ===== ページ読み込み時のメッセージ =====
+      console.log("⚡ リアルタイムバリデーションフォームが読み込まれました");
+      console.log("\n【実装のポイント】");
+      console.log("1. blur イベント: フォーカスが外れた時にバリデーション");
+      console.log("2. input イベント: 入力中もリアルタイムでチェック");
+      console.log("3. 視覚的フィードバック: 緑（成功）/ 赤（エラー）");
+      console.log("4. 送信ボタンの制御: 全て valid でなければ無効化");
+      console.log("\n【イベントの使い分け】");
+      console.log("・blur: 最初のチェックに使用（入力完了後）");
+      console.log("・input: リアルタイムチェックに使用（修正中の状態確認）");
+      console.log("\n実際に入力してみてください:");
+      console.log("- 各フィールドに入力してフォーカスを外すと、即座にチェック");
+      console.log("- エラーがある状態で入力を続けると、リアルタイムで状態が更新される");
+      console.log("- 全てのフィールドが valid になると、送信ボタンが有効化される");
+    </script>
+  </body>
+</html>

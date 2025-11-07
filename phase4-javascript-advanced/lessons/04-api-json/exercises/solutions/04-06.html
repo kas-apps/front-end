@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題 4-6: 検索機能付きユーザー一覧</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      header {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: #667eea;
+        margin-bottom: 10px;
+        font-size: 32px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .search-bar {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .search-input-wrapper {
+        position: relative;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        color: #999;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 15px 15px 15px 50px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .search-info {
+        margin-top: 15px;
+        color: #666;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .stats {
+        background: white;
+        border-radius: 10px;
+        padding: 15px 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .stats-item {
+        color: #667eea;
+        font-weight: bold;
+      }
+
+      .loading {
+        background: white;
+        border-radius: 15px;
+        padding: 60px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading p {
+        color: #667eea;
+        font-size: 18px;
+      }
+
+      #userList {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .user-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-top: 5px solid #667eea;
+        transition: transform 0.3s, box-shadow 0.3s;
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .user-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+      }
+
+      .user-card h3 {
+        color: #667eea;
+        margin-bottom: 15px;
+        font-size: 22px;
+        border-bottom: 2px solid #f5f5f5;
+        padding-bottom: 10px;
+      }
+
+      .user-card p {
+        margin: 10px 0;
+        color: #555;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .user-card .icon {
+        color: #667eea;
+        font-size: 16px;
+      }
+
+      .no-results {
+        background: white;
+        border-radius: 15px;
+        padding: 60px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .no-results h3 {
+        color: #999;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .no-results p {
+        color: #666;
+      }
+
+      .error {
+        background: #ff5252;
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .error h3 {
+        margin-bottom: 10px;
+        font-size: 24px;
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 26px;
+        }
+
+        #userList {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>👥 ユーザー検索アプリ</h1>
+        <p class="subtitle">リアルタイム検索でユーザーをフィルタリング</p>
+      </header>
+
+      <div class="search-bar">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="名前またはユーザー名で検索..."
+          />
+        </div>
+        <div class="search-info" id="searchInfo">
+          入力するとリアルタイムで検索します
+        </div>
+      </div>
+
+      <div class="stats" id="stats" style="display: none">
+        <div class="stats-item" id="totalCount">全: 0件</div>
+        <div class="stats-item" id="displayCount">表示中: 0件</div>
+      </div>
+
+      <div id="userList"></div>
+    </div>
+
+    <script>
+      // HTML要素を取得
+      const searchInput = document.getElementById("searchInput");
+      const searchInfo = document.getElementById("searchInfo");
+      const stats = document.getElementById("stats");
+      const totalCount = document.getElementById("totalCount");
+      const displayCount = document.getElementById("displayCount");
+      const userList = document.getElementById("userList");
+
+      // 全ユーザーを保存する変数
+      let allUsers = [];
+
+      // ページ読み込み時にユーザー一覧を取得
+      document.addEventListener("DOMContentLoaded", async () => {
+        console.log("ページが読み込まれました！");
+        console.log("全ユーザーを取得します...");
+
+        try {
+          // ローディング表示
+          userList.innerHTML = `
+            <div class="loading" style="grid-column: 1 / -1;">
+              <div class="spinner"></div>
+              <p>ユーザーデータを読み込み中...</p>
+            </div>
+          `;
+
+          // JSONPlaceholder API から全ユーザーを取得
+          const response = await fetch(
+            "https://jsonplaceholder.typicode.com/users"
+          );
+
+          console.log("レスポンスステータス:", response.status);
+
+          if (!response.ok) {
+            throw new Error(`HTTPエラー: ${response.status}`);
+          }
+
+          // JSONデータに変換
+          allUsers = await response.json();
+
+          console.log("取得したユーザー数:", allUsers.length);
+          console.log("ユーザーデータ:", allUsers);
+
+          // 初期表示（全ユーザー）
+          displayUsers(allUsers);
+
+          // 統計情報を表示
+          stats.style.display = "flex";
+          totalCount.textContent = `全: ${allUsers.length}件`;
+          displayCount.textContent = `表示中: ${allUsers.length}件`;
+
+          // 検索情報を更新
+          searchInfo.textContent = `${allUsers.length}人のユーザーが読み込まれました`;
+
+          console.log("ユーザー一覧の表示が完了しました！✅");
+        } catch (error) {
+          console.error("エラーが発生しました:", error);
+
+          userList.innerHTML = `
+            <div class="error" style="grid-column: 1 / -1;">
+              <h3>❌ データの取得に失敗しました</h3>
+              <p>${error.message}</p>
+              <p style="font-size: 14px; margin-top: 10px;">
+                ネットワーク接続を確認してください
+              </p>
+            </div>
+          `;
+        }
+      });
+
+      // 検索機能（リアルタイム検索）
+      searchInput.addEventListener("input", (e) => {
+        // 検索文字列を取得（小文字に変換）
+        const searchTerm = e.target.value.toLowerCase().trim();
+
+        console.log(`検索文字列: "${searchTerm}"`);
+
+        // 検索文字列が空なら全ユーザーを表示
+        if (searchTerm === "") {
+          displayUsers(allUsers);
+          displayCount.textContent = `表示中: ${allUsers.length}件`;
+          searchInfo.textContent = "全ユーザーを表示中";
+          return;
+        }
+
+        // フィルタリング
+        const filteredUsers = allUsers.filter((user) => {
+          // 名前を小文字に変換
+          const name = user.name.toLowerCase();
+          // ユーザー名を小文字に変換
+          const username = user.username.toLowerCase();
+
+          // 名前またはユーザー名に検索文字列が含まれるか
+          return name.includes(searchTerm) || username.includes(searchTerm);
+        });
+
+        console.log(`マッチしたユーザー数: ${filteredUsers.length}`);
+
+        // フィルタリング結果を表示
+        if (filteredUsers.length === 0) {
+          // 該当ユーザーがいない場合
+          userList.innerHTML = `
+            <div class="no-results" style="grid-column: 1 / -1;">
+              <h3>🔍 該当するユーザーが見つかりません</h3>
+              <p>"${e.target.value}" に一致するユーザーはいません</p>
+              <p style="margin-top: 10px; font-size: 14px;">別のキーワードで検索してみてください</p>
+            </div>
+          `;
+          displayCount.textContent = "表示中: 0件";
+          searchInfo.textContent = "該当なし";
+        } else {
+          // 該当ユーザーを表示
+          displayUsers(filteredUsers);
+          displayCount.textContent = `表示中: ${filteredUsers.length}件`;
+          searchInfo.textContent = `"${e.target.value}" で ${filteredUsers.length}件見つかりました`;
+        }
+      });
+
+      // ユーザー一覧を表示する関数
+      function displayUsers(users) {
+        console.log(`${users.length}人のユーザーを表示します`);
+
+        // ユーザーカードのHTMLを生成
+        const html = users
+          .map(
+            (user) => `
+              <div class="user-card">
+                <h3>${user.name}</h3>
+                <p>
+                  <span class="icon">👤</span>
+                  <strong>ユーザー名:</strong> ${user.username}
+                </p>
+                <p>
+                  <span class="icon">📧</span>
+                  <strong>メール:</strong> ${user.email}
+                </p>
+                <p>
+                  <span class="icon">📞</span>
+                  <strong>電話:</strong> ${user.phone}
+                </p>
+                <p>
+                  <span class="icon">🏢</span>
+                  <strong>会社:</strong> ${user.company.name}
+                </p>
+                <p>
+                  <span class="icon">🌐</span>
+                  <strong>サイト:</strong> ${user.website}
+                </p>
+                <p>
+                  <span class="icon">📍</span>
+                  <strong>都市:</strong> ${user.address.city}
+                </p>
+              </div>
+            `
+          )
+          .join("");
+
+        // HTMLに挿入
+        userList.innerHTML = html;
+
+        console.log("表示完了！");
+      }
+
+      // ページ読み込み時にコンソールにメッセージを表示
+      console.log("問題 4-6: 検索機能付きユーザー一覧");
+      console.log("検索ボックスに文字を入力すると、リアルタイムで検索されるよ！");
+      console.log("名前とユーザー名の両方で検索できます");
+      console.log(
+        "F12キーを押して、開発者ツールのコンソールを開くと、検索の様子が見られるよ！"
+      );
+    </script>
+  </body>
+</html>

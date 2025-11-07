@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題 3-2: setInterval でリアルタイムカウンター</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .counter-display {
+        font-size: 96px;
+        font-weight: bold;
+        color: #11998e;
+        margin: 30px 0;
+        font-family: "Courier New", monospace;
+        min-height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #e0f7f4 0%, #d4f7e8 100%);
+        border-radius: 15px;
+        padding: 20px;
+      }
+
+      .status {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 20px;
+        min-height: 30px;
+      }
+
+      .button-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      button {
+        padding: 15px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      #startButton {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+      }
+
+      #startButton:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+      }
+
+      #stopButton {
+        background: #ff6b6b;
+        color: white;
+      }
+
+      #stopButton:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+      }
+
+      #resetButton {
+        background: #4ecdc4;
+        color: white;
+      }
+
+      #resetButton:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .info-box {
+        background: #f8f9fa;
+        border-left: 4px solid #11998e;
+        padding: 15px;
+        margin-top: 30px;
+        text-align: left;
+        border-radius: 5px;
+      }
+
+      .info-box h3 {
+        color: #11998e;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .info-box ul {
+        margin-left: 20px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stat-card {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #11998e;
+      }
+
+      @keyframes counting {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .counting {
+        animation: counting 0.5s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>⏱️ リアルタイムカウンター</h1>
+      <p class="subtitle">問題 3-2: 基礎編</p>
+
+      <div class="counter-display" id="counterDisplay">0</div>
+
+      <div class="status" id="status">「開始」ボタンでカウント開始</div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-label">開始時刻</div>
+          <div class="stat-value" id="startTime">--:--:--</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">経過時間</div>
+          <div class="stat-value" id="elapsedTime">0秒</div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button id="startButton">開始</button>
+        <button id="stopButton" disabled>停止</button>
+        <button id="resetButton">リセット</button>
+      </div>
+
+      <div class="info-box">
+        <h3>💡 学習ポイント</h3>
+        <ul>
+          <li>setInterval() で繰り返し処理を実行</li>
+          <li>clearInterval() で繰り返しを停止</li>
+          <li>インターバルIDを変数に保存して管理</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // 要素の取得
+      // ==========================================
+      const startButton = document.getElementById("startButton");
+      const stopButton = document.getElementById("stopButton");
+      const resetButton = document.getElementById("resetButton");
+      const counterDisplay = document.getElementById("counterDisplay");
+      const status = document.getElementById("status");
+      const startTimeElement = document.getElementById("startTime");
+      const elapsedTimeElement = document.getElementById("elapsedTime");
+
+      // カウンター変数
+      let count = 0;
+
+      // インターバルIDを保存する変数（停止するために必要）
+      let intervalId = null;
+
+      // 開始時刻を保存
+      let startTimestamp = null;
+
+      // ==========================================
+      // 開始ボタンのクリックイベント
+      // ==========================================
+      startButton.addEventListener("click", function () {
+        console.log("========================================");
+        console.log("カウンター開始！");
+
+        // 既存のインターバルがあれば停止（二重起動防止）
+        if (intervalId !== null) {
+          clearInterval(intervalId);
+          console.log("既存のタイマーを停止しました");
+        }
+
+        // 開始時刻を記録
+        startTimestamp = new Date();
+        const timeString = startTimestamp.toLocaleTimeString("ja-JP");
+        startTimeElement.textContent = timeString;
+        console.log("開始時刻:", timeString);
+
+        // ボタンの状態を変更
+        startButton.disabled = true;
+        stopButton.disabled = false;
+        status.textContent = "カウント中...";
+
+        // setInterval で1秒ごとにカウントアップ
+        intervalId = setInterval(function () {
+          // カウントアップ
+          count++;
+          counterDisplay.textContent = count;
+          elapsedTimeElement.textContent = `${count}秒`;
+
+          // アニメーション効果
+          counterDisplay.classList.remove("counting");
+          void counterDisplay.offsetWidth; // リフローを強制
+          counterDisplay.classList.add("counting");
+
+          // コンソールにログ出力
+          console.log(`カウント: ${count}`);
+        }, 1000); // 1000ミリ秒 = 1秒
+
+        console.log("インターバルID:", intervalId);
+        console.log("1秒ごとにカウントアップします");
+        console.log("========================================");
+      });
+
+      // ==========================================
+      // 停止ボタンのクリックイベント
+      // ==========================================
+      stopButton.addEventListener("click", function () {
+        console.log("========================================");
+        console.log("カウンター停止");
+        console.log("停止したインターバルID:", intervalId);
+        console.log("最終カウント:", count);
+        console.log("========================================");
+
+        // clearInterval でインターバルを停止
+        // インターバルIDを使って、どのインターバルを停止するか指定する
+        clearInterval(intervalId);
+
+        // ボタンの状態を変更
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        status.textContent = "停止中（開始ボタンで再開）";
+      });
+
+      // ==========================================
+      // リセットボタンのクリックイベント
+      // ==========================================
+      resetButton.addEventListener("click", function () {
+        console.log("========================================");
+        console.log("カウンターリセット");
+        console.log("リセット前のカウント:", count);
+
+        // インターバルを停止
+        clearInterval(intervalId);
+        intervalId = null;
+
+        // カウントをリセット
+        count = 0;
+        counterDisplay.textContent = count;
+        elapsedTimeElement.textContent = "0秒";
+        startTimeElement.textContent = "--:--:--";
+
+        // ボタンの状態を変更
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        status.textContent = "「開始」ボタンでカウント開始";
+
+        console.log("カウントを0にリセットしました");
+        console.log("========================================");
+      });
+
+      // ==========================================
+      // ページ読み込み時のログ
+      // ==========================================
+      console.log("========================================");
+      console.log("問題 3-2: setInterval でリアルタイムカウンター");
+      console.log("========================================");
+      console.log("【学習ポイント】");
+      console.log("1. setInterval() で繰り返し処理を実行");
+      console.log("2. clearInterval() で繰り返しを停止");
+      console.log("3. インターバルIDを変数に保存して管理");
+      console.log("========================================");
+      console.log("【setInterval と setTimeout の違い】");
+      console.log("setTimeout: 1回だけ実行");
+      console.log("setInterval: 繰り返し実行");
+      console.log("========================================");
+      console.log("「開始」ボタンをクリックしてカウントを開始！");
+      console.log("「停止」ボタンでストップ、「リセット」で0に戻るよ！");
+      console.log("========================================");
+    </script>
+  </body>
+</html>

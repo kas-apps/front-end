@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問題 1-1: イベントオブジェクトの活用</title>
+  <style>
+    /* ページ全体のスタイル */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    /* コンテナのスタイル */
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 見出しのスタイル */
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* ボタンのスタイル */
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: block;
+      margin: 20px auto;
+      width: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    /* 説明文のスタイル */
+    .description {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #667eea;
+    }
+
+    /* コンソール確認メッセージ */
+    .console-notice {
+      background: #fff3cd;
+      color: #856404;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 イベントオブジェクトの活用</h1>
+    <p class="subtitle">ボタンをクリックして、コンソールを確認してみよう！</p>
+
+    <div class="description">
+      <p><strong>この演習で学ぶこと：</strong></p>
+      <ul>
+        <li>イベントオブジェクトには、イベントに関する情報がたくさん入っている</li>
+        <li>event.type でイベントの種類を取得</li>
+        <li>event.target でクリックされた要素を取得</li>
+        <li>event.clientX, event.clientY でマウスの座標を取得</li>
+      </ul>
+    </div>
+
+    <button id="myButton">クリックしてね！</button>
+
+    <div class="console-notice">
+      📢 デベロッパーツールのコンソールを開いて確認してね！
+    </div>
+  </div>
+
+  <script>
+    // ボタン要素を取得
+    const button = document.getElementById('myButton');
+
+    // クリックイベントのリスナーを追加
+    button.addEventListener('click', (event) => {
+      // イベントオブジェクトから情報を取得してコンソールに表示するよ！
+
+      console.log('========== イベント情報 ==========');
+
+      // 1. イベントのタイプ（種類）を表示
+      console.log('📌 イベントタイプ:', event.type);
+      // 結果: 'click' と表示されるよ
+
+      // 2. クリックされた要素（ターゲット）を表示
+      console.log('🎯 クリックされた要素:', event.target);
+      // 結果: <button id="myButton">要素が表示されるよ
+
+      // 3. マウスのX座標を表示（画面左端からのピクセル数）
+      console.log('📍 マウスのX座標:', event.clientX);
+      // 結果: クリックした位置のX座標が表示されるよ
+
+      // 4. マウスのY座標を表示（画面上端からのピクセル数）
+      console.log('📍 マウスのY座標:', event.clientY);
+      // 結果: クリックした位置のY座標が表示されるよ
+
+      console.log('=================================');
+
+      // ボーナス：その他の便利な情報も表示してみるよ！
+      console.log('\n【その他の便利な情報】');
+      console.log('🖱️ クリックされたボタン:', event.button); // 0 = 左クリック
+      console.log('⏰ タイムスタンプ:', event.timeStamp); // イベントが発生した時刻
+      console.log('🔄 バブリング中？:', event.bubbles); // イベントがバブリングするか
+
+      // 分かりやすいメッセージを追加表示
+      console.log(`\n💡 ボタンを (${event.clientX}, ${event.clientY}) の位置でクリックしたよ！`);
+    });
+
+    // ページ読み込み時のメッセージ
+    console.log('✅ イベントリスナーが設定されました！ボタンをクリックしてみてね！');
+  </script>
+</body>
+</html>

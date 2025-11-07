@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問題 1-6: キーボードイベントの処理</title>
+  <style>
+    /* ページ全体のスタイル */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+      min-height: 100vh;
+    }
+
+    /* コンテナのスタイル */
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 見出しのスタイル */
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* 説明文のスタイル */
+    .description {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #fbc2eb;
+    }
+
+    /* 入力エリアのスタイル */
+    .input-container {
+      margin: 20px 0;
+    }
+
+    .input-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #fbc2eb;
+      box-shadow: 0 0 0 3px rgba(251, 194, 235, 0.2);
+    }
+
+    /* ショートカット一覧 */
+    .shortcuts {
+      background: #e7f3ff;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .shortcuts h3 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+
+    .shortcuts ul {
+      margin: 10px 0;
+    }
+
+    .shortcuts li {
+      margin: 8px 0;
+    }
+
+    .key {
+      background: #333;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    /* ログエリア */
+    .log-area {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .log-area h4 {
+      margin-top: 0;
+      color: #666;
+    }
+
+    .log-entry {
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 4px;
+      font-size: 14px;
+      animation: slideIn 0.3s;
+    }
+
+    .log-enter {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .log-escape {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .log-save {
+      background: #cce5ff;
+      color: #004085;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* 説明セクション */
+    .explanation {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-left: 4px solid #0066cc;
+    }
+
+    .explanation h3 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⌨️ キーボードイベントの処理</h1>
+    <p class="subtitle">ショートカットキーを実装しよう！</p>
+
+    <div class="description">
+      <p><strong>この演習で学ぶこと：</strong></p>
+      <ul>
+        <li>キーボードイベントで便利なショートカットを実装</li>
+        <li>event.key で押されたキーを判定</li>
+        <li>event.ctrlKey, event.metaKey で修飾キーを判定</li>
+        <li>preventDefault でブラウザのデフォルト動作をキャンセル</li>
+      </ul>
+    </div>
+
+    <!-- 入力エリア -->
+    <div class="input-container">
+      <label class="input-label">テキストを入力して、ショートカットキーを試してみよう：</label>
+      <input type="text" id="textInput" placeholder="ここに何か入力してね...">
+    </div>
+
+    <!-- ショートカット一覧 -->
+    <div class="shortcuts">
+      <h3>📋 使えるショートカット</h3>
+      <ul>
+        <li><span class="key">Enter</span> - 入力内容を送信（アラート表示）</li>
+        <li><span class="key">Escape</span> - 入力欄をクリア</li>
+        <li><span class="key">Ctrl + S</span> または <span class="key">⌘ + S</span> - 保存（アラート表示）</li>
+      </ul>
+    </div>
+
+    <!-- ログエリア -->
+    <div class="log-area" id="logArea">
+      <h4>📝 操作ログ</h4>
+      <p style="color: #999; font-style: italic;">ショートカットキーを使うと、ここにログが表示されます</p>
+    </div>
+
+    <div class="explanation">
+      <h3>💡 重要なポイント</h3>
+      <p>
+        <strong>Ctrl+S (⌘+S) の preventDefault</strong>：<br>
+        ブラウザのデフォルト動作（保存ダイアログの表示）をキャンセルしないと、
+        カスタムの動作とブラウザの動作が両方実行されてしまうよ！
+      </p>
+      <p>
+        <strong>Mac と Windows の違い</strong>：<br>
+        Windows/Linux は <code>Ctrl</code> キー（<code>event.ctrlKey</code>）<br>
+        macOS は <code>⌘</code> キー（<code>event.metaKey</code>）<br>
+        両方をチェックすることで、どの OS でも動作するようにするよ！
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // 要素を取得
+    const textInput = document.getElementById('textInput');
+    const logArea = document.getElementById('logArea');
+
+    // ログを追加する関数
+    function addLog(message, type) {
+      // 「ログがありません」メッセージを削除
+      const placeholder = logArea.querySelector('p[style]');
+      if (placeholder) {
+        placeholder.remove();
+      }
+
+      // 新しいログエントリを作成
+      const logEntry = document.createElement('div');
+      logEntry.className = `log-entry log-${type}`;
+      logEntry.textContent = `${new Date().toLocaleTimeString()} - ${message}`;
+
+      // ログを追加（最新のものを上に）
+      logArea.insertBefore(logEntry, logArea.firstChild.nextSibling);
+
+      // ログが多くなりすぎたら古いものを削除
+      const logs = logArea.querySelectorAll('.log-entry');
+      if (logs.length > 10) {
+        logs[logs.length - 1].remove();
+      }
+    }
+
+    // キーボードイベントのリスナー
+    textInput.addEventListener('keydown', (event) => {
+      // デバッグ用：押されたキーをコンソールに表示
+      console.log('押されたキー:', event.key);
+      console.log('Ctrl:', event.ctrlKey, 'Meta:', event.metaKey);
+
+      // 1. Enterキーで送信
+      if (event.key === 'Enter') {
+        const value = textInput.value.trim();
+
+        if (value === '') {
+          alert('テキストを入力してください');
+          addLog('⚠️ 空欄で送信しようとしました', 'escape');
+        } else {
+          alert(`送信されました: "${value}"`);
+          addLog(`📤 送信: "${value}"`, 'enter');
+        }
+      }
+
+      // 2. Escapeキーで入力欄をクリア
+      if (event.key === 'Escape') {
+        const oldValue = textInput.value;
+        textInput.value = '';
+        addLog(`🧹 入力欄をクリアしました（元の内容: "${oldValue}"）`, 'escape');
+        console.log('入力欄をクリアしました');
+      }
+
+      // 3. Ctrl+S (または Cmd+S) で保存
+      // Windows/Linuxでは event.ctrlKey、macOSでは event.metaKey を使用
+      if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+        // 【超重要！】ブラウザのデフォルト動作（保存ダイアログ）をキャンセル
+        event.preventDefault();
+
+        const value = textInput.value.trim();
+
+        if (value === '') {
+          alert('保存する内容がありません');
+          addLog('⚠️ 空欄で保存しようとしました', 'escape');
+        } else {
+          alert(`保存されました: "${value}"`);
+          addLog(`💾 保存: "${value}"`, 'save');
+        }
+
+        console.log('保存処理を実行しました');
+        console.log('preventDefault() でブラウザの保存ダイアログをキャンセルしました');
+      }
+    });
+
+    // ページ読み込み時のメッセージ
+    console.log('✅ キーボードイベントリスナーが設定されました！');
+    console.log('💡 入力欄にフォーカスして、ショートカットキーを試してみてね！');
+    console.log('');
+    console.log('【ショートカット一覧】');
+    console.log('- Enter: 送信');
+    console.log('- Escape: クリア');
+    console.log('- Ctrl+S (⌘+S): 保存');
+    console.log('');
+    console.log('【重要】Ctrl+S を押したときに、ブラウザの保存ダイアログが表示されないことを確認してね！');
+  </script>
+</body>
+</html>

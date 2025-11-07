@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題 3-3: Promise の基本</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .result-display {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 30px 0;
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        border: 2px dashed #dee2e6;
+      }
+
+      .result-display.success {
+        background: linear-gradient(135deg, #d4f7e8 0%, #c7f9e3 100%);
+        border-color: #38ef7d;
+        color: #11998e;
+      }
+
+      .result-display.error {
+        background: linear-gradient(135deg, #ffe0e0 0%, #ffd0d0 100%);
+        border-color: #ff6b6b;
+        color: #c92a2a;
+      }
+
+      .result-display.pending {
+        background: linear-gradient(135deg, #e0e7ff 0%, #d0dbff 100%);
+        border-color: #667eea;
+        color: #667eea;
+      }
+
+      .status-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      .status-item {
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        background: #f8f9fa;
+        color: #adb5bd;
+      }
+
+      .status-item.active {
+        animation: pulse 1s infinite;
+      }
+
+      .status-item.pending.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .status-item.fulfilled.active {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+      }
+
+      .status-item.rejected.active {
+        background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+        color: white;
+      }
+
+      button {
+        padding: 15px 40px;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        margin: 10px 0;
+      }
+
+      button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .info-box {
+        background: #f8f9fa;
+        border-left: 4px solid #f093fb;
+        padding: 15px;
+        margin-top: 30px;
+        text-align: left;
+        border-radius: 5px;
+      }
+
+      .info-box h3 {
+        color: #f093fb;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .info-box ul {
+        margin-left: 20px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .code-example {
+        background: #2d3748;
+        color: #f7fafc;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        text-align: left;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        overflow-x: auto;
+      }
+
+      .code-example .keyword {
+        color: #f093fb;
+      }
+
+      .code-example .function {
+        color: #38ef7d;
+      }
+
+      .code-example .string {
+        color: #ffd93d;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      @keyframes spinner {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: #667eea;
+        animation: spinner 0.6s linear infinite;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stat-card {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #f093fb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎲 Promise の基本</h1>
+      <p class="subtitle">問題 3-3: 基礎編</p>
+
+      <div class="status-indicator">
+        <div class="status-item pending" id="pendingStatus">Pending</div>
+        <div class="status-item fulfilled" id="fulfilledStatus">Fulfilled</div>
+        <div class="status-item rejected" id="rejectedStatus">Rejected</div>
+      </div>
+
+      <div class="result-display" id="resultDisplay">
+        結果がここに表示されます
+      </div>
+
+      <button id="executeButton">Promise を実行</button>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-label">成功回数</div>
+          <div class="stat-value" id="successCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">失敗回数</div>
+          <div class="stat-value" id="failCount">0</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h3>💡 学習ポイント</h3>
+        <ul>
+          <li>Promise は非同期処理の成功/失敗を表現するオブジェクト</li>
+          <li>resolve() で成功、reject() で失敗を通知</li>
+          <li>.then() で成功時の処理、.catch() で失敗時の処理</li>
+          <li>Promise の3つの状態: Pending → Fulfilled または Rejected</li>
+        </ul>
+      </div>
+
+      <div class="code-example">
+        <span class="keyword">const</span> promise =
+        <span class="keyword">new</span>
+        <span class="function">Promise</span>((resolve, reject) => {<br />
+        &nbsp;&nbsp;<span class="keyword">if</span> (success) {<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">resolve</span>(<span
+          class="string"
+          >'成功！'</span
+        >);<br />
+        &nbsp;&nbsp;} <span class="keyword">else</span> {<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">reject</span>(<span
+          class="string"
+          >'失敗...'</span
+        >);<br />
+        &nbsp;&nbsp;}<br />
+        });<br /><br />
+        promise<br />
+        &nbsp;&nbsp;.<span class="function">then</span>((result) => { ... })<br />
+        &nbsp;&nbsp;.<span class="function">catch</span>((error) => { ... });
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // 要素の取得
+      // ==========================================
+      const executeButton = document.getElementById("executeButton");
+      const resultDisplay = document.getElementById("resultDisplay");
+      const pendingStatus = document.getElementById("pendingStatus");
+      const fulfilledStatus = document.getElementById("fulfilledStatus");
+      const rejectedStatus = document.getElementById("rejectedStatus");
+      const successCountElement = document.getElementById("successCount");
+      const failCountElement = document.getElementById("failCount");
+
+      // 統計情報
+      let successCount = 0;
+      let failCount = 0;
+
+      // ==========================================
+      // Promise を実行するボタンのクリックイベント
+      // ==========================================
+      executeButton.addEventListener("click", function () {
+        console.log("========================================");
+        console.log("Promise を実行します");
+
+        // ボタンを無効化
+        executeButton.disabled = true;
+
+        // 状態をリセット
+        resetStatus();
+
+        // Pending 状態を表示
+        pendingStatus.classList.add("active");
+        resultDisplay.className = "result-display pending";
+        resultDisplay.innerHTML = '<div class="spinner"></div> 処理中...';
+
+        // Promise を作成
+        const promise = new Promise(function (resolve, reject) {
+          console.log("Promise 作成: 状態は Pending");
+
+          // 2秒後にランダムで成功/失敗を決定
+          setTimeout(function () {
+            // Math.random() は 0〜1 のランダムな数を返す
+            // 0.5 より大きければ成功（50%の確率）
+            const success = Math.random() > 0.5;
+
+            console.log("ランダム判定:", success ? "成功" : "失敗");
+
+            if (success) {
+              // 成功時: resolve を呼ぶ
+              console.log("resolve() を呼び出します");
+              resolve("成功しました！🎉");
+            } else {
+              // 失敗時: reject を呼ぶ
+              console.log("reject() を呼び出します");
+              reject("失敗しました😢");
+            }
+          }, 2000);
+        });
+
+        console.log("Promise オブジェクト:", promise);
+        console.log("2秒後に成功/失敗が決まります");
+
+        // Promise の結果を処理
+        promise
+          .then(function (result) {
+            // 成功時の処理（resolve が呼ばれた時）
+            console.log("========================================");
+            console.log(".then() が実行されました");
+            console.log("成功メッセージ:", result);
+
+            // Fulfilled 状態を表示
+            pendingStatus.classList.remove("active");
+            fulfilledStatus.classList.add("active");
+            resultDisplay.className = "result-display success";
+            resultDisplay.textContent = result;
+
+            // 統計を更新
+            successCount++;
+            successCountElement.textContent = successCount;
+
+            console.log("Promise の状態: Fulfilled");
+            console.log("========================================");
+
+            // ボタンを有効化
+            executeButton.disabled = false;
+          })
+          .catch(function (error) {
+            // 失敗時の処理（reject が呼ばれた時）
+            console.log("========================================");
+            console.log(".catch() が実行されました");
+            console.log("エラーメッセージ:", error);
+
+            // Rejected 状態を表示
+            pendingStatus.classList.remove("active");
+            rejectedStatus.classList.add("active");
+            resultDisplay.className = "result-display error";
+            resultDisplay.textContent = error;
+
+            // 統計を更新
+            failCount++;
+            failCountElement.textContent = failCount;
+
+            console.log("Promise の状態: Rejected");
+            console.log("========================================");
+
+            // ボタンを有効化
+            executeButton.disabled = false;
+          });
+
+        console.log("========================================");
+      });
+
+      // ==========================================
+      // 状態表示をリセットする関数
+      // ==========================================
+      function resetStatus() {
+        pendingStatus.classList.remove("active");
+        fulfilledStatus.classList.remove("active");
+        rejectedStatus.classList.remove("active");
+      }
+
+      // ==========================================
+      // ページ読み込み時のログ
+      // ==========================================
+      console.log("========================================");
+      console.log("問題 3-3: Promise の基本");
+      console.log("========================================");
+      console.log("【学習ポイント】");
+      console.log("1. Promise は非同期処理の成功/失敗を表現するオブジェクト");
+      console.log("2. resolve() で成功、reject() で失敗を通知");
+      console.log("3. .then() で成功時の処理、.catch() で失敗時の処理");
+      console.log("========================================");
+      console.log("【Promise の3つの状態】");
+      console.log("1. Pending（保留中）: 処理中");
+      console.log("2. Fulfilled（成功）: resolve が呼ばれた");
+      console.log("3. Rejected（失敗）: reject が呼ばれた");
+      console.log("========================================");
+      console.log("ボタンをクリックして Promise を実行してみよう！");
+      console.log("何度か試して、成功と失敗の違いを確認してね！");
+      console.log("========================================");
+    </script>
+  </body>
+</html>

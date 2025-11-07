@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題 3-6: エラーハンドリング</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .user-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #f0f3f7 100%);
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s;
+      }
+
+      .user-card.loading {
+        background: linear-gradient(135deg, #e3f2fd 0%, #d1e7f7 100%);
+        border-color: #4facfe;
+      }
+
+      .user-card.success {
+        background: linear-gradient(135deg, #d4f7e8 0%, #c7f9e3 100%);
+        border-color: #38ef7d;
+      }
+
+      .user-card.error {
+        background: linear-gradient(135deg, #ffe0e0 0%, #ffd0d0 100%);
+        border-color: #ff6b6b;
+      }
+
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(79, 172, 254, 0.2);
+        border-radius: 50%;
+        border-top-color: #4facfe;
+        animation: spinner 0.8s linear infinite;
+      }
+
+      .loading-text {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #4facfe;
+        font-weight: bold;
+      }
+
+      .user-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        margin-bottom: 20px;
+      }
+
+      .user-info {
+        text-align: center;
+      }
+
+      .user-name {
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .user-age {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 15px;
+      }
+
+      .user-id {
+        font-size: 14px;
+        color: #999;
+        font-family: "Courier New", monospace;
+      }
+
+      .error-message {
+        font-size: 20px;
+        color: #c92a2a;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .error-icon {
+        font-size: 60px;
+        margin-bottom: 20px;
+      }
+
+      .fetch-button {
+        padding: 15px 40px;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        color: #333;
+      }
+
+      .fetch-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(168, 237, 234, 0.4);
+      }
+
+      .fetch-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .try-catch-flow {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin: 30px 0;
+      }
+
+      .flow-step {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+        text-align: center;
+      }
+
+      .flow-step.active {
+        border-color: #4facfe;
+        background: linear-gradient(135deg, #e3f2fd 0%, #d1e7f7 100%);
+      }
+
+      .flow-step-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #333;
+      }
+
+      .flow-step-desc {
+        font-size: 12px;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .info-box {
+        background: #f8f9fa;
+        border-left: 4px solid #a8edea;
+        padding: 15px;
+        margin-top: 30px;
+        text-align: left;
+        border-radius: 5px;
+      }
+
+      .info-box h3 {
+        color: #4facfe;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .info-box ul {
+        margin-left: 20px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .stat-card {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #4facfe;
+      }
+
+      @keyframes spinner {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🛡️ エラーハンドリング</h1>
+      <p class="subtitle">問題 3-6: 応用編</p>
+
+      <div class="try-catch-flow">
+        <div class="flow-step" id="tryStep">
+          <div class="flow-step-title">try</div>
+          <div class="flow-step-desc">処理を実行</div>
+        </div>
+        <div class="flow-step" id="catchStep">
+          <div class="flow-step-title">catch</div>
+          <div class="flow-step-desc">エラー時に実行</div>
+        </div>
+        <div class="flow-step" id="finallyStep">
+          <div class="flow-step-title">finally</div>
+          <div class="flow-step-desc">必ず実行</div>
+        </div>
+      </div>
+
+      <div class="user-card" id="userCard">
+        <div style="font-size: 48px; color: #999">👤</div>
+        <div style="margin-top: 20px; color: #999">
+          「データ取得」ボタンをクリック
+        </div>
+      </div>
+
+      <button class="fetch-button" id="fetchButton">データ取得</button>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-label">成功回数</div>
+          <div class="stat-value" id="successCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">失敗回数</div>
+          <div class="stat-value" id="errorCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">合計試行</div>
+          <div class="stat-value" id="totalCount">0</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h3>💡 学習ポイント</h3>
+        <ul>
+          <li>
+            try-catch-finally を使って安全に非同期処理を実行できる
+          </li>
+          <li>try: 実行したいコード（エラーが起こるかも）</li>
+          <li>catch: エラーが起きた時の処理</li>
+          <li>finally: 成功でも失敗でも必ず実行される処理</li>
+          <li>ローディング表示は finally で消すのがベストプラクティス</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // 要素の取得
+      // ==========================================
+      const fetchButton = document.getElementById("fetchButton");
+      const userCard = document.getElementById("userCard");
+      const tryStep = document.getElementById("tryStep");
+      const catchStep = document.getElementById("catchStep");
+      const finallyStep = document.getElementById("finallyStep");
+      const successCountElement = document.getElementById("successCount");
+      const errorCountElement = document.getElementById("errorCount");
+      const totalCountElement = document.getElementById("totalCount");
+
+      // 統計情報
+      let successCount = 0;
+      let errorCount = 0;
+      let totalCount = 0;
+
+      // ==========================================
+      // ユーザーデータを取得する関数（Promise を返す）
+      // ==========================================
+      function getUserData() {
+        return new Promise(function (resolve, reject) {
+          // 2秒後にランダムで成功/失敗
+          setTimeout(function () {
+            const success = Math.random() > 0.5;
+
+            if (success) {
+              // 成功時：ユーザー情報を返す
+              const user = {
+                id: "USER" + Math.floor(Math.random() * 10000),
+                name: "太郎",
+                age: 25,
+                avatar: "👨",
+              };
+              resolve(user);
+            } else {
+              // 失敗時：エラーを返す
+              reject(new Error("ネットワークエラーが発生しました"));
+            }
+          }, 2000);
+        });
+      }
+
+      // ==========================================
+      // データ取得処理（async/await + try-catch-finally）
+      // ==========================================
+      async function fetchUserData() {
+        console.log("========================================");
+        console.log("データ取得開始");
+
+        // ボタンを無効化
+        fetchButton.disabled = true;
+
+        // フローをリセット
+        resetFlowSteps();
+
+        // ローディング表示を出す
+        showLoading();
+        console.log("ローディング表示を出しました");
+
+        // try ステップをアクティブに
+        tryStep.classList.add("active");
+
+        try {
+          console.log("try ブロック: データ取得を試みます");
+
+          // await でユーザーデータの取得を待つ
+          const user = await getUserData();
+
+          console.log("✅ データ取得成功:", user);
+
+          // 成功時の処理
+          showUserData(user);
+
+          // 統計を更新
+          successCount++;
+          successCountElement.textContent = successCount;
+        } catch (error) {
+          console.log("❌ エラーが発生しました");
+          console.error("エラー詳細:", error);
+
+          // catch ステップをアクティブに
+          catchStep.classList.add("active");
+
+          // 失敗時の処理
+          showError(error.message);
+
+          // 統計を更新
+          errorCount++;
+          errorCountElement.textContent = errorCount;
+        } finally {
+          console.log("finally ブロック: 必ず実行される処理");
+
+          // finally ステップをアクティブに
+          finallyStep.classList.add("active");
+
+          // ローディング表示を消す（成功でも失敗でも実行される）
+          hideLoading();
+          console.log("ローディング表示を消しました");
+
+          // ボタンを有効化
+          fetchButton.disabled = false;
+
+          // 統計を更新
+          totalCount++;
+          totalCountElement.textContent = totalCount;
+
+          console.log("========================================");
+          console.log(`統計: 成功 ${successCount}回 / 失敗 ${errorCount}回`);
+          console.log("========================================");
+        }
+      }
+
+      // ==========================================
+      // ローディング表示
+      // ==========================================
+      function showLoading() {
+        userCard.className = "user-card loading";
+        userCard.innerHTML = `
+          <div class="loading-spinner"></div>
+          <div class="loading-text">読み込み中...</div>
+        `;
+      }
+
+      function hideLoading() {
+        // finallyで呼ばれるので、ここでは何もしない
+        // （showUserData または showError で表示が更新される）
+      }
+
+      // ==========================================
+      // ユーザーデータ表示（成功時）
+      // ==========================================
+      function showUserData(user) {
+        userCard.className = "user-card success";
+        userCard.innerHTML = `
+          <div class="user-avatar">${user.avatar}</div>
+          <div class="user-info">
+            <div class="user-name">${user.name}さん</div>
+            <div class="user-age">${user.age}歳</div>
+            <div class="user-id">ID: ${user.id}</div>
+          </div>
+        `;
+      }
+
+      // ==========================================
+      // エラー表示（失敗時）
+      // ==========================================
+      function showError(message) {
+        userCard.className = "user-card error";
+        userCard.innerHTML = `
+          <div class="error-icon">❌</div>
+          <div class="error-message">データ取得失敗</div>
+          <div style="color: #666; font-size: 14px;">${message}</div>
+        `;
+      }
+
+      // ==========================================
+      // フローステップをリセット
+      // ==========================================
+      function resetFlowSteps() {
+        tryStep.classList.remove("active");
+        catchStep.classList.remove("active");
+        finallyStep.classList.remove("active");
+      }
+
+      // ==========================================
+      // イベントリスナー
+      // ==========================================
+      fetchButton.addEventListener("click", fetchUserData);
+
+      // ==========================================
+      // ページ読み込み時のログ
+      // ==========================================
+      console.log("========================================");
+      console.log("問題 3-6: エラーハンドリング");
+      console.log("========================================");
+      console.log("【学習ポイント】");
+      console.log("1. try-catch-finally でエラーハンドリング");
+      console.log("2. try: 実行したいコード");
+      console.log("3. catch: エラー時の処理");
+      console.log("4. finally: 必ず実行される処理");
+      console.log("========================================");
+      console.log("【try-catch-finally の実行順序】");
+      console.log("");
+      console.log("成功時:");
+      console.log("  try → 成功 → finally");
+      console.log("");
+      console.log("失敗時:");
+      console.log("  try → エラー → catch → finally");
+      console.log("");
+      console.log("========================================");
+      console.log("【ベストプラクティス】");
+      console.log("");
+      console.log("// ローディング表示は finally で消す");
+      console.log("async function() {");
+      console.log("  showLoading();  // 処理開始前に表示");
+      console.log("  try {");
+      console.log("    const data = await getData();");
+      console.log("    showData(data);");
+      console.log("  } catch (error) {");
+      console.log("    showError(error);");
+      console.log("  } finally {");
+      console.log("    hideLoading();  // 必ず実行される");
+      console.log("  }");
+      console.log("}");
+      console.log("");
+      console.log("========================================");
+      console.log("「データ取得」ボタンを何度かクリックして、");
+      console.log("成功と失敗の違いを確認してみよう！");
+      console.log("finally が必ず実行されることもチェック！");
+      console.log("========================================");
+    </script>
+  </body>
+</html>
