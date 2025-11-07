@@ -20,16 +20,14 @@
         case 2:
         case 3:
         case 4:
-          message = `${
-            ["", "月", "火", "水", "木"][dayNumber]
-          }曜日: まだまだ続く...`;
+          message = "火曜日〜木曜日: まだまだ続く...";
           break;
         case 5:
           message = "金曜日: 明日は休み！";
           break;
         case 6:
         case 7:
-          message = `${dayNumber === 6 ? "土" : "日"}曜日: 週末だ！`;
+          message = "土曜日・日曜日: 週末だ！";
           break;
         default:
           message = "無効な曜日番号です";
