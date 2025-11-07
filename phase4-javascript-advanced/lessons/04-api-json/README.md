@@ -312,7 +312,7 @@ JSON.stringify(data);
 
 // 第2引数：特定のキーだけ含める
 JSON.stringify(data, ["name", "age"]);
-// {"name":"太郎","age":25"}  ← password は除外された！
+// {"name":"太郎","age":25}  ← password は除外された！
 
 // 第3引数：インデント（見やすくする）
 JSON.stringify(data, null, 2);
