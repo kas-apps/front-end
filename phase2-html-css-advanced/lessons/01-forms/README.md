@@ -598,12 +598,12 @@ AI がフォームのコードを生成したら、以下のポイントをチ�
 
    ```html
    <!-- 良い例：同じnameで1つだけ選択可能 -->
-   <input type="radio" name="gender" value="male" /> 男性
-   <input type="radio" name="gender" value="female" /> 女性
+   <label><input type="radio" name="gender" value="male" /> 男性</label>
+   <label><input type="radio" name="gender" value="female" /> 女性</label>
 
    <!-- 悪い例：nameが違うと全部選択できてしまう -->
-   <input type="radio" name="gender1" value="male" /> 男性
-   <input type="radio" name="gender2" value="female" /> 女性
+   <label><input type="radio" name="gender1" value="male" /> 男性</label>
+   <label><input type="radio" name="gender2" value="female" /> 女性</label>
    ```
 
    → ラジオボタンは同じ `name` を付けないと、1 つだけ選択という機能が働かない！
