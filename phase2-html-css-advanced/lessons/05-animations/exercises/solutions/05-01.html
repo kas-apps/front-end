@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 1：最初の transition - 解答例</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 28px;
+      }
+
+      /* ボタンのスタイル */
+      button {
+        background-color: #3498db; /* 青い背景 */
+        color: white;
+        padding: 15px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+
+        /* ⭐ transitionを設定（通常の状態に設定するのが重要！） */
+        transition: background-color 0.3s;
+      }
+
+      /* ホバー時のスタイル */
+      button:hover {
+        background-color: #2980b9; /* 濃い青に変化 */
+      }
+
+      /* ボタンを押した時のスタイル */
+      button:active {
+        transform: scale(0.95);
+      }
+
+      .description {
+        margin-top: 30px;
+        color: #666;
+        line-height: 1.8;
+      }
+
+      .code-hint {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        text-align: left;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>演習 1：最初の transition</h1>
+
+      <button>ホバーしてみて！</button>
+
+      <div class="description">
+        <p><strong>ポイント</strong></p>
+        <p>
+          transition は<strong>元の状態</strong>（button）に設定します。<br />
+          これにより、hover 時も、hover を外した時も滑らかに変化します。
+        </p>
+      </div>
+
+      <div class="code-hint">
+        <strong>CSS のポイント：</strong><br />
+        button {<br />
+        &nbsp;&nbsp;background-color: #3498db;<br />
+        &nbsp;&nbsp;transition: background-color 0.3s;<br />
+        }<br />
+        <br />
+        button:hover {<br />
+        &nbsp;&nbsp;background-color: #2980b9;<br />
+        }
+      </div>
+    </div>
+  </body>
+</html>

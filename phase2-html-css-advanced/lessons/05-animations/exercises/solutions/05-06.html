@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 6：パルスアニメーション - 解答例</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 28px;
+      }
+
+      /* ⭐ パルスアニメーションを定義 */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2); /* 1.2倍に拡大 */
+        }
+        100% {
+          transform: scale(1); /* 元のサイズに戻る */
+        }
+      }
+
+      /* ハートボタンのスタイル */
+      .heart-button {
+        width: 80px;
+        height: 80px;
+        background-color: #e74c3c; /* 赤い背景 */
+        border-radius: 50%; /* 円形 */
+        border: none;
+        cursor: pointer;
+
+        /* ハートマークの設定 */
+        color: white;
+        font-size: 30px;
+
+        /* 中央配置 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* 画面中央に配置するために margin auto を使用 */
+        margin: 30px auto;
+
+        /* ⭐ パルスアニメーションを適用 */
+        animation: pulse 1.5s ease-in-out infinite;
+        /*        ↑     ↑    ↑          ↑        */
+        /*      名前   時間  速度     繰り返し    */
+
+        /* ホバー時のカーソル */
+        transition: background-color 0.3s;
+      }
+
+      .heart-button:hover {
+        background-color: #c0392b; /* ホバー時は少し暗く */
+      }
+
+      .description {
+        margin-top: 30px;
+        color: #666;
+        line-height: 1.8;
+      }
+
+      .ai-instruction {
+        background: #e8f5e9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        text-align: left;
+        border-left: 4px solid #4caf50;
+      }
+
+      .ai-instruction h3 {
+        margin-top: 0;
+        color: #2e7d32;
+      }
+
+      .ai-instruction pre {
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .code-hint {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        text-align: left;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>演習 6：パルスアニメーション</h1>
+
+      <button class="heart-button">♡</button>
+
+      <div class="description">
+        <p><strong>パルス（脈打つ）アニメーション</strong></p>
+        <p>
+          ハートが脈打つように、大きくなったり小さくなったりを繰り返します。<br />
+          注目を集めたい要素（いいねボタン、通知など）に効果的です。
+        </p>
+      </div>
+
+      <div class="ai-instruction">
+        <h3>🤖 AI への指示例</h3>
+        <pre>「パルスアニメーションを作成してください。
+以下の要件を満たすHTMLファイルを作成してください：
+
+- 円形のボタンを作成（幅・高さ80px、
+  border-radius 50%、背景色 #e74c3c）
+- 中央に白い♡（ハート）を表示
+  （font-size 30px、color white）
+- @keyframesで"pulse"という名前の
+  アニメーションを定義
+  - 0%: transform: scale(1);
+  - 50%: transform: scale(1.2);
+  - 100%: transform: scale(1);
+- アニメーションは1.5秒、無限ループ、
+  ease-in-outで実行
+- ボタンは画面中央に配置」</pre>
+      </div>
+
+      <div class="code-hint">
+        <strong>CSS のポイント：</strong><br />
+        @keyframes pulse {<br />
+        &nbsp;&nbsp;0% { transform: scale(1); }<br />
+        &nbsp;&nbsp;50% { transform: scale(1.2); }<br />
+        &nbsp;&nbsp;100% { transform: scale(1); }<br />
+        }<br />
+        <br />
+        .heart-button {<br />
+        &nbsp;&nbsp;animation: pulse 1.5s ease-in-out infinite;<br />
+        }
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 4：フェードインアニメーション - 解答例</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+      }
+
+      /* ⭐ @keyframes でアニメーションを定義 */
+      @keyframes fadeIn {
+        from {
+          opacity: 0; /* 透明 */
+        }
+        to {
+          opacity: 1; /* 不透明 */
+        }
+      }
+
+      /* または、パーセンテージで指定することもできる */
+      /* @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      } */
+
+      h1 {
+        color: #333;
+        font-size: 48px;
+        margin-bottom: 30px;
+
+        /* ⭐ アニメーションを適用 */
+        animation: fadeIn 2s;
+        /*        ↑     ↑    */
+        /*      名前    時間  */
+      }
+
+      .description {
+        color: #666;
+        line-height: 1.8;
+
+        /* 説明文にも少し遅れてフェードイン */
+        animation: fadeIn 2s ease-in-out 0.5s both;
+        /*                               ↑   ↑    */
+        /*                            遅延  fill-mode */
+      }
+
+      .reload-hint {
+        margin-top: 30px;
+        padding: 15px;
+        background: #e3f2fd;
+        border-radius: 8px;
+        color: #1976d2;
+        font-size: 14px;
+      }
+
+      .code-hint {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        text-align: left;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        color: #333;
+
+        /* コードヒントにもフェードイン */
+        animation: fadeIn 2s ease-in-out 1s both;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ようこそ！</h1>
+
+      <div class="description">
+        <p><strong>フェードインアニメーション</strong></p>
+        <p>
+          ページを開いた時に、テキストがふわっと現れるアニメーションです。<br />
+          @keyframes を使って、透明（opacity: 0）から不透明（opacity: 1）へ変化させています。
+        </p>
+      </div>
+
+      <div class="reload-hint">
+        💡 ページを再読み込みすると、もう一度アニメーションが見られます！
+      </div>
+
+      <div class="code-hint">
+        <strong>CSS のポイント：</strong><br />
+        @keyframes fadeIn {<br />
+        &nbsp;&nbsp;from { opacity: 0; }<br />
+        &nbsp;&nbsp;to { opacity: 1; }<br />
+        }<br />
+        <br />
+        h1 {<br />
+        &nbsp;&nbsp;animation: fadeIn 2s;<br />
+        }
+      </div>
+    </div>
+  </body>
+</html>

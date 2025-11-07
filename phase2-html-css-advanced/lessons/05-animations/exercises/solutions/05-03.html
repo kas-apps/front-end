@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 3：タイミング関数 - 解答例</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 28px;
+      }
+
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin: 30px 0;
+      }
+
+      .button-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* 共通のボタンスタイル */
+      button {
+        background-color: #3498db;
+        color: white;
+        padding: 15px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 250px;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+        transform: scale(1.1);
+      }
+
+      /* タイミング関数ごとの設定 */
+      .btn-ease {
+        transition: all 0.5s ease; /* デフォルト */
+      }
+
+      .btn-linear {
+        transition: all 0.5s linear; /* 一定速度 */
+      }
+
+      .btn-ease-in-out {
+        transition: all 0.5s ease-in-out; /* ゆっくり始まってゆっくり終わる */
+      }
+
+      .label {
+        color: #666;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .description {
+        margin-top: 30px;
+        color: #666;
+        line-height: 1.8;
+        text-align: left;
+      }
+
+      .description ul {
+        text-align: left;
+        padding-left: 20px;
+      }
+
+      .description li {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>演習 3：タイミング関数の比較</h1>
+
+      <p style="color: #666;">それぞれのボタンにホバーして、動きの違いを感じてみよう！</p>
+
+      <div class="button-group">
+        <div class="button-item">
+          <button class="btn-ease">ホバーしてみて！</button>
+          <span class="label">ease（デフォルト）</span>
+        </div>
+
+        <div class="button-item">
+          <button class="btn-linear">ホバーしてみて！</button>
+          <span class="label">linear（一定速度）</span>
+        </div>
+
+        <div class="button-item">
+          <button class="btn-ease-in-out">ホバーしてみて！</button>
+          <span class="label">ease-in-out（ゆっくり始まってゆっくり終わる）</span>
+        </div>
+      </div>
+
+      <div class="description">
+        <p><strong>各タイミング関数の特徴</strong></p>
+        <ul>
+          <li>
+            <strong>ease</strong>: ゆっくり始まって、速くなって、ゆっくり終わる。<br />
+            → 一般的なホバー効果に最適
+          </li>
+          <li>
+            <strong>linear</strong>: 一定速度で変化。<br />
+            → 回転や移動など、一定速度が自然な場合に使う
+          </li>
+          <li>
+            <strong>ease-in-out</strong>: ゆっくり始まって、ゆっくり終わる。<br />
+            → より滑らかで優雅な印象
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
