@@ -874,10 +874,10 @@ AI がイベント処理のコードを生成したら、以下をチェック�
      console.log("クリックされた要素:", event.target);
    });
 
-   // ❌ Bad: this を使っている（アロー関数では動作しない）
-   element.addEventListener("click", () => {
-     console.log(this); // → undefined（アロー関数では this が使えない）
-   });
+// ❌ Bad: this を使っている（アロー関数では意図通りに動作しないことがある）
+element.addEventListener("click", () => {
+  console.log(this); // → アロー関数は自身の`this`を持たないため、外側のスコープの`this`（この場合は`window`または`undefined`）を参照します
+});
    ```
 
 5. **動的に追加された要素にもイベントが効くか？**
