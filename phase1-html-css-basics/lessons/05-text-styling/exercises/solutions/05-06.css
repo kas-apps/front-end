@@ -1,0 +1,46 @@
+/* 演習6 - AIで生成されたCSS */
+
+/* bodyは薄い灰色の背景 */
+body {
+  background-color: #f3f4f6;
+}
+
+/* h1は青色、40px、中央寄せ、太字、文字間隔0.05em */
+h1 {
+  color: #3b82f6;
+  font-size: 40px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+/* h2は濃い灰色、32px、太字 */
+h2 {
+  color: #1f2937;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* pは灰色、16px、行間1.6 */
+p {
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* リンク（a）は青色、下線なし、ホバー時に下線を表示 */
+a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* .highlight クラスは黄色背景、太字、内側余白10px */
+.highlight {
+  background-color: #fef3c7;
+  font-weight: bold;
+  padding: 10px;
+}

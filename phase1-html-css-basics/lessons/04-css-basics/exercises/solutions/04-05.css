@@ -1,0 +1,22 @@
+/* 演習5 - AIで生成されたCSS */
+
+/* h1は青色、36px、中央寄せ */
+h1 {
+  color: blue;
+  font-size: 36px;
+  text-align: center;
+}
+
+/* .card クラスは白背景、灰色のボーダー、内側20px余白、外側20px余白 */
+.card {
+  background-color: white;
+  border: 2px solid lightgray;
+  padding: 20px;
+  margin: 20px;
+}
+
+/* .highlight クラスは黄色背景、太字 */
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}

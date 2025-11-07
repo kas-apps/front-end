@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTMLの基礎を学ぼう - WebDev Blog</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header>
+      <div class="container">
+        <h1>WebDev Blog</h1>
+        <p class="tagline">フロントエンド開発を楽しく学ぼう！</p>
+      </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+      <div class="container">
+        <ul class="nav-list">
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="index.html#about">このブログについて</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main>
+      <div class="container">
+        <article class="article-detail">
+          <!-- 記事ヘッダー -->
+          <header class="article-header">
+            <h2>HTMLの基礎を学ぼう - 初心者のためのガイド</h2>
+            <p class="article-meta">2025年1月15日 投稿</p>
+          </header>
+
+          <!-- 記事本文 -->
+          <section class="article-content">
+            <h3>HTMLとは？</h3>
+            <p>
+              HTML（HyperText Markup
+              Language）は、Webページの構造を定義するためのマークアップ言語です。テキストや画像、リンクなどをタグで囲むことで、ブラウザに「これは見出し」「これは段落」といった情報を伝えます。
+            </p>
+
+            <h3>HTMLの基本構造</h3>
+            <p>すべてのHTMLドキュメントは、以下の基本構造を持っています：</p>
+            <ul>
+              <li><strong>&lt;!DOCTYPE html&gt;</strong>：HTML5であることを宣言</li>
+              <li><strong>&lt;html&gt;</strong>：HTMLドキュメント全体を囲む</li>
+              <li>
+                <strong>&lt;head&gt;</strong>：メタ情報（タイトル、文字コードなど）
+              </li>
+              <li>
+                <strong>&lt;body&gt;</strong>：ページに表示される実際のコンテンツ
+              </li>
+            </ul>
+
+            <h3>重要なHTML要素</h3>
+
+            <h4>1. 見出し（h1-h6）</h4>
+            <p>
+              見出しは文書の構造を表します。h1が最も重要で、h6が最も小さな見出しです。
+            </p>
+
+            <h4>2. 段落（p）</h4>
+            <p>テキストの段落を表します。文章を読みやすく構造化するために使います。</p>
+
+            <h4>3. リスト（ul, ol, li）</h4>
+            <p>
+              情報を箇条書きで表示します。ulは順序なしリスト、olは順序付きリストです。
+            </p>
+
+            <h4>4. リンク（a）</h4>
+            <p>
+              他のページやセクションへのリンクを作成します。href属性にURLを指定します。
+            </p>
+
+            <h3>まとめ</h3>
+            <p>
+              HTMLはWebページの基礎です。タグの意味を理解して、適切に使い分けることで、
+              構造的で読みやすいWebページを作ることができます。次は、CSSでページをスタイリングする方法を学びましょう！
+            </p>
+          </section>
+
+          <!-- 関連記事 -->
+          <section class="related-articles">
+            <h3>関連記事</h3>
+            <ul>
+              <li><a href="article2.html">CSSでデザインしよう</a></li>
+              <li><a href="article3.html">セマンティックHTMLの重要性</a></li>
+            </ul>
+          </section>
+
+          <!-- 記事フッター -->
+          <footer class="article-footer">
+            <a href="index.html" class="back-link">← 記事一覧に戻る</a>
+          </footer>
+        </article>
+      </div>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 WebDev Blog. All rights reserved.</p>
+        <p>Phase 1 ミニプロジェクト - HTML/CSS 基礎編</p>
+      </div>
+    </footer>
+  </body>
+</html>

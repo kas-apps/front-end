@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>セマンティックHTMLの重要性 - WebDev Blog</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header>
+      <div class="container">
+        <h1>WebDev Blog</h1>
+        <p class="tagline">フロントエンド開発を楽しく学ぼう！</p>
+      </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+      <div class="container">
+        <ul class="nav-list">
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="index.html#about">このブログについて</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main>
+      <div class="container">
+        <article class="article-detail">
+          <!-- 記事ヘッダー -->
+          <header class="article-header">
+            <h2>
+              セマンティックHTMLの重要性 - なぜ意味のあるタグを使うべきか
+            </h2>
+            <p class="article-meta">2025年1月5日 投稿</p>
+          </header>
+
+          <!-- 記事本文 -->
+          <section class="article-content">
+            <h3>セマンティックHTMLとは？</h3>
+            <p>
+              セマンティック（semantic）とは「意味のある」という意味です。セマンティックHTMLとは、
+              タグの見た目ではなく、「意味」に基づいて適切な要素を使うことを指します。
+            </p>
+
+            <h3>なぜセマンティックHTMLが重要なのか？</h3>
+
+            <h4>1. 検索エンジンに優しい（SEO向上）</h4>
+            <p>
+              Googleなどの検索エンジンは、セマンティックなタグを理解して、ページの内容を正しく評価します。
+              例えば、&lt;header&gt;や&lt;article&gt;を使うことで、「ここがヘッダー」「ここが記事本文」と伝わります。
+            </p>
+
+            <h4>2. アクセシビリティの向上</h4>
+            <p>
+              視覚障害のある人が使うスクリーンリーダーは、セマンティックなタグを読み取って、
+              ページの構造を音声で伝えます。&lt;nav&gt;を使えば「ここはナビゲーション」と分かります。
+            </p>
+
+            <h4>3. コードの可読性が上がる</h4>
+            <p>
+              &lt;div&gt;だらけのコードよりも、&lt;header&gt;、&lt;main&gt;、&lt;footer&gt;を使った方が、
+              他の開発者（未来の自分も！）がコードを理解しやすくなります。
+            </p>
+
+            <h3>主要なセマンティック要素</h3>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>要素</th>
+                  <th>意味</th>
+                  <th>用途</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>&lt;header&gt;</td>
+                  <td>ヘッダー</td>
+                  <td>ページやセクションの導入部</td>
+                </tr>
+                <tr>
+                  <td>&lt;nav&gt;</td>
+                  <td>ナビゲーション</td>
+                  <td>メニュー、リンク集</td>
+                </tr>
+                <tr>
+                  <td>&lt;main&gt;</td>
+                  <td>メインコンテンツ</td>
+                  <td>ページの主要な内容</td>
+                </tr>
+                <tr>
+                  <td>&lt;article&gt;</td>
+                  <td>記事</td>
+                  <td>独立したコンテンツ</td>
+                </tr>
+                <tr>
+                  <td>&lt;section&gt;</td>
+                  <td>セクション</td>
+                  <td>内容のまとまり</td>
+                </tr>
+                <tr>
+                  <td>&lt;aside&gt;</td>
+                  <td>サイドバー</td>
+                  <td>補足情報、関連リンク</td>
+                </tr>
+                <tr>
+                  <td>&lt;footer&gt;</td>
+                  <td>フッター</td>
+                  <td>ページやセクションの末尾</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>悪い例と良い例</h3>
+
+            <h4>悪い例（divだらけ）</h4>
+            <ul>
+              <li>&lt;div class="header"&gt; - 意味が分からない</li>
+              <li>&lt;div class="nav"&gt; - CSSでしか分からない</li>
+              <li>&lt;div class="content"&gt; - 曖昧</li>
+            </ul>
+
+            <h4>良い例（セマンティック）</h4>
+            <ul>
+              <li>&lt;header&gt; - ヘッダーだと一目で分かる</li>
+              <li>&lt;nav&gt; - ナビゲーションだと明確</li>
+              <li>&lt;main&gt; - メインコンテンツだと分かる</li>
+            </ul>
+
+            <h3>まとめ</h3>
+            <p>
+              セマンティックHTMLを使うことで、検索エンジン、スクリーンリーダー、他の開発者に優しいWebページを作れます。
+              見た目は同じでも、「意味」を持たせることで、より質の高いコードになります。
+            </p>
+          </section>
+
+          <!-- 関連記事 -->
+          <section class="related-articles">
+            <h3>関連記事</h3>
+            <ul>
+              <li><a href="article1.html">HTMLの基礎を学ぼう</a></li>
+              <li><a href="article2.html">CSSでデザインしよう</a></li>
+            </ul>
+          </section>
+
+          <!-- 記事フッター -->
+          <footer class="article-footer">
+            <a href="index.html" class="back-link">← 記事一覧に戻る</a>
+          </footer>
+        </article>
+      </div>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 WebDev Blog. All rights reserved.</p>
+        <p>Phase 1 ミニプロジェクト - HTML/CSS 基礎編</p>
+      </div>
+    </footer>
+  </body>
+</html>

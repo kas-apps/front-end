@@ -1,0 +1,197 @@
+/* ========================================
+   Phase 1 ミニプロジェクト: プロフィールページ
+   Phase 1 で学んだ全ての技術を使用
+   ======================================== */
+
+/* 全体のリセットと基本設定 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* rem の基準 */
+}
+
+body {
+  font-family: "Hiragino Sans", "游ゴシック", "Yu Gothic", sans-serif;
+  line-height: 1.6; /* Phase 1 で学んだ行間 */
+  color: #333333;
+  background-color: #f9fafb;
+}
+
+/* ========================================
+   ヘッダー
+   ======================================== */
+
+header {
+  background-color: #3b82f6; /* Phase 1 で学んだ 16 進数カラー */
+  color: white;
+  text-align: center; /* Phase 1 で学んだテキスト配置 */
+  padding: 3rem 1rem; /* Phase 1 で学んだ padding */
+}
+
+header h1 {
+  font-size: 2.5rem; /* Phase 1 で学んだ rem 単位 */
+  font-weight: bold; /* Phase 1 で学んだ font-weight */
+  letter-spacing: 0.05em; /* Phase 1 で学んだ letter-spacing */
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #dbeafe; /* 薄い青 */
+}
+
+/* ========================================
+   メインコンテンツ
+   ======================================== */
+
+main {
+  max-width: 800px;
+  margin: 2rem auto; /* Phase 1 で学んだ margin（中央寄せ） */
+  padding: 0 1rem;
+}
+
+/* セクション共通スタイル */
+section {
+  background-color: white;
+  padding: 2rem; /* Phase 1 で学んだ padding */
+  margin-bottom: 2rem; /* Phase 1 で学んだ margin */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を付けて立体感を出す */
+}
+
+section h2 {
+  font-size: 2rem; /* Phase 1 で学んだ rem 単位 */
+  color: #1f2937; /* 濃い灰色 */
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #3b82f6; /* Phase 1 で学んだ border */
+}
+
+section h3 {
+  font-size: 1.5rem;
+  color: #374151;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+section p {
+  font-size: 1rem;
+  color: #6b7280; /* Phase 1 で学んだ色指定 */
+  line-height: 1.6; /* Phase 1 で学んだ行間 */
+  margin-bottom: 1rem;
+}
+
+/* ========================================
+   リスト（Phase 1 で学んだ ul, li）
+   ======================================== */
+
+ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+ul li {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+/* ========================================
+   テーブル（Phase 1 で学んだ table）
+   ======================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse; /* ボーダーを重ねる */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+table th,
+table td {
+  padding: 0.75rem; /* Phase 1 で学んだ padding */
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb; /* Phase 1 で学んだ border */
+}
+
+table th {
+  background-color: #f3f4f6;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+table td {
+  color: #6b7280;
+}
+
+/* ========================================
+   趣味セクション（Phase 1 で学んだ display）
+   ======================================== */
+
+.hobby-list {
+  display: block; /* Phase 1 で学んだ display プロパティ */
+}
+
+.hobby-item {
+  background-color: #f9fafb;
+  padding: 1rem; /* Phase 1 で学んだ padding */
+  margin-bottom: 1rem; /* Phase 1 で学んだ margin */
+  border-radius: 6px;
+  border-left: 4px solid #3b82f6; /* Phase 1 で学んだ border */
+}
+
+.hobby-item h3 {
+  font-size: 1.2rem;
+  color: #1f2937;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.hobby-item p {
+  color: #6b7280;
+  margin-bottom: 0;
+}
+
+/* ========================================
+   連絡先セクション
+   ======================================== */
+
+.contact-list {
+  list-style: none; /* リストマーカーを消す */
+  margin-left: 0;
+}
+
+.contact-list li {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.contact-list a {
+  color: #3b82f6; /* Phase 1 で学んだリンクの色 */
+  text-decoration: none; /* Phase 1 で学んだ下線を消す */
+}
+
+.contact-list a:hover {
+  text-decoration: underline; /* Phase 1 で学んだホバー時の下線 */
+}
+
+/* ========================================
+   フッター
+   ======================================== */
+
+footer {
+  background-color: #1f2937;
+  color: #9ca3af;
+  text-align: center; /* Phase 1 で学んだテキスト配置 */
+  padding: 2rem 1rem; /* Phase 1 で学んだ padding */
+  margin-top: 2rem;
+}
+
+footer p {
+  font-size: 0.875rem;
+  margin: 0;
+}

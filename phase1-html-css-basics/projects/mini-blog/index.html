@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebDev Blog - フロントエンド開発を学ぼう</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header>
+      <div class="container">
+        <h1>WebDev Blog</h1>
+        <p class="tagline">フロントエンド開発を楽しく学ぼう！</p>
+      </div>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+      <div class="container">
+        <ul class="nav-list">
+          <li><a href="index.html" class="active">ホーム</a></li>
+          <li><a href="#about">このブログについて</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main>
+      <div class="container">
+        <!-- 記事一覧 -->
+        <section class="articles">
+          <h2>最新記事</h2>
+
+          <!-- 記事1 -->
+          <article class="article-card">
+            <h3>
+              <a href="article1.html"
+                >HTMLの基礎を学ぼう - 初心者のためのガイド</a
+              >
+            </h3>
+            <p class="article-meta">2025年1月15日 投稿</p>
+            <p class="article-excerpt">
+              HTMLはWebページの骨組みを作る言語です。この記事では、HTMLの基本構造や重要な要素について、初心者にも分かりやすく解説します。
+            </p>
+            <a href="article1.html" class="read-more">続きを読む →</a>
+          </article>
+
+          <!-- 記事2 -->
+          <article class="article-card">
+            <h3>
+              <a href="article2.html"
+                >CSSでデザインしよう - スタイリングの基本</a
+              >
+            </h3>
+            <p class="article-meta">2025年1月10日 投稿</p>
+            <p class="article-excerpt">
+              CSSを使えば、HTMLで作った骨組みを美しくデザインできます。色、フォント、レイアウトなど、CSSの基本を実例とともに学びましょう。
+            </p>
+            <a href="article2.html" class="read-more">続きを読む →</a>
+          </article>
+
+          <!-- 記事3 -->
+          <article class="article-card">
+            <h3>
+              <a href="article3.html"
+                >セマンティックHTMLの重要性 - なぜ意味のあるタグを使うべきか</a
+              >
+            </h3>
+            <p class="article-meta">2025年1月5日 投稿</p>
+            <p class="article-excerpt">
+              セマンティックHTMLを使うことで、検索エンジンやスクリーンリーダーがあなたのWebページを正しく理解できるようになります。その重要性と使い方を解説します。
+            </p>
+            <a href="article3.html" class="read-more">続きを読む →</a>
+          </article>
+        </section>
+
+        <!-- サイドバー（このブログについて） -->
+        <aside id="about" class="sidebar">
+          <h2>このブログについて</h2>
+          <p>
+            WebDev
+            Blogは、フロントエンド開発を学ぶ人のための技術ブログです。HTML、CSS、JavaScriptの基礎から実践的なテクニックまで、分かりやすく解説します。
+          </p>
+          <h3>カテゴリー</h3>
+          <ul class="category-list">
+            <li><a href="#">HTML</a></li>
+            <li><a href="#">CSS</a></li>
+            <li><a href="#">JavaScript</a></li>
+            <li><a href="#">初心者向け</a></li>
+          </ul>
+        </aside>
+      </div>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 WebDev Blog. All rights reserved.</p>
+        <p>Phase 1 ミニプロジェクト - HTML/CSS 基礎編</p>
+      </div>
+    </footer>
+  </body>
+</html>
