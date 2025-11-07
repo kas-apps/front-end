@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>問題5-6</title>
+</head>
+<body>
+<h1>問題5-6: 要素の追加</h1>
+<button>項目を追加</button>
+<ul></ul>
+<script>
+const button = document.querySelector('button');
+const list = document.querySelector('ul');
+let count = 0;
+button.addEventListener('click', () => {
+  count++;
+  const li = document.createElement('li');
+  li.textContent = `項目 ${count}`;
+  list.appendChild(li);
+});
+</script>
+</body>
+</html>

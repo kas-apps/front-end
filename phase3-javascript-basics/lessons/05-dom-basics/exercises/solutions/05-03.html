@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>問題5-3</title>
+</head>
+<body>
+<h1>問題5-3: クリックイベント</h1>
+<button>クリック</button>
+<p>まだクリックされていません</p>
+<script>
+const button = document.querySelector('button');
+const paragraph = document.querySelector('p');
+button.addEventListener('click', () => {
+  paragraph.textContent = 'クリックされました！';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題2-4: 偶数だけ表示</title>
+  </head>
+  <body>
+    <h1>問題2-4: 偶数だけ表示</h1>
+    <p>F12キーを押してConsoleタブを開いて、出力結果を確認してください。</p>
+
+    <script>
+      let count = 0;
+
+      for (let i = 1; i <= 20; i++) {
+        if (i % 2 === 0) {
+          // 偶数の判定
+          console.log(i);
+          count++;
+        }
+      }
+
+      console.log(`偶数は全部で ${count} 個ありました`);
+    </script>
+  </body>
+</html>

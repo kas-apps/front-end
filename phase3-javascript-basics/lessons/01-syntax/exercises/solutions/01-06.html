@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題1-6: 複数の演算子を組み合わせる</title>
+  </head>
+  <body>
+    <h1>問題1-6: 複数の演算子を組み合わせる</h1>
+    <p>F12キーを押してConsoleタブを開いて、出力結果を確認してください。</p>
+
+    <script>
+      // 変数を宣言
+      const a = 10;
+      const b = 20;
+
+      // 算術演算子で計算
+      const sum = a + b;
+      const difference = a - b;
+      const product = a * b;
+      const quotient = a / b;
+      const remainder = a % b;
+
+      // 比較演算子で判定
+      const isLess = a < b;
+
+      // 論理演算子で判定
+      const bothGreaterThan10 = a >= 10 && b >= 10;
+
+      // 結果を出力
+      console.log(`a = ${a}, b = ${b}`);
+      console.log(`和: ${sum}`);
+      console.log(`差: ${difference}`);
+      console.log(`積: ${product}`);
+      console.log(`商: ${quotient}`);
+      console.log(`余り: ${remainder}`);
+      console.log(`aはbより小さい: ${isLess}`);
+      console.log(`両方とも10以上: ${bothGreaterThan10}`);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>問題5-5</title>
+<style>
+.highlight { background-color: yellow; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>問題5-5: クラスのトグル</h1>
+<button>トグル</button>
+<p id="target">この要素をハイライト</p>
+<script>
+const button = document.querySelector('button');
+const element = document.querySelector('#target');
+button.addEventListener('click', () => {
+  element.classList.toggle('highlight');
+});
+</script>
+</body>
+</html>

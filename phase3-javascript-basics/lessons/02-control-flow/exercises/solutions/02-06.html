@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題2-6: switch文で曜日メッセージ</title>
+  </head>
+  <body>
+    <h1>問題2-6: switch文で曜日メッセージ</h1>
+    <p>F12キーを押してConsoleタブを開いて、出力結果を確認してください。</p>
+
+    <script>
+      const dayNumber = 5;
+      let message;
+
+      switch (dayNumber) {
+        case 1:
+          message = "月曜日: 今週も頑張ろう！";
+          break;
+        case 2:
+        case 3:
+        case 4:
+          message = `${
+            ["", "月", "火", "水", "木"][dayNumber]
+          }曜日: まだまだ続く...`;
+          break;
+        case 5:
+          message = "金曜日: 明日は休み！";
+          break;
+        case 6:
+        case 7:
+          message = `${dayNumber === 6 ? "土" : "日"}曜日: 週末だ！`;
+          break;
+        default:
+          message = "無効な曜日番号です";
+      }
+
+      console.log(message);
+    </script>
+  </body>
+</html>
