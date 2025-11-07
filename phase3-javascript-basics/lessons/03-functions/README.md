@@ -272,7 +272,7 @@ console.log(add3(5, 3)); // → 8
 const double1 = (n) => n * 2;
 
 // 省略
-const double2 = (n) => n * 2;
+const double2 = n => n * 2;
 
 console.log(double2(5)); // → 10
 ```
