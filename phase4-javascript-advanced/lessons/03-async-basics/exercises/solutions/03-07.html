@@ -511,7 +511,14 @@
 
           // Promise.all で全画像を並行読み込み
           // map で各URLをloadImageのPromiseに変換し、配列を作る
-          const promises = imageUrls.map((url, index) => loadImage(url, index));
+          let loadedCount = 0;
+          const promises = imageUrls.map((url, index) =>
+            loadImage(url, index).then(result => {
+              loadedCount++;
+              updateProgress(loadedCount, imageUrls.length);
+              return result;
+            })
+          );
 
           // Promise.all ですべてのPromiseが完了するまで待つ
           const results = await Promise.all(promises);
