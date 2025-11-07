@@ -201,9 +201,9 @@ let let = "test"; // 予約語はNG
 
 **よく使われる命名規則**：
 
-- **キャメルケース**（camelCase）：JavaScript では最も一般的
+- **キャメルケース**（camelCase）：JavaScript の変数や関数名で最も一般的
   - `userName`, `myAge`, `studentList`
-- **スネークケース**（snake_case）：定数によく使われる
+- **スクリーミングスネークケース**（SCREAMING_SNAKE_CASE）：定数名に使われる
   - `MAX_COUNT`, `API_KEY`
 
 ---
