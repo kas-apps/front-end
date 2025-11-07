@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 4: レスポンシブナビゲーション</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      h1 {
+        padding: 20px;
+        text-align: center;
+        color: #1f2937;
+        margin: 0 0 1rem 0;
+      }
+
+      .info {
+        text-align: center;
+        color: #6b7280;
+        padding: 0 20px 20px 20px;
+      }
+
+      /* デスクトップ（768px以上）：横並び */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1f2937;
+        padding: 1rem 2rem;
+      }
+
+      .logo {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #3b82f6;
+      }
+
+      /* モバイル（767px以下）：縦並び */
+      @media (max-width: 767px) {
+        nav {
+          flex-direction: column; /* 縦並びに変更 */
+          align-items: flex-start;
+          padding: 1rem;
+        }
+
+        .logo {
+          margin-bottom: 1rem;
+        }
+
+        .nav-links {
+          flex-direction: column; /* メニューも縦並びに */
+          gap: 0;
+          width: 100%;
+        }
+
+        .nav-links li {
+          border-bottom: 1px solid #374151; /* 下線を追加 */
+          padding: 0.75rem 0; /* 間隔を広げる */
+        }
+
+        .nav-links li:last-child {
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 4: レスポンシブナビゲーション</h1>
+    <div class="info">
+      <p>画面幅を変えてみてください（767px以下で縦並び、それ以上で横並び）</p>
+    </div>
+
+    <nav>
+      <div class="logo">MyWebsite</div>
+      <ul class="nav-links">
+        <li><a href="#">ホーム</a></li>
+        <li><a href="#">サービス</a></li>
+        <li><a href="#">会社概要</a></li>
+        <li><a href="#">お問い合わせ</a></li>
+      </ul>
+    </nav>
+
+    <div style="padding: 2rem; background-color: #f9fafb; min-height: 400px">
+      <p style="text-align: center; color: #6b7280">
+        ナビゲーションがレスポンシブに変化します。
+      </p>
+    </div>
+  </body>
+</html>

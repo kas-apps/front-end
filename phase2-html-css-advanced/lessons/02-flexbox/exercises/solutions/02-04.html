@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 4: ナビゲーションメニュー</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      /* ナビゲーション全体のFlexコンテナ */
+      nav {
+        display: flex;
+        justify-content: space-between; /* ロゴとメニューを両端に */
+        align-items: center; /* 縦方向で中央揃え */
+        background-color: #1f2937;
+        padding: 1rem 2rem;
+      }
+
+      /* ロゴ */
+      .logo {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      /* メニューリンクのFlexコンテナ */
+      .nav-links {
+        display: flex;
+        gap: 2rem; /* メニュー間の余白 */
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* リンクのスタイル */
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #3b82f6;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="logo">MyWebsite</div>
+      <ul class="nav-links">
+        <li><a href="#">ホーム</a></li>
+        <li><a href="#">サービス</a></li>
+        <li><a href="#">会社概要</a></li>
+        <li><a href="#">お問い合わせ</a></li>
+      </ul>
+    </nav>
+
+    <div style="padding: 2rem">
+      <h1>演習 4: ナビゲーションメニュー</h1>
+      <p>上部のナビゲーションメニューがFlexboxで作られています。</p>
+    </div>
+  </body>
+</html>

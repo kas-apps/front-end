@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 5: ダッシュボード風レイアウト</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      /* メインのGridコンテナ */
+      .container {
+        display: grid;
+        grid-template-columns: 150px 1fr 200px; /* Nav、メイン、サイドバー */
+        grid-template-rows: 60px 1fr 50px; /* ヘッダー、メイン、フッター */
+        gap: 10px;
+        min-height: 100vh;
+        padding: 10px;
+        background-color: #f0f0f0;
+      }
+
+      /* ヘッダー：全列をまたぐ */
+      .header {
+        grid-column: 1 / -1;
+        background-color: #3b82f6;
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+      }
+
+      /* ナビゲーション：1列目、2行目 */
+      .nav {
+        background-color: #1f2937;
+        color: white;
+        padding: 20px 10px;
+      }
+
+      .nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .nav li {
+        padding: 10px;
+        margin-bottom: 5px;
+        background-color: #374151;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .nav li:hover {
+        background-color: #4b5563;
+      }
+
+      /* メインコンテンツ：2列目、2行目（ネストされたグリッド） */
+      .main {
+        display: grid; /* ネストされたグリッド */
+        grid-template-columns: 1fr 1fr; /* 2列 */
+        grid-template-rows: 1fr 1fr; /* 2行 */
+        gap: 10px;
+        padding: 10px;
+        background-color: #e5e7eb;
+      }
+
+      /* 統計カード */
+      .stat-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-box h3 {
+        margin: 0 0 10px 0;
+        color: #1f2937;
+        font-size: 1rem;
+      }
+
+      .stat-box p {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #3b82f6;
+      }
+
+      /* サイドバー：3列目、2行目 */
+      .sidebar {
+        background-color: #f3f4f6;
+        padding: 20px;
+      }
+
+      .sidebar h3 {
+        margin-top: 0;
+        color: #1f2937;
+      }
+
+      /* フッター：全列をまたぐ */
+      .footer {
+        grid-column: 1 / -1;
+        background-color: #1f2937;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- ヘッダー -->
+      <div class="header">
+        <h1>ダッシュボード</h1>
+      </div>
+
+      <!-- ナビゲーション -->
+      <div class="nav">
+        <ul>
+          <li>ホーム</li>
+          <li>統計</li>
+          <li>レポート</li>
+          <li>設定</li>
+        </ul>
+      </div>
+
+      <!-- メインコンテンツ（ネストされたグリッド） -->
+      <div class="main">
+        <div class="stat-box">
+          <h3>総ユーザー数</h3>
+          <p>1,234</p>
+        </div>
+        <div class="stat-box">
+          <h3>今月の売上</h3>
+          <p>¥567,890</p>
+        </div>
+        <div class="stat-box">
+          <h3>新規登録</h3>
+          <p>89</p>
+        </div>
+        <div class="stat-box">
+          <h3>アクティブ率</h3>
+          <p>76%</p>
+        </div>
+      </div>
+
+      <!-- サイドバー -->
+      <div class="sidebar">
+        <h3>お知らせ</h3>
+        <p>新機能がリリースされました！</p>
+        <p>メンテナンス予定：1月25日</p>
+      </div>
+
+      <!-- フッター -->
+      <div class="footer">
+        <p>© 2024 Dashboard</p>
+      </div>
+    </div>
+  </body>
+</html>

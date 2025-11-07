@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>チャレンジ 1: エラー修正（修正後）</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      h1 {
+        padding: 20px;
+        text-align: center;
+      }
+
+      /* 修正1: containerに高さを追加 */
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px; /* 追加：高さを設定しないとalign-itemsが効かない */
+        background-color: #f0f0f0;
+        margin-bottom: 2rem;
+      }
+
+      /* 修正2: width: 100%を削除 */
+      .item {
+        /* width: 100%; を削除：これがあると横並びにならない */
+        background-color: #3b82f6;
+        color: white;
+        padding: 20px;
+        margin: 10px;
+      }
+
+      /* 修正3: navにdisplay: flexと配置プロパティを追加 */
+      .nav {
+        display: flex; /* 追加 */
+        justify-content: center; /* 追加：メニューを中央に配置 */
+        align-items: center; /* 追加：縦方向で中央揃え */
+        background-color: #1f2937;
+        padding: 1rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+      /* 修正4: marginではなくgapを使用 */
+      .nav-links {
+        display: flex;
+        gap: 2rem; /* 追加：marginの代わりにgapを使う */
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* 修正5: marginを削除（gapを使うので不要） */
+      /* .nav-links li {
+        margin-right: 2rem;
+      } */
+
+      /* 修正5: last-childのスタイルを削除（gapを使うので不要） */
+      /* .nav-links li:last-child {
+        margin-right: 0;
+      } */
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+      }
+
+      /* 修正6: flex-wrapを追加 */
+      .card-container {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap; /* 追加：画面が狭い時に折り返す */
+        padding: 20px;
+      }
+
+      .card {
+        background-color: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
+        min-width: 250px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .card h3 {
+        margin-top: 0;
+        color: #1f2937;
+      }
+
+      .card p {
+        color: #6b7280;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>チャレンジ 1: エラー修正（修正後）</h1>
+
+    <!-- セクション1: 中央配置 -->
+    <div class="container">
+      <div class="item">中央に配置したい</div>
+    </div>
+
+    <!-- セクション2: ナビゲーション -->
+    <nav class="nav">
+      <ul class="nav-links">
+        <li><a href="#">ホーム</a></li>
+        <li><a href="#">サービス</a></li>
+        <li><a href="#">お問い合わせ</a></li>
+      </ul>
+    </nav>
+
+    <!-- セクション3: カードレイアウト -->
+    <div class="card-container">
+      <div class="card">
+        <h3>カード1</h3>
+        <p>これは最初のカードです。</p>
+      </div>
+      <div class="card">
+        <h3>カード2</h3>
+        <p>これは2番目のカードです。</p>
+      </div>
+      <div class="card">
+        <h3>カード3</h3>
+        <p>これは3番目のカードです。</p>
+      </div>
+    </div>
+  </body>
+</html>

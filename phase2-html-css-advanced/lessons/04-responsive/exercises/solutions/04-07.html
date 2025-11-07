@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>チャレンジ 1: 複雑なレスポンシブレイアウト</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      /* モバイル（デフォルト、767px以下）：1列グリッド */
+      .container {
+        display: grid;
+        grid-template-columns: 1fr; /* 1列 */
+        gap: 10px;
+        min-height: 100vh;
+        padding: 10px;
+        background-color: #f0f0f0;
+      }
+
+      .header {
+        background-color: #3b82f6;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .sidebar-left,
+      .sidebar-right {
+        background-color: #f3f4f6;
+        padding: 20px;
+      }
+
+      /* モバイルではサイドバーを結合 */
+      .sidebar-right {
+        display: none; /* モバイルでは非表示 */
+      }
+
+      .main {
+        display: grid;
+        grid-template-columns: 1fr; /* モバイル：1列 */
+        gap: 10px;
+        padding: 10px;
+        background-color: #e5e7eb;
+      }
+
+      .content-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .content-card h3 {
+        margin: 0 0 10px 0;
+        color: #1f2937;
+      }
+
+      .content-card p {
+        margin: 0;
+        color: #6b7280;
+      }
+
+      .footer {
+        background-color: #1f2937;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1,
+      h2 {
+        margin-top: 0;
+      }
+
+      /* タブレット（768px〜1023px）：2列グリッド */
+      @media (min-width: 768px) and (max-width: 1023px) {
+        .container {
+          grid-template-columns: 200px 1fr; /* サイドバー + メイン */
+          grid-template-rows: auto 1fr auto;
+        }
+
+        .header {
+          grid-column: 1 / -1; /* 全列をまたぐ */
+        }
+
+        .sidebar-left {
+          grid-row: 2; /* 2行目 */
+        }
+
+        .main {
+          grid-row: 2; /* 2行目 */
+          grid-template-columns: 1fr; /* メインは1列 */
+        }
+
+        /* 右サイドバーは非表示のまま */
+        .sidebar-right {
+          display: none;
+        }
+
+        .footer {
+          grid-column: 1 / -1; /* 全列をまたぐ */
+        }
+      }
+
+      /* デスクトップ（1024px以上）：3列グリッド */
+      @media (min-width: 1024px) {
+        .container {
+          grid-template-columns: 200px 1fr 200px; /* 3列 */
+          grid-template-rows: auto 1fr auto;
+        }
+
+        .header {
+          grid-column: 1 / -1; /* 全列をまたぐ */
+        }
+
+        .sidebar-left {
+          grid-row: 2;
+        }
+
+        .main {
+          grid-row: 2;
+          grid-template-columns: repeat(2, 1fr); /* メインは2列 */
+        }
+
+        .sidebar-right {
+          display: block; /* デスクトップでは表示 */
+          grid-row: 2;
+        }
+
+        .footer {
+          grid-column: 1 / -1; /* 全列をまたぐ */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- ヘッダー -->
+      <div class="header">
+        <h1>チャレンジ 1: 複雑なレスポンシブレイアウト</h1>
+      </div>
+
+      <!-- 左サイドバー -->
+      <div class="sidebar-left">
+        <h2>サイドバー（左）</h2>
+        <ul>
+          <li>メニュー1</li>
+          <li>メニュー2</li>
+          <li>メニュー3</li>
+          <li>メニュー4</li>
+        </ul>
+        <p style="font-size: 0.875rem; color: #6b7280; margin-top: 20px">
+          モバイル：最後に表示<br />
+          タブレット：左側に表示<br />
+          デスクトップ：左側に表示
+        </p>
+      </div>
+
+      <!-- メインコンテンツ -->
+      <div class="main">
+        <div class="content-card">
+          <h3>コンテンツ1</h3>
+          <p>デスクトップでは2列、タブレット・モバイルでは1列で表示されます。</p>
+        </div>
+        <div class="content-card">
+          <h3>コンテンツ2</h3>
+          <p>画面幅に応じてレイアウトが大きく変化します。</p>
+        </div>
+        <div class="content-card">
+          <h3>コンテンツ3</h3>
+          <p>モバイル、タブレット、デスクトップで異なるレイアウト。</p>
+        </div>
+        <div class="content-card">
+          <h3>コンテンツ4</h3>
+          <p>複数のブレークポイントを使った実践的な例です。</p>
+        </div>
+        <div class="content-card">
+          <h3>コンテンツ5</h3>
+          <p>Gridとメディアクエリの組み合わせで実現しています。</p>
+        </div>
+        <div class="content-card">
+          <h3>コンテンツ6</h3>
+          <p>画面サイズを変えてレイアウトの変化を確認してください！</p>
+        </div>
+      </div>
+
+      <!-- 右サイドバー（デスクトップのみ表示） -->
+      <div class="sidebar-right">
+        <h2>サイドバー（右）</h2>
+        <h3>お知らせ</h3>
+        <p>新機能がリリースされました！</p>
+        <h3>人気記事</h3>
+        <ul>
+          <li>記事1</li>
+          <li>記事2</li>
+          <li>記事3</li>
+        </ul>
+        <p style="font-size: 0.875rem; color: #6b7280; margin-top: 20px">
+          モバイル：非表示<br />
+          タブレット：非表示<br />
+          デスクトップ：右側に表示
+        </p>
+      </div>
+
+      <!-- フッター -->
+      <div class="footer">
+        <p>&copy; 2024 Responsive Layout Challenge</p>
+      </div>
+    </div>
+  </body>
+</html>

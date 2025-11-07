@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 5: レスポンシブカードレイアウト</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9fafb;
+      }
+
+      h1 {
+        text-align: center;
+        color: #1f2937;
+        margin-bottom: 1rem;
+      }
+
+      .info {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 2rem;
+      }
+
+      /* モバイル（デフォルト、480px以下）：1列 */
+      .card-grid {
+        display: grid;
+        grid-template-columns: 1fr; /* 1列 */
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .card {
+        background-color: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s, transform 0.3s;
+        cursor: pointer;
+      }
+
+      .card:hover {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+      }
+
+      .card-image {
+        width: 100%;
+        height: 150px;
+        background-color: #3b82f6;
+      }
+
+      /* 各カードの画像色を変える */
+      .card:nth-child(2) .card-image {
+        background-color: #10b981;
+      }
+      .card:nth-child(3) .card-image {
+        background-color: #f59e0b;
+      }
+      .card:nth-child(4) .card-image {
+        background-color: #ef4444;
+      }
+      .card:nth-child(5) .card-image {
+        background-color: #8b5cf6;
+      }
+      .card:nth-child(6) .card-image {
+        background-color: #ec4899;
+      }
+
+      .card-content {
+        padding: 20px;
+      }
+
+      .card h3 {
+        margin: 0 0 10px 0;
+        color: #1f2937;
+      }
+
+      .card p {
+        margin: 0 0 15px 0;
+        color: #6b7280;
+        line-height: 1.6;
+      }
+
+      .card button {
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .card button:hover {
+        background-color: #2563eb;
+      }
+
+      /* タブレット（481px〜1023px）：2列 */
+      @media (min-width: 481px) and (max-width: 1023px) {
+        .card-grid {
+          grid-template-columns: repeat(2, 1fr); /* 2列 */
+        }
+      }
+
+      /* デスクトップ（1024px以上）：3列 */
+      @media (min-width: 1024px) {
+        .card-grid {
+          grid-template-columns: repeat(3, 1fr); /* 3列 */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 5: レスポンシブカードレイアウト</h1>
+    <div class="info">
+      <p>画面幅を変えてみてください：</p>
+      <p>480px以下: 1列 / 481px〜1023px: 2列 / 1024px以上: 3列</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h3>商品A</h3>
+          <p>これは商品Aの説明文です。レスポンシブに表示されます。</p>
+          <button>詳しく見る</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h3>商品B</h3>
+          <p>これは商品Bの説明文です。画面幅に応じて列数が変わります。</p>
+          <button>詳しく見る</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h3>商品C</h3>
+          <p>これは商品Cの説明文です。モバイル、タブレット、デスクトップ対応。</p>
+          <button>詳しく見る</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h3>商品D</h3>
+          <p>これは商品Dの説明文です。どんな画面サイズでも快適に。</p>
+          <button>詳しく見る</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h3>商品E</h3>
+          <p>これは商品Eの説明文です。レスポンシブデザインの実践例です。</p>
+          <button>詳しく見る</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image"></div>
+        <div class="card-content">
+          <h3>商品F</h3>
+          <p>これは商品Fの説明文です。グリッドとメディアクエリの組み合わせ。</p>
+          <button>詳しく見る</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

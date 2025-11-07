@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 1: 最初のメディアクエリ</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background-color: #f9fafb;
+      }
+
+      h1 {
+        text-align: center;
+        color: #1f2937;
+        margin-bottom: 2rem;
+      }
+
+      /* デフォルト（広い画面）：青 */
+      .box {
+        background-color: #3b82f6;
+        color: white;
+        padding: 40px;
+        text-align: center;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* 画面幅が768px以下：緑に変更 */
+      @media (max-width: 768px) {
+        .box {
+          background-color: #10b981;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 1: 最初のメディアクエリ</h1>
+    <p style="text-align: center; color: #6b7280; margin-bottom: 2rem">
+      画面幅を変えてみてください（768px以下で緑、それ以上で青）
+    </p>
+
+    <div class="box">画面幅に応じて色が変わります</div>
+  </body>
+</html>
