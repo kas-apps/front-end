@@ -279,7 +279,7 @@ async function fetchUsers() {
 非同期処理のエラーは、原因が分かりにくいことも。でも、エラーメッセージをよく読めば解決できる！
 
 ```javascript
-// Uncaught (in promise) TypeError: Cannot read property 'name' of undefined
+// Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'name')
 // → dataがundefinedになってる！APIからデータが返ってきてない可能性
 
 // Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 0
