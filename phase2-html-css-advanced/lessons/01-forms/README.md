@@ -245,19 +245,21 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 **複数のチェックボックスの例**：
 
 ```html
-<p>興味のある分野（複数選択可）:</p>
-<label>
-  <input type="checkbox" name="interests" value="coding" />
-  プログラミング
-</label>
-<label>
-  <input type="checkbox" name="interests" value="design" />
-  デザイン
-</label>
-<label>
-  <input type="checkbox" name="interests" value="business" />
-  ビジネス
-</label>
+<fieldset>
+  <legend>興味のある分野（複数選択可）:</legend>
+  <label>
+    <input type="checkbox" name="interests" value="coding" />
+    プログラミング
+  </label>
+  <label>
+    <input type="checkbox" name="interests" value="design" />
+    デザイン
+  </label>
+  <label>
+    <input type="checkbox" name="interests" value="business" />
+    ビジネス
+  </label>
+</fieldset>
 ```
 
 ---
