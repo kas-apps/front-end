@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題2: HTML5バリデーション属性を使ったフォーム</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .info-box {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 12px;
+        margin-bottom: 24px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #856404;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .required {
+        color: #f5576c;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+
+      /* フォーカス時 */
+      input:focus {
+        outline: none;
+        border-color: #f093fb;
+      }
+
+      /* 有効な入力（緑の枠線） */
+      input:valid:not(:placeholder-shown) {
+        border-color: #51cf66;
+        background-color: #f0fdf4;
+      }
+
+      /* 無効な入力（赤の枠線） */
+      input:invalid:not(:placeholder-shown):not(:focus) {
+        border-color: #ff6b6b;
+        background-color: #fff5f5;
+      }
+
+      /* チェックマーク（有効な入力） */
+      input:valid:not(:placeholder-shown) {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2351cf66'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 24px;
+        padding-right: 44px;
+      }
+
+      .hint {
+        font-size: 13px;
+        color: #868e96;
+        margin-top: 4px;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      /* 送信結果 */
+      .success-message {
+        margin-top: 20px;
+        padding: 16px;
+        background: #d4edda;
+        border: 2px solid #c3e6cb;
+        border-radius: 6px;
+        color: #155724;
+        display: none;
+      }
+
+      .success-message.show {
+        display: block;
+      }
+
+      .success-message h3 {
+        margin-bottom: 8px;
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>✅ ユーザー登録フォーム</h1>
+      <p class="description">
+        問題2の解答例：HTML5のバリデーション属性を使って、JavaScriptを最小限に抑えた実装です。
+      </p>
+
+      <div class="info-box">
+        💡 <strong>ポイント</strong>: 入力を始めると、リアルタイムで緑（有効）または赤（無効）の枠線が表示されます。
+        ブラウザが自動でバリデーションを行っています。
+      </div>
+
+      <form id="registrationForm">
+        <!-- ユーザー名 -->
+        <div class="form-group">
+          <label for="username">
+            ユーザー名 <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="例: yamada_taro"
+            required
+            minlength="3"
+            maxlength="20"
+          />
+          <div class="hint">3文字以上、20文字以下で入力してください</div>
+        </div>
+
+        <!-- メールアドレス -->
+        <div class="form-group">
+          <label for="email">
+            メールアドレス <span class="required">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="例: taro@example.com"
+            required
+          />
+          <div class="hint">有効なメールアドレスを入力してください</div>
+        </div>
+
+        <!-- パスワード -->
+        <div class="form-group">
+          <label for="password">
+            パスワード <span class="required">*</span>
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="8文字以上のパスワード"
+            required
+            minlength="8"
+          />
+          <div class="hint">8文字以上で入力してください</div>
+        </div>
+
+        <!-- 年齢 -->
+        <div class="form-group">
+          <label for="age">
+            年齢 <span class="required">*</span>
+          </label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            placeholder="例: 25"
+            required
+            min="18"
+            max="120"
+          />
+          <div class="hint">18歳以上で入力してください</div>
+        </div>
+
+        <button type="submit">登録する</button>
+      </form>
+
+      <!-- 成功メッセージ -->
+      <div class="success-message" id="successMessage">
+        <h3>🎉 登録成功！</h3>
+        <p>全てのフィールドが正しく入力されました。</p>
+        <p style="margin-top: 8px; font-size: 14px;">
+          コンソールで詳細を確認できます（F12キーを押してConsoleタブを開く）
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // ===== 要素を取得 =====
+      const form = document.getElementById("registrationForm");
+      const successMessage = document.getElementById("successMessage");
+
+      // ===== フォーム送信イベント =====
+      form.addEventListener("submit", function (event) {
+        // デフォルトの送信動作を防ぐ
+        event.preventDefault();
+
+        console.log("=== フォームが送信されました ===");
+
+        // ===== FormDataで全データを取得 =====
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        // コンソールに出力
+        console.log("登録データ:", data);
+        console.log("\n【各フィールドの値】");
+        console.log("ユーザー名:", data.username);
+        console.log("メールアドレス:", data.email);
+        console.log("パスワード:", data.password);
+        console.log("年齢:", data.age);
+
+        // ===== バリデーション状態を確認 =====
+        console.log("\n【バリデーション状態】");
+        const username = document.getElementById("username");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const age = document.getElementById("age");
+
+        console.log("ユーザー名 - 有効:", username.validity.valid);
+        console.log("メールアドレス - 有効:", email.validity.valid);
+        console.log("パスワード - 有効:", password.validity.valid);
+        console.log("年齢 - 有効:", age.validity.valid);
+
+        // ===== 成功メッセージを表示 =====
+        successMessage.classList.add("show");
+
+        // スムーズにスクロール
+        successMessage.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+
+        console.log("\n✓ 登録が完了しました！");
+      });
+
+      // ===== ページ読み込み時のメッセージ =====
+      console.log("✅ HTML5バリデーション付きフォームが読み込まれました");
+      console.log("\n【HTML5バリデーション属性の説明】");
+      console.log("・required: 必須項目");
+      console.log("・minlength: 最小文字数");
+      console.log("・maxlength: 最大文字数");
+      console.log("・type='email': メール形式を自動チェック");
+      console.log("・type='number': 数値のみ入力可能");
+      console.log("・min/max: 数値の範囲指定");
+      console.log("\n【CSSの擬似クラス】");
+      console.log("・:valid: バリデーションをパスした状態（緑の枠線）");
+      console.log("・:invalid: バリデーションに失敗した状態（赤の枠線）");
+      console.log("・:placeholder-shown: プレースホルダーが表示されている状態");
+      console.log("\n試しに以下を入力してみてください:");
+      console.log("・ユーザー名: 2文字だけ → エラーになる");
+      console.log("・メールアドレス: 'abc' だけ → エラーになる");
+      console.log("・パスワード: 5文字だけ → エラーになる");
+      console.log("・年齢: 15 → エラーになる");
+    </script>
+  </body>
+</html>

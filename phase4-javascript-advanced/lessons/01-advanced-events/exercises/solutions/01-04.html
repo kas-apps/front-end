@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問題 1-4: イベント委譲でリスト管理</title>
+  <style>
+    /* ページ全体のスタイル */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      min-height: 100vh;
+    }
+
+    /* コンテナのスタイル */
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 見出しのスタイル */
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* 説明文のスタイル */
+    .description {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #fa709a;
+    }
+
+    /* 入力エリアのスタイル */
+    .input-area {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #fa709a;
+    }
+
+    .add-button {
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .add-button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* タスクリストのスタイル */
+    #taskList {
+      list-style: none;
+      padding: 0;
+    }
+
+    #taskList li {
+      background: #f8f9fa;
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s;
+    }
+
+    #taskList li:hover {
+      background: #e9ecef;
+    }
+
+    .task-text {
+      flex: 1;
+    }
+
+    .delete {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .delete:hover {
+      background: #c82333;
+    }
+
+    /* 空の状態のメッセージ */
+    .empty-message {
+      text-align: center;
+      color: #999;
+      padding: 30px;
+      font-style: italic;
+    }
+
+    /* 説明セクション */
+    .explanation {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-left: 4px solid #0066cc;
+    }
+
+    .explanation h3 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📝 イベント委譲でリスト管理</h1>
+    <p class="subtitle">効率的なイベント処理を体験しよう！</p>
+
+    <div class="description">
+      <p><strong>この演習で学ぶこと：</strong></p>
+      <ul>
+        <li>イベント委譲で親要素に1つだけイベントリスナーを設定</li>
+        <li>動的に追加される要素にも自動的にイベントが適用される</li>
+        <li>パフォーマンスが良く、コードもシンプルになる！</li>
+      </ul>
+    </div>
+
+    <!-- タスク追加の入力エリア -->
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="タスクを入力してください">
+      <button class="add-button" id="addButton">追加</button>
+    </div>
+
+    <!-- タスクリスト -->
+    <ul id="taskList">
+      <li class="empty-message">まだタスクがありません。上の入力欄からタスクを追加してね！</li>
+    </ul>
+
+    <div class="explanation">
+      <h3>💡 イベント委譲のポイント</h3>
+      <p>
+        各タスクの削除ボタンに個別にイベントリスナーを設定するのではなく、
+        親要素の<code>&lt;ul&gt;</code>に<strong>1つだけ</strong>イベントリスナーを設定しているよ！
+      </p>
+      <p>
+        クリックされた要素が削除ボタン（<code>delete</code>クラス）かどうかを
+        <code>event.target</code>で判定しているんだ。
+      </p>
+      <p>
+        これなら、後から追加したタスクの削除ボタンも自動的に動作するよ！
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // 要素を取得
+    const taskInput = document.getElementById('taskInput');
+    const addButton = document.getElementById('addButton');
+    const taskList = document.getElementById('taskList');
+
+    // タスクを追加する関数
+    function addTask() {
+      const taskText = taskInput.value.trim();
+
+      // 空欄チェック
+      if (taskText === '') {
+        alert('タスクを入力してください');
+        return;
+      }
+
+      // 最初のタスクなら、空メッセージを削除
+      const emptyMessage = taskList.querySelector('.empty-message');
+      if (emptyMessage) {
+        emptyMessage.remove();
+      }
+
+      // 新しいタスクのli要素を作成
+      const li = document.createElement('li');
+
+      // タスクのテキスト部分
+      const span = document.createElement('span');
+      span.className = 'task-text';
+      span.textContent = taskText;
+
+      // 削除ボタンを作成
+      const deleteButton = document.createElement('button');
+      deleteButton.className = 'delete';
+      deleteButton.textContent = '削除';
+
+      // li要素にテキストとボタンを追加
+      li.appendChild(span);
+      li.appendChild(deleteButton);
+
+      // リストに追加
+      taskList.appendChild(li);
+
+      // 入力欄をクリア
+      taskInput.value = '';
+      taskInput.focus();
+
+      console.log('✅ タスクを追加しました:', taskText);
+    }
+
+    // 追加ボタンのクリックイベント
+    addButton.addEventListener('click', addTask);
+
+    // Enter キーでも追加できるようにする
+    taskInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        addTask();
+      }
+    });
+
+    // 【重要！】イベント委譲：親要素（ul）に1つだけイベントリスナーを設定
+    taskList.addEventListener('click', (event) => {
+      // クリックされた要素が削除ボタン（deleteクラス）かどうかチェック
+      if (event.target.classList.contains('delete')) {
+        // 削除ボタンの親要素（li）を取得
+        const li = event.target.parentElement;
+        const taskText = li.querySelector('.task-text').textContent;
+
+        // タスクを削除
+        li.remove();
+
+        console.log('🗑️ タスクを削除しました:', taskText);
+
+        // すべてのタスクが削除されたら、空メッセージを表示
+        if (taskList.children.length === 0) {
+          const emptyLi = document.createElement('li');
+          emptyLi.className = 'empty-message';
+          emptyLi.textContent = 'すべてのタスクが完了しました！新しいタスクを追加してね！';
+          taskList.appendChild(emptyLi);
+        }
+      }
+    });
+
+    // ページ読み込み時のメッセージ
+    console.log('✅ イベント委譲が設定されました！');
+    console.log('💡 親要素（ul）に1つだけイベントリスナーを設定しているよ！');
+    console.log('💡 タスクを追加して削除してみてね！');
+  </script>
+</body>
+</html>

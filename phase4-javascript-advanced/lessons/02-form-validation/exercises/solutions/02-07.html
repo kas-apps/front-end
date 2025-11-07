@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題7: 完全なユーザー登録フォーム</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 32px;
+        text-align: center;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      /* エラーサマリー */
+      .error-summary {
+        display: none;
+        margin-bottom: 24px;
+        padding: 16px;
+        background: #fff5f5;
+        border: 2px solid #ff6b6b;
+        border-radius: 8px;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      .error-summary.show {
+        display: block;
+      }
+
+      .error-summary h3 {
+        color: #c92a2a;
+        margin-bottom: 12px;
+        font-size: 16px;
+      }
+
+      .error-summary ul {
+        margin: 0;
+        padding-left: 20px;
+        color: #c92a2a;
+        font-size: 14px;
+      }
+
+      .error-summary li {
+        margin: 4px 0;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* フォームグループ */
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .required {
+        color: #ff6b6b;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      /* バリデーション状態 */
+      input.valid,
+      textarea.valid {
+        border-color: #51cf66;
+        background-color: #f0fdf4;
+      }
+
+      input.error,
+      textarea.error {
+        border-color: #ff6b6b;
+        background-color: #fff5f5;
+      }
+
+      /* メッセージ */
+      .error-message,
+      .success-message {
+        display: none;
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      .error-message {
+        background-color: #ffe0e0;
+        border-left: 4px solid #ff6b6b;
+        color: #c92a2a;
+      }
+
+      .success-message {
+        background-color: #d4edda;
+        border-left: 4px solid #51cf66;
+        color: #155724;
+        font-weight: 600;
+      }
+
+      .error-message.show,
+      .success-message.show {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* パスワード強度 */
+      .password-strength {
+        margin-top: 12px;
+      }
+
+      .strength-meter {
+        height: 8px;
+        background: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 8px;
+      }
+
+      .strength-bar {
+        height: 100%;
+        width: 0%;
+        transition: all 0.3s;
+      }
+
+      .strength-bar.weak {
+        width: 33%;
+        background: #ff6b6b;
+      }
+
+      .strength-bar.medium {
+        width: 66%;
+        background: #ffd93d;
+      }
+
+      .strength-bar.strong {
+        width: 100%;
+        background: #51cf66;
+      }
+
+      .strength-text {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .requirements {
+        margin-top: 8px;
+        font-size: 13px;
+      }
+
+      .requirement {
+        margin: 4px 0;
+        color: #868e96;
+      }
+
+      .requirement.met {
+        color: #51cf66;
+        font-weight: 600;
+      }
+
+      /* チェックボックス・ラジオボタン */
+      .checkbox-group,
+      .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 8px;
+      }
+
+      .checkbox-item,
+      .radio-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      input[type="checkbox"],
+      input[type="radio"] {
+        width: auto;
+        cursor: pointer;
+      }
+
+      /* 文字数カウンター */
+      .char-count {
+        text-align: right;
+        font-size: 13px;
+        color: #868e96;
+        margin-top: 4px;
+      }
+
+      .char-count.warning {
+        color: #ff6b6b;
+      }
+
+      /* ボタン */
+      button {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
+      }
+
+      button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      button:disabled {
+        background: #adb5bd;
+        cursor: not-allowed;
+      }
+
+      /* ローディング状態 */
+      .loading {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      .loading.show {
+        display: block;
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e9ecef;
+        border-top-color: #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* 成功メッセージ */
+      .success-result {
+        display: none;
+        text-align: center;
+        padding: 40px;
+      }
+
+      .success-result.show {
+        display: block;
+      }
+
+      .success-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+      }
+
+      .success-result h2 {
+        color: #28a745;
+        margin-bottom: 16px;
+      }
+
+      .success-result p {
+        color: #666;
+        font-size: 16px;
+      }
+
+      /* レスポンシブ */
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 26px;
+        }
+
+        .checkbox-group,
+        .radio-group {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚀 ユーザー登録フォーム</h1>
+      <p class="description">
+        問題7の解答例：全ての機能を組み合わせた総合的なフォーム実装です。
+      </p>
+
+      <!-- エラーサマリー -->
+      <div class="error-summary" id="errorSummary">
+        <h3>⚠️ 入力内容に誤りがあります</h3>
+        <ul id="errorList"></ul>
+      </div>
+
+      <form id="registrationForm">
+        <!-- ユーザー名 -->
+        <div class="form-group">
+          <label for="username">
+            ユーザー名 <span class="required">*</span>
+          </label>
+          <input type="text" id="username" name="username" placeholder="例: yamada_taro" />
+          <div class="error-message" id="usernameError"></div>
+          <div class="success-message" id="usernameSuccess">✓ OK!</div>
+        </div>
+
+        <!-- メールアドレス -->
+        <div class="form-group">
+          <label for="email">
+            メールアドレス <span class="required">*</span>
+          </label>
+          <input type="email" id="email" name="email" placeholder="例: taro@example.com" />
+          <div class="error-message" id="emailError"></div>
+          <div class="success-message" id="emailSuccess">✓ OK!</div>
+        </div>
+
+        <!-- パスワード -->
+        <div class="form-group">
+          <label for="password">
+            パスワード <span class="required">*</span>
+          </label>
+          <input type="password" id="password" name="password" placeholder="強力なパスワードを入力" />
+          <div class="password-strength">
+            <div class="strength-meter">
+              <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            <div class="strength-text" id="strengthText"></div>
+            <div class="requirements">
+              <div class="requirement" id="req-length">✗ 8文字以上</div>
+              <div class="requirement" id="req-uppercase">✗ 大文字を含む</div>
+              <div class="requirement" id="req-lowercase">✗ 小文字を含む</div>
+              <div class="requirement" id="req-number">✗ 数字を含む</div>
+            </div>
+          </div>
+          <div class="error-message" id="passwordError"></div>
+          <div class="success-message" id="passwordSuccess">✓ 強力なパスワードです！</div>
+        </div>
+
+        <!-- パスワード確認 -->
+        <div class="form-group">
+          <label for="confirmPassword">
+            パスワード（確認） <span class="required">*</span>
+          </label>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="もう一度入力" />
+          <div class="error-message" id="confirmPasswordError"></div>
+          <div class="success-message" id="confirmPasswordSuccess">✓ パスワードが一致しています</div>
+        </div>
+
+        <!-- 生年月日 -->
+        <div class="form-group">
+          <label for="birthdate">生年月日</label>
+          <input type="date" id="birthdate" name="birthdate" />
+        </div>
+
+        <!-- 性別 -->
+        <div class="form-group">
+          <label>性別</label>
+          <div class="radio-group">
+            <div class="radio-item">
+              <input type="radio" id="male" name="gender" value="male" />
+              <label for="male">男性</label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" id="female" name="gender" value="female" />
+              <label for="female">女性</label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" id="other" name="gender" value="other" />
+              <label for="other">その他</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 趣味 -->
+        <div class="form-group">
+          <label>趣味（複数選択可）</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="reading" name="hobbies" value="reading" />
+              <label for="reading">読書</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="movies" name="hobbies" value="movies" />
+              <label for="movies">映画</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="sports" name="hobbies" value="sports" />
+              <label for="sports">スポーツ</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="music" name="hobbies" value="music" />
+              <label for="music">音楽</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="games" name="hobbies" value="games" />
+              <label for="games">ゲーム</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="travel" name="hobbies" value="travel" />
+              <label for="travel">旅行</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 自己紹介 -->
+        <div class="form-group">
+          <label for="bio">自己紹介（最大500文字）</label>
+          <textarea id="bio" name="bio" placeholder="自己紹介を入力してください" maxlength="500"></textarea>
+          <div class="char-count" id="charCount">0 / 500</div>
+        </div>
+
+        <button type="submit" id="submitBtn">登録する</button>
+      </form>
+
+      <!-- ローディング -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p style="margin-top: 16px">処理中...</p>
+      </div>
+
+      <!-- 成功メッセージ -->
+      <div class="success-result" id="successResult">
+        <div class="success-icon">🎉</div>
+        <h2>登録完了！</h2>
+        <p>ユーザー登録が正常に完了しました。</p>
+      </div>
+    </div>
+
+    <script>
+      // ===== 要素取得 =====
+      const form = document.getElementById("registrationForm");
+      const errorSummary = document.getElementById("errorSummary");
+      const errorList = document.getElementById("errorList");
+      const loading = document.getElementById("loading");
+      const successResult = document.getElementById("successResult");
+      const submitBtn = document.getElementById("submitBtn");
+
+      const usernameInput = document.getElementById("username");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+      const bioTextarea = document.getElementById("bio");
+      const charCount = document.getElementById("charCount");
+
+      // ===== エラー表示関数 =====
+      function showError(inputId, message) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(inputId + "Error");
+        const successDiv = document.getElementById(inputId + "Success");
+
+        input.classList.add("error");
+        input.classList.remove("valid");
+        errorDiv.textContent = message;
+        errorDiv.classList.add("show");
+        if (successDiv) successDiv.classList.remove("show");
+      }
+
+      // ===== 成功表示関数 =====
+      function showSuccess(inputId) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(inputId + "Error");
+        const successDiv = document.getElementById(inputId + "Success");
+
+        input.classList.add("valid");
+        input.classList.remove("error");
+        errorDiv.classList.remove("show");
+        if (successDiv) successDiv.classList.add("show");
+      }
+
+      // ===== バリデーションクリア =====
+      function clearValidation(inputId) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(inputId + "Error");
+        const successDiv = document.getElementById(inputId + "Success");
+
+        input.classList.remove("valid", "error");
+        errorDiv.classList.remove("show");
+        if (successDiv) successDiv.classList.remove("show");
+      }
+
+      // ===== 全エラークリア =====
+      function clearAllErrors() {
+        ["username", "email", "password", "confirmPassword"].forEach(clearValidation);
+        errorSummary.classList.remove("show");
+        errorList.innerHTML = "";
+      }
+
+      // ===== ユーザー名バリデーション =====
+      function validateUsername() {
+        const value = usernameInput.value.trim();
+        if (!value) return { valid: false, message: "ユーザー名を入力してください" };
+        if (value.length < 3 || value.length > 20)
+          return { valid: false, message: "ユーザー名は3〜20文字で入力してください" };
+        if (!/^[a-zA-Z0-9_]+$/.test(value))
+          return { valid: false, message: "英数字とアンダースコアのみ使用できます" };
+        return { valid: true };
+      }
+
+      // ===== メールバリデーション =====
+      function validateEmail() {
+        const value = emailInput.value.trim();
+        if (!value) return { valid: false, message: "メールアドレスを入力してください" };
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          return { valid: false, message: "有効なメールアドレスを入力してください" };
+        return { valid: true };
+      }
+
+      // ===== パスワードバリデーション =====
+      function validatePassword() {
+        const value = passwordInput.value;
+        const checks = {
+          length: value.length >= 8,
+          uppercase: /[A-Z]/.test(value),
+          lowercase: /[a-z]/.test(value),
+          number: /[0-9]/.test(value),
+        };
+
+        // 要件表示更新
+        updateRequirement("req-length", checks.length);
+        updateRequirement("req-uppercase", checks.uppercase);
+        updateRequirement("req-lowercase", checks.lowercase);
+        updateRequirement("req-number", checks.number);
+
+        // 強度計算
+        const strength = Object.values(checks).filter(Boolean).length;
+        const strengthBar = document.getElementById("strengthBar");
+        const strengthText = document.getElementById("strengthText");
+
+        if (!value) {
+          strengthBar.className = "strength-bar";
+          strengthText.textContent = "";
+          return { valid: false, message: "パスワードを入力してください" };
+        }
+
+        if (strength <= 2) {
+          strengthBar.className = "strength-bar weak";
+          strengthText.textContent = "弱い";
+          strengthText.style.color = "#ff6b6b";
+        } else if (strength === 3) {
+          strengthBar.className = "strength-bar medium";
+          strengthText.textContent = "普通";
+          strengthText.style.color = "#ffd93d";
+        } else {
+          strengthBar.className = "strength-bar strong";
+          strengthText.textContent = "強い";
+          strengthText.style.color = "#51cf66";
+        }
+
+        if (!Object.values(checks).every(Boolean))
+          return { valid: false, message: "全ての要件を満たしてください" };
+
+        return { valid: true };
+      }
+
+      function updateRequirement(id, isMet) {
+        const elem = document.getElementById(id);
+        elem.classList.toggle("met", isMet);
+        elem.textContent = elem.textContent.replace(/[✗✓]/, isMet ? "✓" : "✗");
+      }
+
+      // ===== パスワード確認バリデーション =====
+      function validateConfirmPassword() {
+        const value = confirmPasswordInput.value;
+        if (!value) return { valid: false, message: "パスワード（確認）を入力してください" };
+        if (value !== passwordInput.value)
+          return { valid: false, message: "パスワードが一致しません" };
+        return { valid: true };
+      }
+
+      // ===== リアルタイムバリデーション =====
+      usernameInput.addEventListener("blur", () => {
+        const result = validateUsername();
+        result.valid ? showSuccess("username") : showError("username", result.message);
+      });
+
+      emailInput.addEventListener("blur", () => {
+        const result = validateEmail();
+        result.valid ? showSuccess("email") : showError("email", result.message);
+      });
+
+      passwordInput.addEventListener("input", validatePassword);
+
+      confirmPasswordInput.addEventListener("input", () => {
+        if (confirmPasswordInput.value.length > 0) {
+          const result = validateConfirmPassword();
+          result.valid
+            ? showSuccess("confirmPassword")
+            : showError("confirmPassword", result.message);
+        }
+      });
+
+      // ===== 文字数カウント =====
+      bioTextarea.addEventListener("input", () => {
+        const length = bioTextarea.value.length;
+        charCount.textContent = `${length} / 500`;
+        charCount.classList.toggle("warning", length > 450);
+      });
+
+      // ===== フォーム送信 =====
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        clearAllErrors();
+
+        const errors = [];
+        const validations = [
+          { fn: validateUsername, id: "username" },
+          { fn: validateEmail, id: "email" },
+          { fn: validatePassword, id: "password" },
+          { fn: validateConfirmPassword, id: "confirmPassword" },
+        ];
+
+        validations.forEach(({ fn, id }) => {
+          const result = fn();
+          if (result.valid) {
+            showSuccess(id);
+          } else {
+            showError(id, result.message);
+            errors.push(result.message);
+          }
+        });
+
+        if (errors.length > 0) {
+          errors.forEach((error) => {
+            const li = document.createElement("li");
+            li.textContent = error;
+            errorList.appendChild(li);
+          });
+          errorSummary.classList.add("show");
+          errorSummary.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+
+        // 送信処理
+        form.style.display = "none";
+        loading.classList.add("show");
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData);
+          data.hobbies = formData.getAll("hobbies");
+
+          console.log("=== 登録データ ===");
+          console.log(data);
+
+          loading.classList.remove("show");
+          successResult.classList.add("show");
+        }, 2000);
+      });
+
+      console.log("🚀 完全なユーザー登録フォームが読み込まれました");
+      console.log("全ての機能が統合されています：");
+      console.log("✓ リアルタイムバリデーション");
+      console.log("✓ パスワード強度チェック");
+      console.log("✓ エラーサマリー表示");
+      console.log("✓ ローディング状態");
+      console.log("✓ 文字数カウント");
+    </script>
+  </body>
+</html>

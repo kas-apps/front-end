@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問題 1-2: preventDefault の使用</title>
+  <style>
+    /* ページ全体のスタイル */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      min-height: 100vh;
+    }
+
+    /* コンテナのスタイル */
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 見出しのスタイル */
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* 説明文のスタイル */
+    .description {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #f5576c;
+    }
+
+    /* リンクのスタイル */
+    .link-box {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .link-box a {
+      color: white;
+      font-size: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 15px 30px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .link-box a:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* 説明セクション */
+    .explanation {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-left: 4px solid #0066cc;
+    }
+
+    .explanation h3 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚫 preventDefault の使用</h1>
+    <p class="subtitle">リンクをクリックしてもページ遷移しないよ！</p>
+
+    <div class="description">
+      <p><strong>この演習で学ぶこと：</strong></p>
+      <ul>
+        <li>event.preventDefault() でブラウザのデフォルト動作をキャンセル</li>
+        <li>リンクのクリック、フォームの送信などを防ぐことができる</li>
+        <li>カスタムの動作を実装したい時に超便利！</li>
+      </ul>
+    </div>
+
+    <div class="link-box">
+      <a href="https://www.google.com" id="myLink">
+        このリンクをクリックしてみて！
+      </a>
+    </div>
+
+    <div class="explanation">
+      <h3>💡 何が起こっているの？</h3>
+      <p>
+        通常、<code>&lt;a&gt;</code>タグをクリックすると、<code>href</code>属性に指定されたURLへページ遷移するよね。
+      </p>
+      <p>
+        でも、<code>event.preventDefault()</code>を使うと、この「デフォルトの動作」をキャンセルできるんだ！
+      </p>
+      <p>
+        だから、リンクをクリックしてもページ遷移せずに、代わりにアラートが表示されるよ！
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // リンク要素を取得
+    const link = document.getElementById('myLink');
+
+    // クリックイベントのリスナーを追加
+    link.addEventListener('click', (event) => {
+      // 【重要！】event.preventDefault() でデフォルト動作（ページ遷移）をキャンセル
+      event.preventDefault();
+
+      // コンソールにもメッセージを出力
+      console.log('🚫 リンクのクリックを検知！');
+      console.log('📍 本来の遷移先:', event.target.href);
+      console.log('✅ preventDefault() でページ遷移をキャンセルしました！');
+
+      // カスタムの動作：アラートを表示
+      alert('リンクがクリックされましたが、遷移はキャンセルされました');
+
+      // もし preventDefault() を呼ばなければ、
+      // このアラートの後にページ遷移してしまうよ！
+    });
+
+    // ページ読み込み時のメッセージ
+    console.log('✅ イベントリスナーが設定されました！リンクをクリックしてみてね！');
+    console.log('💡 preventDefault() がないと、アラートの後にGoogleへ遷移してしまうよ！');
+  </script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題6: 動的にフィールドを追加・削除</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 650px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 24px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .info-box {
+        background: #e7f5ff;
+        border-left: 4px solid #339af0;
+        padding: 12px;
+        margin-bottom: 24px;
+        border-radius: 4px;
+        font-size: 13px;
+        color: #1971c2;
+      }
+
+      /* スキルフィールドのコンテナ */
+      #skillsContainer {
+        margin-bottom: 20px;
+      }
+
+      .skill-group {
+        margin-bottom: 16px;
+        padding: 16px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        background: #f8f9fa;
+        position: relative;
+        transition: border-color 0.3s;
+      }
+
+      .skill-group:hover {
+        border-color: #a8edea;
+      }
+
+      .skill-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .skill-input-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .skill-group input {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      .skill-group input:focus {
+        outline: none;
+        border-color: #a8edea;
+      }
+
+      /* 削除ボタン */
+      .remove-btn {
+        padding: 10px 16px;
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: background 0.3s, transform 0.2s;
+        white-space: nowrap;
+      }
+
+      .remove-btn:hover {
+        background: #ff5252;
+        transform: scale(1.05);
+      }
+
+      /* 追加ボタン */
+      .add-btn {
+        width: 100%;
+        padding: 12px;
+        background: #51cf66;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .add-btn:hover:not(:disabled) {
+        background: #40c057;
+        transform: translateY(-2px);
+      }
+
+      .add-btn:disabled {
+        background: #adb5bd;
+        cursor: not-allowed;
+      }
+
+      /* 送信ボタン */
+      .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        color: #333;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(168, 237, 234, 0.4);
+      }
+
+      /* カウンター表示 */
+      .counter {
+        text-align: center;
+        margin: 16px 0;
+        font-size: 14px;
+        color: #495057;
+        padding: 8px;
+        background: #fff3cd;
+        border-radius: 6px;
+        border-left: 4px solid #ffc107;
+      }
+
+      /* 結果表示 */
+      .result {
+        display: none;
+        margin-top: 24px;
+        padding: 20px;
+        background: #d4edda;
+        border: 2px solid #c3e6cb;
+        border-radius: 8px;
+      }
+
+      .result.show {
+        display: block;
+      }
+
+      .result h3 {
+        color: #155724;
+        margin-bottom: 12px;
+      }
+
+      .skills-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .skills-list li {
+        padding: 8px 12px;
+        margin: 4px 0;
+        background: white;
+        border-radius: 4px;
+        border-left: 4px solid #51cf66;
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+
+        .skill-input-wrapper {
+          flex-direction: column;
+        }
+
+        .remove-btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>➕ スキル登録フォーム</h1>
+      <p class="description">
+        問題6の解答例：JavaScriptでフォームフィールドを動的に追加・削除します。
+      </p>
+
+      <div class="info-box">
+        💡
+        <strong>操作方法</strong>:
+        「スキルを追加」ボタンで新しいフィールドを追加できます。各フィールドの「削除」ボタンで削除できます（最初のフィールドを除く）。最大5個まで追加可能です。
+      </div>
+
+      <form id="skillsForm">
+        <!-- スキルフィールドのコンテナ -->
+        <div id="skillsContainer">
+          <!-- 最初のスキルフィールド（削除ボタンなし） -->
+          <div class="skill-group">
+            <label>スキル 1</label>
+            <div class="skill-input-wrapper">
+              <input
+                type="text"
+                name="skills[]"
+                placeholder="例: JavaScript"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- カウンター -->
+        <div class="counter" id="counter">
+          現在のスキル数: <strong>1</strong> / 最大 5 個
+        </div>
+
+        <!-- 追加ボタン -->
+        <button type="button" class="add-btn" id="addSkillBtn">
+          <span>➕</span>
+          <span>スキルを追加</span>
+        </button>
+
+        <!-- 送信ボタン -->
+        <button type="submit" class="submit-btn">登録する</button>
+      </form>
+
+      <!-- 結果表示 -->
+      <div class="result" id="result">
+        <h3>🎉 登録完了！</h3>
+        <p>以下のスキルが登録されました:</p>
+        <ul class="skills-list" id="skillsList"></ul>
+      </div>
+    </div>
+
+    <script>
+      // ===== 要素を取得 =====
+      const form = document.getElementById("skillsForm");
+      const skillsContainer = document.getElementById("skillsContainer");
+      const addSkillBtn = document.getElementById("addSkillBtn");
+      const counter = document.getElementById("counter");
+      const result = document.getElementById("result");
+      const skillsList = document.getElementById("skillsList");
+
+      // ===== 定数 =====
+      const MAX_SKILLS = 5;
+      let skillCount = 1; // 現在のスキル数
+
+      // ===== カウンター表示を更新 =====
+      function updateCounter() {
+        counter.innerHTML = `現在のスキル数: <strong>${skillCount}</strong> / 最大 ${MAX_SKILLS} 個`;
+
+        // 最大数に達したらカウンターの色を変更
+        if (skillCount >= MAX_SKILLS) {
+          counter.style.background = "#ffe0e0";
+          counter.style.borderLeftColor = "#ff6b6b";
+        } else {
+          counter.style.background = "#fff3cd";
+          counter.style.borderLeftColor = "#ffc107";
+        }
+      }
+
+      // ===== スキルラベルの番号を更新 =====
+      function updateSkillLabels() {
+        const skillGroups = skillsContainer.querySelectorAll(".skill-group");
+        skillGroups.forEach((group, index) => {
+          const label = group.querySelector("label");
+          label.textContent = `スキル ${index + 1}`;
+        });
+        skillCount = skillGroups.length;
+        updateCounter();
+
+        console.log(`スキルラベルを更新しました（合計: ${skillCount}個）`);
+      }
+
+      // ===== スキルフィールドを追加 =====
+      addSkillBtn.addEventListener("click", function () {
+        // 最大数チェック
+        if (skillCount >= MAX_SKILLS) {
+          alert(`スキルは最大${MAX_SKILLS}個までしか追加できません。`);
+          return;
+        }
+
+        skillCount++;
+
+        // 新しいスキルグループを作成
+        const skillGroup = document.createElement("div");
+        skillGroup.className = "skill-group";
+
+        // HTMLを設定
+        skillGroup.innerHTML = `
+          <label>スキル ${skillCount}</label>
+          <div class="skill-input-wrapper">
+            <input type="text" name="skills[]" placeholder="例: React" required />
+            <button type="button" class="remove-btn">削除</button>
+          </div>
+        `;
+
+        // コンテナに追加
+        skillsContainer.appendChild(skillGroup);
+
+        // アニメーション効果（フェードイン）
+        skillGroup.style.opacity = "0";
+        skillGroup.style.transform = "translateY(-10px)";
+        setTimeout(() => {
+          skillGroup.style.transition = "all 0.3s ease-out";
+          skillGroup.style.opacity = "1";
+          skillGroup.style.transform = "translateY(0)";
+        }, 10);
+
+        // 削除ボタンのイベントリスナーを設定
+        const removeBtn = skillGroup.querySelector(".remove-btn");
+        removeBtn.addEventListener("click", function () {
+          // フェードアウトアニメーション
+          skillGroup.style.transition = "all 0.3s ease-out";
+          skillGroup.style.opacity = "0";
+          skillGroup.style.transform = "translateY(-10px)";
+
+          // アニメーション完了後に削除
+          setTimeout(() => {
+            skillsContainer.removeChild(skillGroup);
+            updateSkillLabels();
+
+            // 追加ボタンを有効化
+            if (skillCount < MAX_SKILLS) {
+              addSkillBtn.disabled = false;
+            }
+
+            console.log(`スキルフィールドを削除しました（残り: ${skillCount}個）`);
+          }, 300);
+        });
+
+        // カウンターを更新
+        updateCounter();
+
+        // 最大数に達したら追加ボタンを無効化
+        if (skillCount >= MAX_SKILLS) {
+          addSkillBtn.disabled = true;
+          console.log(`最大数（${MAX_SKILLS}個）に達しました`);
+        }
+
+        // 新しく追加したフィールドにフォーカス
+        const newInput = skillGroup.querySelector("input");
+        newInput.focus();
+
+        console.log(`スキルフィールドを追加しました（合計: ${skillCount}個）`);
+      });
+
+      // ===== フォーム送信イベント =====
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        console.log("=== フォームが送信されました ===");
+
+        // FormDataで全てのスキルを取得（配列として）
+        const formData = new FormData(form);
+        const skills = formData.getAll("skills[]");
+
+        // 空のスキルを除外
+        const validSkills = skills.filter((skill) => skill.trim().length > 0);
+
+        console.log("登録されたスキル:", validSkills);
+        console.log("スキル数:", validSkills.length);
+
+        // 結果を表示
+        skillsList.innerHTML = "";
+        validSkills.forEach((skill, index) => {
+          const li = document.createElement("li");
+          li.textContent = `${index + 1}. ${skill}`;
+          skillsList.appendChild(li);
+        });
+
+        result.classList.add("show");
+
+        // スムーズにスクロール
+        result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+        console.log("✓ スキルの登録が完了しました");
+      });
+
+      // ===== ページ読み込み時のメッセージ =====
+      console.log("➕ 動的フィールド追加フォームが読み込まれました");
+      console.log("\n【実装のポイント】");
+      console.log("1. document.createElement()で新しい要素を作成");
+      console.log("2. appendChild()でDOMに追加");
+      console.log("3. removeChild()で要素を削除");
+      console.log("4. name='skills[]'で配列として扱う");
+      console.log("5. FormData.getAll()で全ての値を配列として取得");
+      console.log("\n【動的イベントリスナー】");
+      console.log("- 新しく追加した削除ボタンにもイベントを設定");
+      console.log("- 要素を追加した直後にイベントリスナーも設定する");
+      console.log("\n【状態管理】");
+      console.log("- skillCountでフィールド数を追跡");
+      console.log("- 最大数に達したら追加ボタンを無効化");
+      console.log("- 削除したらラベルの番号を振り直す");
+      console.log("\n実際に操作してみてください:");
+      console.log("1. 「スキルを追加」ボタンをクリック → 新しいフィールドが追加");
+      console.log("2. 5個追加すると、追加ボタンが無効化される");
+      console.log("3. 「削除」ボタンで不要なフィールドを削除");
+      console.log("4. 削除すると、番号が自動で振り直される");
+      console.log("5. 「登録する」で全てのスキルを配列として取得");
+    </script>
+  </body>
+</html>

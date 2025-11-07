@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問題 1-5: stopPropagation の使用</title>
+  <style>
+    /* ページ全体のスタイル */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      min-height: 100vh;
+    }
+
+    /* コンテナのスタイル */
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 見出しのスタイル */
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* 説明文のスタイル */
+    .description {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #a8edea;
+    }
+
+    /* 親要素のスタイル */
+    .parent {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      padding: 40px;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: transform 0.3s;
+    }
+
+    .parent:hover {
+      transform: scale(1.02);
+    }
+
+    .parent-label {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    /* 子要素（ボタン）のスタイル */
+    .child-button {
+      display: block;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .child-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* メッセージ表示エリア */
+    .message-area {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      min-height: 60px;
+    }
+
+    .message {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 6px;
+      animation: slideIn 0.3s;
+    }
+
+    .parent-message {
+      background: #a8edea;
+      color: #333;
+    }
+
+    .child-message {
+      background: #667eea;
+      color: white;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* 説明セクション */
+    .explanation {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-left: 4px solid #0066cc;
+    }
+
+    .explanation h3 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⛔ stopPropagation の使用</h1>
+    <p class="subtitle">イベント伝播を止めてみよう！</p>
+
+    <div class="description">
+      <p><strong>この演習で学ぶこと：</strong></p>
+      <ul>
+        <li>stopPropagation() でイベントの伝播（バブリング）を止める</li>
+        <li>子要素のイベントだけを処理したい時に便利</li>
+        <li>問題1-3で見たバブリングを制御できる！</li>
+      </ul>
+    </div>
+
+    <!-- 親要素 -->
+    <div class="parent" id="parent">
+      <div class="parent-label">親要素（この青いエリア）</div>
+      <button class="child-button" id="childButton">
+        子要素（このボタン）
+      </button>
+    </div>
+
+    <!-- メッセージ表示エリア -->
+    <div class="message-area" id="messageArea">
+      <p style="text-align: center; color: #999;">
+        クリックするとメッセージが表示されます
+      </p>
+    </div>
+
+    <div class="explanation">
+      <h3>💡 何が起こっているの？</h3>
+      <p>
+        <strong>通常の動作</strong>：ボタンをクリックすると、子→親の順でイベントが発火する（バブリング）
+      </p>
+      <p>
+        <strong>stopPropagation を使うと</strong>：子要素のイベントで伝播を止めることで、
+        親要素のイベントは発火しなくなるよ！
+      </p>
+      <p>
+        試してみて：
+      </p>
+      <ul>
+        <li>ボタン（子要素）をクリック → 子のメッセージだけ表示</li>
+        <li>青いエリア（親要素）をクリック → 親のメッセージだけ表示</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // 要素を取得
+    const parent = document.getElementById('parent');
+    const childButton = document.getElementById('childButton');
+    const messageArea = document.getElementById('messageArea');
+
+    // メッセージを表示する関数
+    function showMessage(text, type) {
+      // 既存のメッセージをクリア
+      messageArea.innerHTML = '';
+
+      // 新しいメッセージを作成
+      const message = document.createElement('div');
+      message.className = `message ${type}-message`;
+      message.textContent = text;
+
+      // メッセージを追加
+      messageArea.appendChild(message);
+    }
+
+    // 親要素のクリックイベント
+    parent.addEventListener('click', () => {
+      showMessage('👨 親がクリックされました', 'parent');
+      console.log('👨 親がクリックされました');
+    });
+
+    // 子要素（ボタン）のクリックイベント
+    childButton.addEventListener('click', (event) => {
+      // 【重要！】stopPropagation() でイベントの伝播を止める
+      event.stopPropagation();
+
+      showMessage('👶 子がクリックされました（親のイベントは発火しません）', 'child');
+      console.log('👶 子がクリックされました');
+      console.log('⛔ stopPropagation() で親へのイベント伝播を止めました！');
+
+      // もし stopPropagation() を呼ばなければ、
+      // この後に親要素のイベントも発火してしまうよ！
+    });
+
+    // ページ読み込み時のメッセージ
+    console.log('✅ イベントリスナーが設定されました！');
+    console.log('💡 ボタン（子要素）と青いエリア（親要素）をそれぞれクリックしてみてね！');
+    console.log('');
+    console.log('【実験】');
+    console.log('1. ボタンをクリック → 子のイベントだけ発火（親は発火しない）');
+    console.log('2. 青いエリアをクリック → 親のイベントだけ発火');
+    console.log('');
+    console.log('stopPropagation() がないと、ボタンをクリックしたときに');
+    console.log('子→親の順で両方のイベントが発火してしまうよ！');
+  </script>
+</body>
+</html>

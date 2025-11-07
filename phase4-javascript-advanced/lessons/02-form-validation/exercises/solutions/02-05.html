@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題5: 正規表現を使ったカスタムバリデーション</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 650px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 24px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #fa709a;
+      }
+
+      input.valid {
+        border-color: #51cf66;
+        background-color: #f0fdf4;
+      }
+
+      input.invalid {
+        border-color: #ff6b6b;
+        background-color: #fff5f5;
+      }
+
+      .hint {
+        font-size: 13px;
+        color: #868e96;
+        margin-top: 4px;
+      }
+
+      .error-message {
+        display: none;
+        margin-top: 8px;
+        padding: 10px;
+        background-color: #ffe0e0;
+        border-left: 4px solid #ff6b6b;
+        border-radius: 4px;
+        color: #c92a2a;
+        font-size: 13px;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      .success-message {
+        display: none;
+        margin-top: 8px;
+        padding: 10px;
+        background-color: #d4edda;
+        border-left: 4px solid #51cf66;
+        border-radius: 4px;
+        color: #155724;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .success-message.show {
+        display: block;
+      }
+
+      /* パスワード要件リスト */
+      .requirements {
+        margin-top: 12px;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 6px;
+      }
+
+      .requirements-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 8px;
+      }
+
+      .requirement {
+        font-size: 13px;
+        margin: 4px 0;
+        padding: 4px 0;
+        transition: color 0.3s;
+      }
+
+      .requirement.unmet {
+        color: #868e96;
+      }
+
+      .requirement.met {
+        color: #51cf66;
+        font-weight: 600;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(250, 112, 154, 0.4);
+      }
+
+      /* レスポンシブ対応 */
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎯 正規表現バリデーション</h1>
+      <p class="description">
+        問題5の解答例：正規表現を使って複雑なパターンをチェックします。
+      </p>
+
+      <form id="customForm">
+        <!-- ユーザー名 -->
+        <div class="form-group">
+          <label for="username">ユーザー名</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="例: yamada_taro123"
+          />
+          <div class="hint">英数字とアンダースコアのみ使用可能</div>
+          <div class="error-message" id="usernameError"></div>
+          <div class="success-message" id="usernameSuccess">✓ OK!</div>
+        </div>
+
+        <!-- 電話番号 -->
+        <div class="form-group">
+          <label for="phone">電話番号</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="090-1234-5678"
+          />
+          <div class="hint">形式: 090-1234-5678</div>
+          <div class="error-message" id="phoneError"></div>
+          <div class="success-message" id="phoneSuccess">✓ OK!</div>
+        </div>
+
+        <!-- 郵便番号 -->
+        <div class="form-group">
+          <label for="zip">郵便番号</label>
+          <input type="text" id="zip" name="zip" placeholder="123-4567" />
+          <div class="hint">形式: 123-4567</div>
+          <div class="error-message" id="zipError"></div>
+          <div class="success-message" id="zipSuccess">✓ OK!</div>
+        </div>
+
+        <!-- パスワード -->
+        <div class="form-group">
+          <label for="password">パスワード</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="強力なパスワードを入力"
+          />
+          <div class="requirements">
+            <div class="requirements-title">パスワードの要件:</div>
+            <div class="requirement unmet" id="req-length">✗ 8文字以上</div>
+            <div class="requirement unmet" id="req-uppercase">✗ 大文字を含む</div>
+            <div class="requirement unmet" id="req-lowercase">✗ 小文字を含む</div>
+            <div class="requirement unmet" id="req-number">✗ 数字を含む</div>
+          </div>
+          <div class="error-message" id="passwordError"></div>
+          <div class="success-message" id="passwordSuccess">
+            ✓ 強力なパスワードです！
+          </div>
+        </div>
+
+        <button type="submit">登録する</button>
+      </form>
+    </div>
+
+    <script>
+      // ===== 要素を取得 =====
+      const form = document.getElementById("customForm");
+      const usernameInput = document.getElementById("username");
+      const phoneInput = document.getElementById("phone");
+      const zipInput = document.getElementById("zip");
+      const passwordInput = document.getElementById("password");
+
+      // ===== 正規表現パターン =====
+      const patterns = {
+        // 英数字とアンダースコアのみ
+        username: /^[a-zA-Z0-9_]+$/,
+        // 電話番号: 090-1234-5678
+        phone: /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/,
+        // 郵便番号: 123-4567
+        zip: /^[0-9]{3}-[0-9]{4}$/,
+        // パスワードの各条件
+        hasUppercase: /[A-Z]/,
+        hasLowercase: /[a-z]/,
+        hasNumber: /[0-9]/,
+      };
+
+      // ===== 汎用エラー表示関数 =====
+      function showError(inputId, message) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(inputId + "Error");
+        const successDiv = document.getElementById(inputId + "Success");
+
+        input.classList.add("invalid");
+        input.classList.remove("valid");
+        errorDiv.textContent = message;
+        errorDiv.classList.add("show");
+        successDiv.classList.remove("show");
+      }
+
+      // ===== 汎用成功表示関数 =====
+      function showSuccess(inputId) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(inputId + "Error");
+        const successDiv = document.getElementById(inputId + "Success");
+
+        input.classList.add("valid");
+        input.classList.remove("invalid");
+        errorDiv.classList.remove("show");
+        successDiv.classList.add("show");
+      }
+
+      // ===== バリデーションクリア関数 =====
+      function clearValidation(inputId) {
+        const input = document.getElementById(inputId);
+        const errorDiv = document.getElementById(inputId + "Error");
+        const successDiv = document.getElementById(inputId + "Success");
+
+        input.classList.remove("valid", "invalid");
+        errorDiv.classList.remove("show");
+        successDiv.classList.remove("show");
+      }
+
+      // ===== ユーザー名のバリデーション =====
+      function validateUsername() {
+        const value = usernameInput.value.trim();
+
+        if (value.length === 0) {
+          clearValidation("username");
+          return false;
+        }
+
+        if (!patterns.username.test(value)) {
+          showError("username", "英数字とアンダースコアのみ使用できます");
+          return false;
+        }
+
+        showSuccess("username");
+        console.log("✓ ユーザー名: OK");
+        return true;
+      }
+
+      // ===== 電話番号のバリデーション =====
+      function validatePhone() {
+        const value = phoneInput.value.trim();
+
+        if (value.length === 0) {
+          clearValidation("phone");
+          return false;
+        }
+
+        if (!patterns.phone.test(value)) {
+          showError("phone", "形式が正しくありません（例: 090-1234-5678）");
+          return false;
+        }
+
+        showSuccess("phone");
+        console.log("✓ 電話番号: OK");
+        return true;
+      }
+
+      // ===== 郵便番号のバリデーション =====
+      function validateZip() {
+        const value = zipInput.value.trim();
+
+        if (value.length === 0) {
+          clearValidation("zip");
+          return false;
+        }
+
+        if (!patterns.zip.test(value)) {
+          showError("zip", "形式が正しくありません（例: 123-4567）");
+          return false;
+        }
+
+        showSuccess("zip");
+        console.log("✓ 郵便番号: OK");
+        return true;
+      }
+
+      // ===== パスワードのバリデーション =====
+      function validatePassword() {
+        const value = passwordInput.value;
+
+        // 各要件をチェック
+        const hasLength = value.length >= 8;
+        const hasUppercase = patterns.hasUppercase.test(value);
+        const hasLowercase = patterns.hasLowercase.test(value);
+        const hasNumber = patterns.hasNumber.test(value);
+
+        // 要件の表示を更新
+        updateRequirement("req-length", hasLength);
+        updateRequirement("req-uppercase", hasUppercase);
+        updateRequirement("req-lowercase", hasLowercase);
+        updateRequirement("req-number", hasNumber);
+
+        // 全ての要件を満たしているかチェック
+        const allValid = hasLength && hasUppercase && hasLowercase && hasNumber;
+
+        if (value.length === 0) {
+          clearValidation("password");
+          return false;
+        }
+
+        if (!allValid) {
+          passwordInput.classList.add("invalid");
+          passwordInput.classList.remove("valid");
+          document.getElementById("passwordSuccess").classList.remove("show");
+          return false;
+        }
+
+        showSuccess("password");
+        console.log("✓ パスワード: OK（全ての要件を満たしています）");
+        return true;
+      }
+
+      // ===== パスワード要件の表示を更新 =====
+      function updateRequirement(id, isMet) {
+        const element = document.getElementById(id);
+        if (isMet) {
+          element.classList.add("met");
+          element.classList.remove("unmet");
+          element.textContent = element.textContent.replace("✗", "✓");
+        } else {
+          element.classList.add("unmet");
+          element.classList.remove("met");
+          element.textContent = element.textContent.replace("✓", "✗");
+        }
+      }
+
+      // ===== イベントリスナーの設定 =====
+      // ユーザー名
+      usernameInput.addEventListener("blur", validateUsername);
+      usernameInput.addEventListener("input", function () {
+        if (usernameInput.value.length > 0) validateUsername();
+      });
+
+      // 電話番号
+      phoneInput.addEventListener("blur", validatePhone);
+      phoneInput.addEventListener("input", function () {
+        if (phoneInput.value.length > 0) validatePhone();
+      });
+
+      // 郵便番号
+      zipInput.addEventListener("blur", validateZip);
+      zipInput.addEventListener("input", function () {
+        if (zipInput.value.length > 0) validateZip();
+      });
+
+      // パスワード（リアルタイムで要件をチェック）
+      passwordInput.addEventListener("input", validatePassword);
+
+      // ===== フォーム送信イベント =====
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        console.log("=== フォームが送信されました ===");
+
+        // 全フィールドをバリデーション
+        const usernameValid = validateUsername();
+        const phoneValid = validatePhone();
+        const zipValid = validateZip();
+        const passwordValid = validatePassword();
+
+        const allValid =
+          usernameValid && phoneValid && zipValid && passwordValid;
+
+        if (allValid) {
+          console.log("\n🎉 全てのバリデーションに成功！");
+
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData);
+          console.log("登録データ:", data);
+
+          alert("登録成功！\n全てのフィールドが正しく検証されました。");
+        } else {
+          console.log("\n❌ バリデーションエラーがあります");
+          alert("入力内容に誤りがあります。赤い枠線のフィールドを確認してください。");
+        }
+      });
+
+      // ===== ページ読み込み時のメッセージ =====
+      console.log("🎯 正規表現バリデーションフォームが読み込まれました");
+      console.log("\n【使用している正規表現】");
+      console.log("1. ユーザー名: /^[a-zA-Z0-9_]+$/");
+      console.log("   → 英数字とアンダースコアのみ");
+      console.log("\n2. 電話番号: /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/");
+      console.log("   → 090-1234-5678 の形式");
+      console.log("\n3. 郵便番号: /^[0-9]{3}-[0-9]{4}$/");
+      console.log("   → 123-4567 の形式");
+      console.log("\n4. パスワード:");
+      console.log("   - /[A-Z]/: 大文字を含む");
+      console.log("   - /[a-z]/: 小文字を含む");
+      console.log("   - /[0-9]/: 数字を含む");
+      console.log("   - length >= 8: 8文字以上");
+      console.log("\n【正規表現の記号の意味】");
+      console.log("^ : 文字列の先頭");
+      console.log("$ : 文字列の末尾");
+      console.log("[0-9] : 数字");
+      console.log("[a-z] : 小文字");
+      console.log("[A-Z] : 大文字");
+      console.log("{3} : ちょうど3回");
+      console.log("+ : 1回以上");
+      console.log("\n実際に入力してみてください:");
+      console.log("- ユーザー名に記号を入れる → エラー");
+      console.log("- 電話番号を 09012345678（ハイフンなし）→ エラー");
+      console.log("- パスワードに大文字・小文字・数字を全て含める → 成功");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 5-2: 分割代入の練習</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        color: white;
+        margin-bottom: 10px;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 30px;
+        font-size: 1.1em;
+      }
+
+      .demo-section {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .demo-section h2 {
+        color: #f5576c;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+        border-bottom: 3px solid #f5576c;
+        padding-bottom: 10px;
+      }
+
+      .demo-box {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 5px solid #f5576c;
+      }
+
+      .demo-box h3 {
+        color: #495057;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+      }
+
+      .code-display {
+        background: #2d3748;
+        color: #f093fb;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-family: 'Courier New', monospace;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .result-display {
+        background: #fff0f6;
+        border: 2px solid #ffadd2;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px 0;
+      }
+
+      .result-display h4 {
+        color: #c41d7f;
+        margin-bottom: 10px;
+      }
+
+      .result-item {
+        background: white;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        border-left: 3px solid #f5576c;
+      }
+
+      button {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1em;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .variable-box {
+        display: inline-block;
+        background: #f5576c;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        margin: 5px;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+      }
+
+      .arrow {
+        font-size: 1.5em;
+        color: #f5576c;
+        font-weight: bold;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin: 15px 0;
+      }
+
+      .highlight-box {
+        background: linear-gradient(135deg, #f093fb15 0%, #f5576c15 100%);
+        border: 2px solid #f5576c;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+      }
+
+      @media (max-width: 768px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📦 分割代入の練習</h1>
+      <p class="subtitle">データの取り出しが超簡単になる魔法の記法！</p>
+
+      <!-- 配列の分割代入 -->
+      <div class="demo-section">
+        <h2>1. 配列の分割代入</h2>
+        <div class="demo-box">
+          <h3>🎨 配列から値を取り出そう</h3>
+          <button onclick="demoArrayDestructuring()">実行する</button>
+          <div id="arrayResult"></div>
+        </div>
+      </div>
+
+      <!-- オブジェクトの分割代入 -->
+      <div class="demo-section">
+        <h2>2. オブジェクトの分割代入</h2>
+        <div class="demo-box">
+          <h3>👤 ユーザー情報から必要なデータを取り出す</h3>
+          <button onclick="demoObjectDestructuring()">実行する</button>
+          <div id="objectResult"></div>
+        </div>
+      </div>
+
+      <!-- 変数名の変更とデフォルト値 -->
+      <div class="demo-section">
+        <h2>3. 変数名の変更とデフォルト値</h2>
+        <div class="demo-box">
+          <h3>🔧 高度な分割代入テクニック</h3>
+          <button onclick="demoAdvancedDestructuring()">実行する</button>
+          <div id="advancedResult"></div>
+        </div>
+      </div>
+
+      <!-- ネストされたオブジェクトの分割代入 -->
+      <div class="demo-section">
+        <h2>4. ネストされたオブジェクトの分割代入</h2>
+        <div class="demo-box">
+          <h3>🪆 深い階層のデータを取り出す</h3>
+          <button onclick="demoNestedDestructuring()">実行する</button>
+          <div id="nestedResult"></div>
+        </div>
+      </div>
+
+      <!-- 関数の引数で分割代入 -->
+      <div class="demo-section">
+        <h2>5. 関数の引数で分割代入</h2>
+        <div class="demo-box">
+          <h3>⚡ 関数をより簡潔に書く</h3>
+          <button onclick="demoFunctionDestructuring()">実行する</button>
+          <div id="functionResult"></div>
+        </div>
+      </div>
+
+      <!-- すべて実行 -->
+      <div class="demo-section">
+        <div style="text-align: center">
+          <button
+            onclick="runAll()"
+            style="font-size: 1.2em; padding: 15px 40px"
+          >
+            🚀 すべてのデモを実行
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 結果表示用のヘルパー関数
+      function displayResult(elementId, content) {
+        document.getElementById(elementId).innerHTML = content;
+      }
+
+      function showCodeAndResult(elementId, code, result) {
+        const html = `
+          <div class="code-display">${code}</div>
+          <div class="result-display">
+            <h4>📊 実行結果</h4>
+            ${result}
+          </div>
+        `;
+        displayResult(elementId, html);
+      }
+
+      // 1. 配列の分割代入
+      function demoArrayDestructuring() {
+        console.log('=== 配列の分割代入 ===');
+
+        // 基本的な分割代入
+        const colors = ['赤', '青', '緑', '黄', '紫'];
+        const [first, second, third] = colors;
+
+        console.log('first:', first);
+        console.log('second:', second);
+        console.log('third:', third);
+
+        // 一部をスキップ
+        const [, , thirdColor] = colors;
+        console.log('thirdColor:', thirdColor);
+
+        // 残りをまとめて取得
+        const [primary, secondary, ...rest] = colors;
+        console.log('primary:', primary);
+        console.log('secondary:', secondary);
+        console.log('rest:', rest);
+
+        // デフォルト値
+        const [a, b, c, d, e, f = 'デフォルト'] = colors;
+        console.log('f:', f);
+
+        // 値の交換（スワップ）
+        let x = 1;
+        let y = 2;
+        console.log('交換前:', { x, y });
+        [x, y] = [y, x];
+        console.log('交換後:', { x, y });
+
+        const code = `const colors = ['赤', '青', '緑', '黄', '紫'];
+
+// 基本的な分割代入
+const [first, second, third] = colors;
+// first = '赤', second = '青', third = '緑'
+
+// 一部をスキップ
+const [, , thirdColor] = colors;
+// thirdColor = '緑'
+
+// 残りをまとめて取得（...rest）
+const [primary, secondary, ...rest] = colors;
+// primary = '赤', secondary = '青'
+// rest = ['緑', '黄', '紫']
+
+// デフォルト値
+const [a, b, c, d, e, f = 'デフォルト'] = colors;
+// f = 'デフォルト'（配列に6番目の要素がないから）
+
+// 値の交換（スワップ）
+let x = 1, y = 2;
+[x, y] = [y, x];
+// x = 2, y = 1`;
+
+        const result = `
+          <div class="highlight-box">
+            <strong>🎨 元の配列:</strong><br>
+            ${colors.map((c) => `<span class="variable-box">${c}</span>`).join('')}
+          </div>
+
+          <div class="result-item">
+            <strong>基本的な分割代入:</strong><br>
+            <div style="margin-top: 10px;">
+              <span class="variable-box">first = "${first}"</span>
+              <span class="variable-box">second = "${second}"</span>
+              <span class="variable-box">third = "${third}"</span>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong>スキップ:</strong><br>
+            <div style="margin-top: 10px;">
+              <span class="variable-box">thirdColor = "${thirdColor}"</span>
+              <small>（最初の2つをスキップ）</small>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong>残りをまとめて取得:</strong><br>
+            <div style="margin-top: 10px;">
+              <span class="variable-box">primary = "${primary}"</span>
+              <span class="variable-box">secondary = "${secondary}"</span>
+              <span class="variable-box">rest = ${JSON.stringify(rest)}</span>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong>値の交換（スワップ）:</strong><br>
+            <div style="margin-top: 10px;">
+              交換前: x = 1, y = 2<br>
+              交換後: <span class="variable-box">x = 2</span> <span class="variable-box">y = 1</span>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong>💡 ポイント:</strong> 配列の順番で値が代入される
+          </div>
+        `;
+
+        showCodeAndResult('arrayResult', code, result);
+      }
+
+      // 2. オブジェクトの分割代入
+      function demoObjectDestructuring() {
+        console.log('=== オブジェクトの分割代入 ===');
+
+        const user = {
+          id: 1,
+          name: '太郎',
+          age: 25,
+          city: '東京',
+          email: 'taro@example.com',
+        };
+
+        console.log('元のオブジェクト:', user);
+
+        // 基本的な分割代入
+        const { name, age, city } = user;
+        console.log('name:', name);
+        console.log('age:', age);
+        console.log('city:', city);
+
+        // 順番は関係ない
+        const { email, id } = user;
+        console.log('email:', email);
+        console.log('id:', id);
+
+        const code = `const user = {
+  id: 1,
+  name: '太郎',
+  age: 25,
+  city: '東京',
+  email: 'taro@example.com'
+};
+
+// 基本的な分割代入
+const { name, age, city } = user;
+
+// 順番は関係ない（プロパティ名で識別）
+const { email, id } = user;
+
+// 🔴 昔の書き方
+const name = user.name;
+const age = user.age;
+const city = user.city;`;
+
+        const result = `
+          <div class="highlight-box">
+            <strong>👤 元のオブジェクト:</strong><br>
+            ${Object.entries(user)
+              .map(([key, value]) => `<div>${key}: ${value}</div>`)
+              .join('')}
+          </div>
+
+          <div class="result-item">
+            <strong>分割代入で取り出した値:</strong><br>
+            <div class="grid-2">
+              <div><span class="variable-box">name = "${name}"</span></div>
+              <div><span class="variable-box">age = ${age}</span></div>
+              <div><span class="variable-box">city = "${city}"</span></div>
+              <div><span class="variable-box">email = "${email}"</span></div>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong>✅ メリット:</strong>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+              <li>コードが短くなる</li>
+              <li>必要なプロパティだけ取り出せる</li>
+              <li>順番は関係ない（プロパティ名で識別）</li>
+            </ul>
+          </div>
+        `;
+
+        showCodeAndResult('objectResult', code, result);
+      }
+
+      // 3. 変数名の変更とデフォルト値
+      function demoAdvancedDestructuring() {
+        console.log('=== 変数名の変更とデフォルト値 ===');
+
+        const user = {
+          name: '太郎',
+          age: 25,
+          // cityプロパティがない
+        };
+
+        // 変数名を変更
+        const { name: userName, age: userAge } = user;
+        console.log('userName:', userName);
+        console.log('userAge:', userAge);
+
+        // デフォルト値を設定
+        const { name, age, city = '未登録' } = user;
+        console.log('city:', city);
+
+        // 変数名の変更とデフォルト値を同時に使う
+        const { name: fullName = 'ゲスト', email: userEmail = '未登録' } =
+          user;
+        console.log('fullName:', fullName);
+        console.log('userEmail:', userEmail);
+
+        const code = `const user = {
+  name: '太郎',
+  age: 25
+  // cityプロパティがない
+};
+
+// 変数名を変更
+const { name: userName, age: userAge } = user;
+// userName = '太郎', userAge = 25
+
+// デフォルト値を設定
+const { name, age, city = '未登録' } = user;
+// city = '未登録'（プロパティがないから）
+
+// 変数名の変更 + デフォルト値
+const {
+  name: fullName = 'ゲスト',
+  email: userEmail = '未登録'
+} = user;
+// fullName = '太郎', userEmail = '未登録'`;
+
+        const result = `
+          <div class="result-item">
+            <strong>変数名の変更:</strong><br>
+            <div style="margin-top: 10px;">
+              <code>{ name: userName }</code>
+              <span class="arrow">→</span>
+              <span class="variable-box">userName = "${userName}"</span>
+            </div>
+            <small>nameという変数は作られず、userNameが作られる</small>
+          </div>
+
+          <div class="result-item">
+            <strong>デフォルト値:</strong><br>
+            <div style="margin-top: 10px;">
+              <code>{ city = '未登録' }</code>
+              <span class="arrow">→</span>
+              <span class="variable-box">city = "${city}"</span>
+            </div>
+            <small>プロパティがない場合、デフォルト値が使われる</small>
+          </div>
+
+          <div class="result-item">
+            <strong>組み合わせ:</strong><br>
+            <div style="margin-top: 10px;">
+              <span class="variable-box">fullName = "${fullName}"</span>
+              <span class="variable-box">userEmail = "${userEmail}"</span>
+            </div>
+            <small>変数名の変更とデフォルト値を同時に使える</small>
+          </div>
+
+          <div class="result-item">
+            <strong>💡 使いどころ:</strong> APIレスポンスで一部のデータがない場合
+          </div>
+        `;
+
+        showCodeAndResult('advancedResult', code, result);
+      }
+
+      // 4. ネストされたオブジェクトの分割代入
+      function demoNestedDestructuring() {
+        console.log('=== ネストされたオブジェクトの分割代入 ===');
+
+        const user = {
+          id: 1,
+          name: '太郎',
+          address: {
+            city: '東京',
+            zipCode: '123-4567',
+            country: '日本',
+          },
+          contact: {
+            email: 'taro@example.com',
+            phone: '090-1234-5678',
+          },
+        };
+
+        console.log('元のオブジェクト:', user);
+
+        // ネストされたオブジェクトから値を取り出す
+        const {
+          name,
+          address: { city, zipCode },
+          contact: { email },
+        } = user;
+
+        console.log('name:', name);
+        console.log('city:', city);
+        console.log('zipCode:', zipCode);
+        console.log('email:', email);
+
+        const code = `const user = {
+  id: 1,
+  name: '太郎',
+  address: {
+    city: '東京',
+    zipCode: '123-4567',
+    country: '日本'
+  },
+  contact: {
+    email: 'taro@example.com',
+    phone: '090-1234-5678'
+  }
+};
+
+// ネストされたオブジェクトから値を取り出す
+const {
+  name,
+  address: { city, zipCode },
+  contact: { email }
+} = user;
+
+// 🔴 昔の書き方
+const city = user.address.city;
+const zipCode = user.address.zipCode;
+const email = user.contact.email;`;
+
+        const result = `
+          <div class="highlight-box">
+            <strong>🪆 ネストされたオブジェクト:</strong>
+            <pre style="margin-top: 10px;">${JSON.stringify(user, null, 2)}</pre>
+          </div>
+
+          <div class="result-item">
+            <strong>取り出した値:</strong><br>
+            <div style="margin-top: 10px;">
+              <span class="variable-box">name = "${name}"</span><br>
+              <span class="variable-box">city = "${city}"</span>
+              <small>（address.city）</small><br>
+              <span class="variable-box">zipCode = "${zipCode}"</span>
+              <small>（address.zipCode）</small><br>
+              <span class="variable-box">email = "${email}"</span>
+              <small>（contact.email）</small>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong>⚠️ 注意:</strong><br>
+            <code>address: { city }</code> と書くと、<strong>address変数は作られない</strong><br>
+            addressも変数として使いたい場合は:<br>
+            <code>const { address, address: { city } } = user;</code>
+          </div>
+        `;
+
+        showCodeAndResult('nestedResult', code, result);
+      }
+
+      // 5. 関数の引数で分割代入
+      function demoFunctionDestructuring() {
+        console.log('=== 関数の引数で分割代入 ===');
+
+        // 昔の書き方
+        function displayUserOld(user) {
+          console.log(`名前: ${user.name}`);
+          console.log(`年齢: ${user.age}`);
+          console.log(`都市: ${user.city}`);
+        }
+
+        // モダンな書き方
+        function displayUserModern({ name, age, city = '未登録' }) {
+          console.log(`名前: ${name}`);
+          console.log(`年齢: ${age}`);
+          console.log(`都市: ${city}`);
+        }
+
+        const user1 = { name: '太郎', age: 25, city: '東京' };
+        const user2 = { name: '花子', age: 30 }; // cityがない
+
+        console.log('--- 太郎さん ---');
+        displayUserModern(user1);
+
+        console.log('--- 花子さん ---');
+        displayUserModern(user2);
+
+        // 実際に関数を実行して結果を取得
+        const messages1 = [];
+        const tempLog1 = console.log;
+        console.log = (msg) => messages1.push(msg);
+        displayUserModern(user1);
+        console.log = tempLog1;
+
+        const messages2 = [];
+        const tempLog2 = console.log;
+        console.log = (msg) => messages2.push(msg);
+        displayUserModern(user2);
+        console.log = tempLog2;
+
+        const code = `// 🔴 昔の書き方
+function displayUser(user) {
+  console.log(\`名前: \${user.name}\`);
+  console.log(\`年齢: \${user.age}\`);
+  console.log(\`都市: \${user.city}\`);
+}
+
+// ✅ モダンな書き方（引数で分割代入）
+function displayUser({ name, age, city = '未登録' }) {
+  console.log(\`名前: \${name}\`);
+  console.log(\`年齢: \${age}\`);
+  console.log(\`都市: \${city}\`);
+}
+
+// 使い方
+displayUser({ name: '太郎', age: 25, city: '東京' });
+displayUser({ name: '花子', age: 30 }); // cityがない → デフォルト値`;
+
+        const result = `
+          <div class="result-item">
+            <strong>👤 太郎さん（すべてのデータあり）:</strong><br>
+            <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+              ${messages1.join('<br>')}
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong>👤 花子さん（cityがない）:</strong><br>
+            <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+              ${messages2.join('<br>')}
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong>✅ メリット:</strong>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+              <li>関数の中で <code>user.name</code> と書く必要がない</li>
+              <li>どのプロパティを使うのか一目瞭然</li>
+              <li>デフォルト値も設定できる</li>
+              <li>Reactなどのフレームワークでよく使われる</li>
+            </ul>
+          </div>
+
+          <div class="result-item">
+            <strong>🎯 実用例:</strong>
+            <code>function UserCard({ name, age, avatar }) { ... }</code>
+          </div>
+        `;
+
+        showCodeAndResult('functionResult', code, result);
+      }
+
+      // すべてのデモを実行
+      function runAll() {
+        console.clear();
+        console.log('🚀 すべてのデモを実行します！');
+        demoArrayDestructuring();
+        demoObjectDestructuring();
+        demoAdvancedDestructuring();
+        demoNestedDestructuring();
+        demoFunctionDestructuring();
+        console.log('✅ すべてのデモが完了しました！');
+      }
+
+      // ページ読み込み時のメッセージ
+      console.log('📦 分割代入の練習へようこそ！');
+      console.log('各セクションのボタンをクリックして、デモを実行してみよう！');
+    </script>
+  </body>
+</html>

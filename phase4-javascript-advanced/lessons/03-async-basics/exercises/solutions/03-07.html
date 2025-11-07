@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>問題 3-7: 画像ローダー（Promise.all）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 32px;
+        text-align: center;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .control-panel {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+      }
+
+      .control-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .control-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .load-button {
+        padding: 15px 40px;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        color: white;
+        flex: 1;
+        max-width: 300px;
+      }
+
+      .load-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(48, 207, 208, 0.4);
+      }
+
+      .load-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .progress-section {
+        flex: 1;
+        margin-left: 30px;
+      }
+
+      .progress-bar {
+        height: 20px;
+        background: #e9ecef;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #30cfd0, #330867);
+        transition: width 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .progress-text {
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        border: 2px solid #dee2e6;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+      }
+
+      .stat-value {
+        font-size: 28px;
+        font-weight: bold;
+        color: #30cfd0;
+      }
+
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      .loading-overlay.active {
+        display: flex;
+      }
+
+      .loading-content {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+      }
+
+      .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 6px solid rgba(48, 207, 208, 0.2);
+        border-radius: 50%;
+        border-top-color: #30cfd0;
+        animation: spinner 0.8s linear infinite;
+        margin: 0 auto 20px;
+      }
+
+      .loading-message {
+        font-size: 18px;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .image-card {
+        background: #f8f9fa;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+        opacity: 0;
+        animation: fadeIn 0.5s forwards;
+      }
+
+      .image-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .image-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .image-info {
+        padding: 15px;
+      }
+
+      .image-title {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .image-size {
+        font-size: 12px;
+        color: #999;
+      }
+
+      .error-card {
+        background: linear-gradient(135deg, #ffe0e0 0%, #ffd0d0 100%);
+        border: 2px solid #ff6b6b;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+      }
+
+      .error-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      .error-message {
+        font-size: 16px;
+        color: #c92a2a;
+        font-weight: bold;
+      }
+
+      .success-message {
+        background: linear-gradient(135deg, #d4f7e8 0%, #c7f9e3 100%);
+        border: 2px solid #38ef7d;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        text-align: center;
+        display: none;
+      }
+
+      .success-message.show {
+        display: block;
+        animation: slideDown 0.3s;
+      }
+
+      .success-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      .success-text {
+        font-size: 18px;
+        color: #11998e;
+        font-weight: bold;
+      }
+
+      .info-box {
+        background: #f8f9fa;
+        border-left: 4px solid #30cfd0;
+        padding: 20px;
+        margin-top: 30px;
+        border-radius: 5px;
+      }
+
+      .info-box h3 {
+        color: #30cfd0;
+        margin-bottom: 15px;
+        font-size: 18px;
+      }
+
+      .info-box ul {
+        margin-left: 20px;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      @keyframes spinner {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .control-row {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .progress-section {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .load-button {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📸 画像ローダー</h1>
+      <p class="subtitle">問題 3-7: チャレンジ</p>
+
+      <div class="control-panel">
+        <div class="control-row">
+          <button class="load-button" id="loadButton">
+            5枚の画像を読み込む
+          </button>
+          <div class="progress-section">
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <div class="progress-text" id="progressText">
+              準備完了！ボタンをクリックしてね
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">読み込み済み</div>
+          <div class="stat-value" id="loadedCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">合計枚数</div>
+          <div class="stat-value" id="totalCount">5</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">読み込み時間</div>
+          <div class="stat-value" id="loadTime">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">成功率</div>
+          <div class="stat-value" id="successRate">-</div>
+        </div>
+      </div>
+
+      <div class="success-message" id="successMessage">
+        <div class="success-icon">🎉</div>
+        <div class="success-text" id="successText"></div>
+      </div>
+
+      <div class="image-grid" id="imageGrid"></div>
+
+      <div class="info-box">
+        <h3>💡 学習ポイント</h3>
+        <ul>
+          <li>
+            <strong>Promise.all</strong>
+            で複数の画像を並行読み込み（順番に読み込むより速い！）
+          </li>
+          <li>
+            <strong>loadImage関数</strong> で画像読み込みを Promise でラップ
+          </li>
+          <li>
+            <strong>try-catch-finally</strong>
+            でエラーハンドリング（安全に処理）
+          </li>
+          <li>
+            <strong>Date.now()</strong>
+            で読み込み時間を計測（パフォーマンス測定）
+          </li>
+          <li>
+            <strong>finally</strong>
+            でローディング表示を確実に消す（ベストプラクティス）
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-message">画像を読み込み中...</div>
+      </div>
+    </div>
+
+    <script>
+      // ==========================================
+      // 要素の取得
+      // ==========================================
+      const loadButton = document.getElementById("loadButton");
+      const imageGrid = document.getElementById("imageGrid");
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      const progressFill = document.getElementById("progressFill");
+      const progressText = document.getElementById("progressText");
+      const successMessage = document.getElementById("successMessage");
+      const successText = document.getElementById("successText");
+      const loadedCountElement = document.getElementById("loadedCount");
+      const totalCountElement = document.getElementById("totalCount");
+      const loadTimeElement = document.getElementById("loadTime");
+      const successRateElement = document.getElementById("successRate");
+
+      // 画像URLの配列（ランダムな画像を取得）
+      const imageUrls = [
+        "https://picsum.photos/300/200?random=1",
+        "https://picsum.photos/300/200?random=2",
+        "https://picsum.photos/300/200?random=3",
+        "https://picsum.photos/300/200?random=4",
+        "https://picsum.photos/300/200?random=5",
+      ];
+
+      // ==========================================
+      // 画像を読み込む関数（Promise を返す）
+      // ==========================================
+      function loadImage(url, index) {
+        return new Promise(function (resolve, reject) {
+          console.log(`🔄 画像 ${index + 1} の読み込み開始: ${url}`);
+
+          // 新しい画像オブジェクトを作成
+          const img = new Image();
+
+          // 読み込み成功時のイベント
+          img.onload = function () {
+            console.log(`✅ 画像 ${index + 1} の読み込み成功`);
+            resolve({
+              img: img,
+              url: url,
+              index: index,
+              width: img.naturalWidth,
+              height: img.naturalHeight,
+            });
+          };
+
+          // 読み込み失敗時のイベント
+          img.onerror = function () {
+            console.log(`❌ 画像 ${index + 1} の読み込み失敗`);
+            reject(new Error(`Failed to load image ${index + 1}: ${url}`));
+          };
+
+          // 画像の読み込みを開始
+          img.src = url;
+        });
+      }
+
+      // ==========================================
+      // すべての画像を読み込む（Promise.all を使用）
+      // ==========================================
+      async function loadAllImages() {
+        console.log("========================================");
+        console.log("🚀 画像の読み込みを開始します");
+        console.log("========================================");
+
+        // ボタンを無効化
+        loadButton.disabled = true;
+
+        // グリッドをクリア
+        imageGrid.innerHTML = "";
+        successMessage.classList.remove("show");
+
+        // 進捗をリセット
+        let loadedCount = 0;
+        updateProgress(0, imageUrls.length);
+
+        // ローディングオーバーレイを表示
+        loadingOverlay.classList.add("active");
+
+        // 読み込み開始時刻を記録
+        const startTime = Date.now();
+
+        try {
+          console.log(`📦 ${imageUrls.length}枚の画像を並行読み込みします`);
+          console.log("Promise.all を使用することで、すべての画像を同時に読み込みます");
+
+          // Promise.all で全画像を並行読み込み
+          // map で各URLをloadImageのPromiseに変換し、配列を作る
+          let loadedCount = 0;
+          const promises = imageUrls.map((url, index) =>
+            loadImage(url, index).then(result => {
+              loadedCount++;
+              updateProgress(loadedCount, imageUrls.length);
+              return result;
+            })
+          );
+
+          // Promise.all ですべてのPromiseが完了するまで待つ
+          const results = await Promise.all(promises);
+
+          // 読み込み時間を計算
+          const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+
+          console.log("========================================");
+          console.log(`🎉 すべての画像の読み込みが完了しました！`);
+          console.log(`⏱️ 読み込み時間: ${loadTime}秒`);
+          console.log(`📊 成功: ${results.length}枚 / ${imageUrls.length}枚`);
+          console.log("========================================");
+
+          // 画像を表示
+          results.forEach((result, index) => {
+            displayImage(result, index);
+          });
+
+          // 進捗を100%に
+          updateProgress(results.length, imageUrls.length);
+
+          // 統計を更新
+          loadedCountElement.textContent = results.length;
+          loadTimeElement.textContent = `${loadTime}秒`;
+          successRateElement.textContent = "100%";
+
+          // 成功メッセージを表示
+          successText.textContent = `${loadTime}秒で${results.length}枚の画像を読み込みました！`;
+          successMessage.classList.add("show");
+        } catch (error) {
+          console.log("========================================");
+          console.error("❌ 画像の読み込みに失敗しました");
+          console.error("エラー詳細:", error);
+          console.log("========================================");
+
+          // エラーカードを表示
+          displayError(error.message);
+
+          // 統計を更新
+          successRateElement.textContent = "失敗";
+        } finally {
+          console.log("finally ブロック: クリーンアップ処理");
+
+          // ローディングオーバーレイを非表示（成功でも失敗でも実行）
+          loadingOverlay.classList.remove("active");
+
+          // ボタンを有効化
+          loadButton.disabled = false;
+
+          console.log("ローディングオーバーレイを非表示にしました");
+          console.log("========================================");
+        }
+      }
+
+      // ==========================================
+      // 進捗を更新
+      // ==========================================
+      function updateProgress(loaded, total) {
+        const percentage = Math.round((loaded / total) * 100);
+        progressFill.style.width = `${percentage}%`;
+        progressFill.textContent = `${percentage}%`;
+        progressText.textContent = `読み込み中... ${loaded} / ${total} 枚`;
+      }
+
+      // ==========================================
+      // 画像を表示
+      // ==========================================
+      function displayImage(result, index) {
+        const imageCard = document.createElement("div");
+        imageCard.className = "image-card";
+        imageCard.style.animationDelay = `${index * 0.1}s`;
+
+        const img = document.createElement("img");
+        img.src = result.url;
+        img.alt = `Image ${index + 1}`;
+
+        const imageInfo = document.createElement("div");
+        imageInfo.className = "image-info";
+
+        const imageTitle = document.createElement("div");
+        imageTitle.className = "image-title";
+        imageTitle.textContent = `画像 ${index + 1}`;
+
+        const imageSize = document.createElement("div");
+        imageSize.className = "image-size";
+        imageSize.textContent = `${result.width} × ${result.height}px`;
+
+        imageInfo.appendChild(imageTitle);
+        imageInfo.appendChild(imageSize);
+        imageCard.appendChild(img);
+        imageCard.appendChild(imageInfo);
+        imageGrid.appendChild(imageCard);
+      }
+
+      // ==========================================
+      // エラーを表示
+      // ==========================================
+      function displayError(message) {
+        const errorCard = document.createElement("div");
+        errorCard.className = "error-card";
+        errorCard.innerHTML = `
+          <div class="error-icon">❌</div>
+          <div class="error-message">画像の読み込みに失敗しました</div>
+          <div style="margin-top: 10px; font-size: 14px; color: #666;">${message}</div>
+        `;
+        imageGrid.appendChild(errorCard);
+      }
+
+      // ==========================================
+      // イベントリスナー
+      // ==========================================
+      loadButton.addEventListener("click", loadAllImages);
+
+      // ==========================================
+      // ページ読み込み時のログ
+      // ==========================================
+      console.log("========================================");
+      console.log("問題 3-7: 画像ローダー（Promise.all）");
+      console.log("========================================");
+      console.log("【学習ポイント】");
+      console.log("1. Promise.all で複数の画像を並行読み込み");
+      console.log("2. loadImage 関数で Promise をラップ");
+      console.log("3. try-catch-finally でエラーハンドリング");
+      console.log("4. Date.now() で読み込み時間を計測");
+      console.log("========================================");
+      console.log("【Promise.all のメリット】");
+      console.log("");
+      console.log("順番に読み込み:");
+      console.log("  画像1（1秒） → 画像2（1秒） → 画像3（1秒） = 合計3秒");
+      console.log("");
+      console.log("Promise.all で並行読み込み:");
+      console.log("  画像1（1秒）");
+      console.log("  画像2（1秒） → 同時に実行");
+      console.log("  画像3（1秒）");
+      console.log("  合計1秒！（3倍速い！）");
+      console.log("");
+      console.log("========================================");
+      console.log("【実装のポイント】");
+      console.log("");
+      console.log("// 画像読み込みをPromiseでラップ");
+      console.log("function loadImage(url) {");
+      console.log("  return new Promise((resolve, reject) => {");
+      console.log("    const img = new Image();");
+      console.log("    img.onload = () => resolve(img);");
+      console.log("    img.onerror = () => reject(new Error(...));");
+      console.log("    img.src = url;");
+      console.log("  });");
+      console.log("}");
+      console.log("");
+      console.log("// Promise.allで並行実行");
+      console.log("const promises = urls.map(url => loadImage(url));");
+      console.log("const images = await Promise.all(promises);");
+      console.log("");
+      console.log("========================================");
+      console.log("「5枚の画像を読み込む」ボタンをクリックしてみよう！");
+      console.log("========================================");
+    </script>
+  </body>
+</html>
