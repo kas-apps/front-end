@@ -453,7 +453,7 @@ form.addEventListener("submit", (event) => {
       addBtn.addEventListener("click", addTodo);
 
       // Enterキーでも追加できるように
-      input.addEventListener("keypress", (event) => {
+      input.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
           addTodo();
         }
