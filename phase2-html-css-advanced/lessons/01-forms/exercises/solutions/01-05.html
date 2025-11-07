@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>会員登録フォーム</title>
+  </head>
+  <body>
+    <h1>会員登録フォーム</h1>
+
+    <form>
+      <!-- ユーザー名（3〜20文字） -->
+      <div>
+        <label for="username">ユーザー名（3〜20文字、必須）:</label>
+        <input type="text" id="username" name="username" minlength="3" maxlength="20" required />
+      </div>
+
+      <!-- メールアドレス（placeholderあり） -->
+      <div>
+        <label for="email">メールアドレス（必須）:</label>
+        <input type="email" id="email" name="email" placeholder="example@email.com" required />
+      </div>
+
+      <!-- パスワード（8〜20文字） -->
+      <div>
+        <label for="password">パスワード（8〜20文字、必須）:</label>
+        <input type="password" id="password" name="password" minlength="8" maxlength="20" required />
+      </div>
+
+      <!-- 生年月日（18歳以上） -->
+      <div>
+        <label for="birthday">生年月日（18歳以上、必須）:</label>
+        <input type="date" id="birthday" name="birthday" max="2006-01-01" required />
+      </div>
+
+      <!-- 性別（ラジオボタン） -->
+      <div>
+        <p>性別:</p>
+        <label>
+          <input type="radio" name="gender" value="male" />
+          男性
+        </label>
+        <label>
+          <input type="radio" name="gender" value="female" />
+          女性
+        </label>
+        <label>
+          <input type="radio" name="gender" value="other" />
+          その他
+        </label>
+      </div>
+
+      <!-- 興味のある分野（チェックボックス） -->
+      <div>
+        <p>興味のある分野（複数選択可）:</p>
+        <label>
+          <input type="checkbox" name="interests" value="coding" />
+          プログラミング
+        </label>
+        <label>
+          <input type="checkbox" name="interests" value="design" />
+          デザイン
+        </label>
+        <label>
+          <input type="checkbox" name="interests" value="business" />
+          ビジネス
+        </label>
+      </div>
+
+      <!-- 利用規約への同意（必須チェックボックス） -->
+      <div>
+        <label>
+          <input type="checkbox" name="agree" value="yes" required />
+          利用規約に同意します（必須）
+        </label>
+      </div>
+
+      <!-- 送信ボタン -->
+      <div>
+        <button type="submit">登録</button>
+      </div>
+    </form>
+  </body>
+</html>

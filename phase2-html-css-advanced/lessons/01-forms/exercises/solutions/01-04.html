@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>会員登録フォーム</title>
+  </head>
+  <body>
+    <h1>会員登録フォーム</h1>
+
+    <form>
+      <!-- ユーザー名 -->
+      <div>
+        <label for="username">ユーザー名（必須）:</label>
+        <input type="text" id="username" name="username" required />
+      </div>
+
+      <!-- メールアドレス -->
+      <div>
+        <label for="email">メールアドレス（必須）:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <!-- パスワード -->
+      <div>
+        <label for="password">パスワード（8文字以上、必須）:</label>
+        <input type="password" id="password" name="password" minlength="8" required />
+      </div>
+
+      <!-- 生年月日 -->
+      <div>
+        <label for="birthday">生年月日（必須）:</label>
+        <input type="date" id="birthday" name="birthday" required />
+      </div>
+
+      <!-- 性別（ラジオボタン） -->
+      <div>
+        <p>性別:</p>
+        <label>
+          <input type="radio" name="gender" value="male" />
+          男性
+        </label>
+        <label>
+          <input type="radio" name="gender" value="female" />
+          女性
+        </label>
+        <label>
+          <input type="radio" name="gender" value="other" />
+          その他
+        </label>
+      </div>
+
+      <!-- 興味のある分野（チェックボックス） -->
+      <div>
+        <p>興味のある分野（複数選択可）:</p>
+        <label>
+          <input type="checkbox" name="interests" value="coding" />
+          プログラミング
+        </label>
+        <label>
+          <input type="checkbox" name="interests" value="design" />
+          デザイン
+        </label>
+        <label>
+          <input type="checkbox" name="interests" value="business" />
+          ビジネス
+        </label>
+      </div>
+
+      <!-- 送信ボタン -->
+      <div>
+        <button type="submit">登録</button>
+      </div>
+    </form>
+  </body>
+</html>
