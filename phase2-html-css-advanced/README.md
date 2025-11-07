@@ -28,7 +28,7 @@ Phase 2 では、その知識をベースに、**もっと動的でインタラ�
 
 - フォームの基本構造
 - 入力要素（input, textarea, select）
-- さまざまな入力タイプ（text, email, password, checkbox, radio）
+- さまざまな入力タイプ（text, email, password, number, date, checkbox, radioなど）
 - HTML5 バリデーション
 - label とアクセシビリティ
 
