@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 6: レスポンシブなブログ記事一覧ページ</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #f9fafb;
+      }
+
+      /* ヘッダー - モバイルファースト（デフォルト） */
+      header {
+        background-color: #1f2937;
+        padding: 1rem;
+      }
+
+      nav {
+        display: flex;
+        flex-direction: column; /* モバイル：縦並び */
+        gap: 1rem;
+      }
+
+      .logo {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 0;
+      }
+
+      /* メインコンテンツ - モバイルファースト（デフォルト） */
+      main {
+        padding: 1rem;
+      }
+
+      h1 {
+        text-align: center;
+        color: #1f2937;
+        margin: 0 0 2rem 0;
+      }
+
+      .blog-grid {
+        display: grid;
+        grid-template-columns: 1fr; /* モバイル：1列 */
+        gap: 25px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .blog-card {
+        background-color: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s, transform 0.3s;
+        cursor: pointer;
+      }
+
+      .blog-card:hover {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+      }
+
+      .blog-image {
+        width: 100%;
+        height: 200px;
+        background-color: #3b82f6;
+      }
+
+      .blog-card:nth-child(2) .blog-image {
+        background-color: #10b981;
+      }
+      .blog-card:nth-child(3) .blog-image {
+        background-color: #f59e0b;
+      }
+      .blog-card:nth-child(4) .blog-image {
+        background-color: #ef4444;
+      }
+      .blog-card:nth-child(5) .blog-image {
+        background-color: #8b5cf6;
+      }
+      .blog-card:nth-child(6) .blog-image {
+        background-color: #ec4899;
+      }
+
+      .blog-content {
+        padding: 20px;
+      }
+
+      .category {
+        display: inline-block;
+        background-color: #dbeafe;
+        color: #1e40af;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        margin-bottom: 10px;
+      }
+
+      .blog-card h3 {
+        margin: 0 0 10px 0;
+        color: #1f2937;
+        font-size: 1.25rem;
+      }
+
+      .blog-card p {
+        color: #6b7280;
+        line-height: 1.6;
+        margin: 0 0 10px 0;
+      }
+
+      .blog-date {
+        font-size: 0.875rem;
+        color: #9ca3af;
+        margin-bottom: 15px;
+      }
+
+      .read-more {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      .read-more:hover {
+        color: #2563eb;
+        text-decoration: underline;
+      }
+
+      /* フッター */
+      footer {
+        background-color: #1f2937;
+        color: white;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      /* タブレット（768px以上） */
+      @media (min-width: 768px) {
+        header {
+          padding: 1.5rem 2rem;
+        }
+
+        nav {
+          flex-direction: row; /* 横並びに変更 */
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .nav-links {
+          flex-direction: row;
+          gap: 2rem;
+        }
+
+        .blog-grid {
+          grid-template-columns: repeat(2, 1fr); /* 2列 */
+        }
+      }
+
+      /* デスクトップ（1024px以上） */
+      @media (min-width: 1024px) {
+        .blog-grid {
+          grid-template-columns: repeat(3, 1fr); /* 3列 */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header>
+      <nav>
+        <div class="logo">MyBlog</div>
+        <ul class="nav-links">
+          <li><a href="#">ホーム</a></li>
+          <li><a href="#">記事一覧</a></li>
+          <li><a href="#">カテゴリ</a></li>
+          <li><a href="#">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+      <h1>ブログ記事一覧</h1>
+
+      <div class="blog-grid">
+        <!-- 記事カード1 -->
+        <div class="blog-card">
+          <div class="blog-image"></div>
+          <div class="blog-content">
+            <span class="category">技術</span>
+            <h3>レスポンシブデザインの基本</h3>
+            <p>
+              レスポンシブデザインの基礎から、実践的なテクニックまで詳しく解説します。
+            </p>
+            <p class="blog-date">2024年1月15日</p>
+            <a href="#" class="read-more">続きを読む →</a>
+          </div>
+        </div>
+
+        <!-- 記事カード2 -->
+        <div class="blog-card">
+          <div class="blog-image"></div>
+          <div class="blog-content">
+            <span class="category">デザイン</span>
+            <h3>モバイルファーストの重要性</h3>
+            <p>
+              なぜモバイルファーストが重要なのか、その理由と実践方法を紹介します。
+            </p>
+            <p class="blog-date">2024年1月20日</p>
+            <a href="#" class="read-more">続きを読む →</a>
+          </div>
+        </div>
+
+        <!-- 記事カード3 -->
+        <div class="blog-card">
+          <div class="blog-image"></div>
+          <div class="blog-content">
+            <span class="category">CSS</span>
+            <h3>メディアクエリの使い方</h3>
+            <p>
+              メディアクエリを使って、様々な画面サイズに対応する方法を学びましょう。
+            </p>
+            <p class="blog-date">2024年1月25日</p>
+            <a href="#" class="read-more">続きを読む →</a>
+          </div>
+        </div>
+
+        <!-- 記事カード4 -->
+        <div class="blog-card">
+          <div class="blog-image"></div>
+          <div class="blog-content">
+            <span class="category">技術</span>
+            <h3>FlexboxとGridの使い分け</h3>
+            <p>
+              FlexboxとGridの特徴を理解して、適切に使い分けられるようになろう。
+            </p>
+            <p class="blog-date">2024年2月1日</p>
+            <a href="#" class="read-more">続きを読む →</a>
+          </div>
+        </div>
+
+        <!-- 記事カード5 -->
+        <div class="blog-card">
+          <div class="blog-image"></div>
+          <div class="blog-content">
+            <span class="category">実践</span>
+            <h3>実践的なレイアウトパターン</h3>
+            <p>
+              よく使われるレイアウトパターンを実装しながら学びましょう。
+            </p>
+            <p class="blog-date">2024年2月5日</p>
+            <a href="#" class="read-more">続きを読む →</a>
+          </div>
+        </div>
+
+        <!-- 記事カード6 -->
+        <div class="blog-card">
+          <div class="blog-image"></div>
+          <div class="blog-content">
+            <span class="category">Tips</span>
+            <h3>よくある問題と解決法</h3>
+            <p>
+              レスポンシブデザインでよく遭遇する問題と、その解決方法を紹介します。
+            </p>
+            <p class="blog-date">2024年2月10日</p>
+            <a href="#" class="read-more">続きを読む →</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+      <p>&copy; 2024 MyBlog. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

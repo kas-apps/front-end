@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 5：ローディングスピナー - 解答例</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 28px;
+      }
+
+      /* ⭐ 回転アニメーションを定義 */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ローディングスピナーのスタイル */
+      .spinner {
+        width: 50px;
+        height: 50px;
+        margin: 30px auto;
+
+        /* 円形にする */
+        border-radius: 50%;
+
+        /* 全体は薄いグレーの枠線 */
+        border: 4px solid #f3f3f3;
+
+        /* 上だけ青い枠線 */
+        border-top: 4px solid #3498db;
+
+        /* ⭐ アニメーションを適用 */
+        animation: spin 1s linear infinite;
+        /*        ↑   ↑  ↑      ↑         */
+        /*      名前 時間 速度  繰り返し   */
+      }
+
+      .description {
+        margin-top: 30px;
+        color: #666;
+        line-height: 1.8;
+      }
+
+      .code-hint {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        text-align: left;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>演習 5：ローディングスピナー</h1>
+
+      <div class="spinner"></div>
+
+      <div class="description">
+        <p><strong>ポイント</strong></p>
+        <p>
+          円の一部だけ色を付けて、それを回転させることで、<br />
+          ローディング中を表現するスピナーが作れます。
+        </p>
+        <p><strong>重要な設定</strong></p>
+        <ul style="text-align: left; padding-left: 40px;">
+          <li><strong>border-radius: 50%</strong> - 正方形を円形に</li>
+          <li><strong>linear</strong> - 一定速度で回転</li>
+          <li><strong>infinite</strong> - 無限ループ</li>
+          <li><strong>rotate(360deg)</strong> - 1回転</li>
+        </ul>
+      </div>
+
+      <div class="code-hint">
+        <strong>CSS のポイント：</strong><br />
+        @keyframes spin {<br />
+        &nbsp;&nbsp;0% { transform: rotate(0deg); }<br />
+        &nbsp;&nbsp;100% { transform: rotate(360deg); }<br />
+        }<br />
+        <br />
+        .spinner {<br />
+        &nbsp;&nbsp;border: 4px solid #f3f3f3;<br />
+        &nbsp;&nbsp;border-top: 4px solid #3498db;<br />
+        &nbsp;&nbsp;border-radius: 50%;<br />
+        &nbsp;&nbsp;animation: spin 1s linear infinite;<br />
+        }
+      </div>
+    </div>
+  </body>
+</html>

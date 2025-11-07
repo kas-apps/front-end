@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 4: ギャラリーレイアウト</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background-color: #f9fafb;
+      }
+
+      h1 {
+        text-align: center;
+        color: #1f2937;
+        margin-bottom: 2rem;
+      }
+
+      /* Gridコンテナ */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3列、等幅 */
+        grid-template-rows: repeat(3, 200px); /* 3行、各200px */
+        gap: 15px; /* グリッド間の余白 */
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* 各ギャラリーアイテム */
+      .gallery-item {
+        /* Flexboxで中央揃え */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+      }
+
+      /* ホバー時に拡大 */
+      .gallery-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      /* 各アイテムの色を変える */
+      .gallery-item:nth-child(1) {
+        background-color: #3b82f6;
+      }
+      .gallery-item:nth-child(2) {
+        background-color: #10b981;
+      }
+      .gallery-item:nth-child(3) {
+        background-color: #f59e0b;
+      }
+      .gallery-item:nth-child(4) {
+        background-color: #ef4444;
+      }
+      .gallery-item:nth-child(5) {
+        background-color: #8b5cf6;
+      }
+      .gallery-item:nth-child(6) {
+        background-color: #ec4899;
+      }
+      .gallery-item:nth-child(7) {
+        background-color: #06b6d4;
+      }
+      .gallery-item:nth-child(8) {
+        background-color: #84cc16;
+      }
+      .gallery-item:nth-child(9) {
+        background-color: #f97316;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 4: ギャラリーレイアウト（3×3）</h1>
+
+    <div class="gallery">
+      <div class="gallery-item">画像 1</div>
+      <div class="gallery-item">画像 2</div>
+      <div class="gallery-item">画像 3</div>
+      <div class="gallery-item">画像 4</div>
+      <div class="gallery-item">画像 5</div>
+      <div class="gallery-item">画像 6</div>
+      <div class="gallery-item">画像 7</div>
+      <div class="gallery-item">画像 8</div>
+      <div class="gallery-item">画像 9</div>
+    </div>
+  </body>
+</html>

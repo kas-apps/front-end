@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 1: 横並びレイアウト</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+
+      /* Flexコンテナ */
+      .container {
+        display: flex; /* Flexboxを有効化 */
+        background-color: #f0f0f0;
+        padding: 20px;
+      }
+
+      /* Flexアイテム */
+      .box {
+        padding: 20px;
+        margin: 10px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .box1 {
+        background-color: #3b82f6; /* 青 */
+      }
+
+      .box2 {
+        background-color: #10b981; /* 緑 */
+      }
+
+      .box3 {
+        background-color: #f59e0b; /* オレンジ */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 1: 横並びレイアウト</h1>
+
+    <div class="container">
+      <div class="box box1">ボックス1</div>
+      <div class="box box2">ボックス2</div>
+      <div class="box box3">ボックス3</div>
+    </div>
+  </body>
+</html>

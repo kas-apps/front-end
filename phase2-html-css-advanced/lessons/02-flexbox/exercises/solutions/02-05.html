@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 5: カードレイアウト</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background-color: #f9fafb;
+      }
+
+      h1 {
+        text-align: center;
+        color: #1f2937;
+        margin-bottom: 2rem;
+      }
+
+      /* カードコンテナのFlexbox */
+      .card-container {
+        display: flex;
+        gap: 20px; /* カード間の余白 */
+        flex-wrap: wrap; /* 画面が狭い時は折り返す */
+        padding: 20px;
+      }
+
+      /* 各カード */
+      .card {
+        flex: 1 1 250px; /* 最小幅250px、余白があれば伸びる */
+        background-color: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .card h3 {
+        margin-top: 0;
+        color: #1f2937;
+        font-size: 1.25rem;
+      }
+
+      .card p {
+        color: #6b7280;
+        line-height: 1.6;
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 5: カードレイアウト</h1>
+
+    <div class="card-container">
+      <div class="card">
+        <h3>Flexboxとは</h3>
+        <p>1次元レイアウトシステムです。要素を横または縦に柔軟に配置できます。</p>
+      </div>
+      <div class="card">
+        <h3>簡単な配置</h3>
+        <p>要素を簡単に横並びにできます。display: flex; を付けるだけ！</p>
+      </div>
+      <div class="card">
+        <h3>レスポンシブ</h3>
+        <p>
+          画面サイズに応じて自動調整されます。flex-wrapで折り返しも簡単です。
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>チャレンジ 1: エラー修正（修正後）</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      /* 修正1: grid-template-columnsを3列に変更 */
+      .container {
+        display: grid;
+        grid-template-columns: 200px 1fr 200px; /* 修正：3列に変更 */
+        gap: 20px;
+        padding: 20px;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+      }
+
+      /* 修正2: grid-columnを全列をまたぐように変更 */
+      .header {
+        grid-column: 1 / -1; /* 修正：全列をまたぐ */
+        background-color: #3b82f6;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      /* 修正3: grid-rowを削除（または明確に列を指定） */
+      .sidebar {
+        /* grid-rowを削除して自動配置に任せる */
+        background-color: #f3f4f6;
+        padding: 20px;
+      }
+
+      .main {
+        /* grid-rowを削除して自動配置に任せる */
+        background-color: white;
+        padding: 20px;
+      }
+
+      /* 修正4: display: gridを追加 */
+      .stats {
+        display: grid; /* 追加：サブグリッドを有効化 */
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-box {
+        background-color: #dbeafe;
+        padding: 15px;
+        text-align: center;
+        border-radius: 8px;
+      }
+
+      /* 修正5: grid-columnを追加 */
+      .footer {
+        grid-column: 1 / -1; /* 追加：全列をまたぐ */
+        background-color: #1f2937;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1,
+      h2 {
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>ヘッダー</h1>
+      </div>
+
+      <div class="sidebar">
+        <h2>サイドバー</h2>
+        <p>ナビゲーション</p>
+        <ul>
+          <li>メニュー1</li>
+          <li>メニュー2</li>
+          <li>メニュー3</li>
+        </ul>
+      </div>
+
+      <div class="main">
+        <h2>メインコンテンツ</h2>
+        <div class="stats">
+          <div class="stat-box">
+            <h3>統計1</h3>
+            <p>100</p>
+          </div>
+          <div class="stat-box">
+            <h3>統計2</h3>
+            <p>200</p>
+          </div>
+          <div class="stat-box">
+            <h3>統計3</h3>
+            <p>300</p>
+          </div>
+          <div class="stat-box">
+            <h3>統計4</h3>
+            <p>400</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- サイドバー（右側）は自動配置される -->
+
+      <div class="footer">
+        <p>フッター © 2024</p>
+      </div>
+    </div>
+  </body>
+</html>

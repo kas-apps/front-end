@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 3: space-betweenで両端配置</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+
+      /* Flexコンテナ：両端配置 */
+      .container {
+        display: flex;
+        justify-content: space-between; /* 両端に配置、間隔を均等に */
+        background-color: #f0f0f0;
+        padding: 20px;
+        border: 2px solid #d1d5db;
+      }
+
+      /* ボタンのスタイル */
+      button {
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #2563eb;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 3: space-betweenで両端配置</h1>
+
+    <div class="container">
+      <button>左</button>
+      <button>中央</button>
+      <button>右</button>
+    </div>
+  </body>
+</html>

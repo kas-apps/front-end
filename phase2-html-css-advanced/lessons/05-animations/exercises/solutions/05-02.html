@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 2：複数プロパティの transition - 解答例</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 28px;
+      }
+
+      /* ボタンのスタイル */
+      button {
+        background-color: #3498db; /* 青い背景 */
+        color: white;
+        padding: 15px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px; /* 角を丸く */
+        cursor: pointer;
+        font-weight: bold;
+
+        /* ⭐ allを使って全てのプロパティに transition を適用 */
+        transition: all 0.3s;
+      }
+
+      /* ホバー時のスタイル */
+      button:hover {
+        background-color: #2980b9; /* 濃い青に変化 */
+        transform: scale(1.1); /* 1.1倍に拡大 */
+      }
+
+      /* ボタンを押した時のスタイル */
+      button:active {
+        transform: scale(1.05);
+      }
+
+      .description {
+        margin-top: 30px;
+        color: #666;
+        line-height: 1.8;
+      }
+
+      .code-hint {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        text-align: left;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>演習 2：複数プロパティの transition</h1>
+
+      <button>ホバーしてみて！</button>
+
+      <div class="description">
+        <p><strong>ポイント</strong></p>
+        <p>
+          <code>transition: all 0.3s;</code> を使うことで、<br />
+          背景色とサイズの両方に同時に transition が適用されます。
+        </p>
+        <p>
+          <strong>transform: scale(1.1)</strong> で、<br />
+          周囲のレイアウトに影響を与えずにサイズが変わります。
+        </p>
+      </div>
+
+      <div class="code-hint">
+        <strong>CSS のポイント：</strong><br />
+        button {<br />
+        &nbsp;&nbsp;transition: all 0.3s;<br />
+        }<br />
+        <br />
+        button:hover {<br />
+        &nbsp;&nbsp;background-color: #2980b9;<br />
+        &nbsp;&nbsp;transform: scale(1.1); /* 1.1倍に拡大 */<br />
+        }
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 2: 2×2グリッド</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+
+      /* Gridコンテナ */
+      .container {
+        display: grid;
+        grid-template-columns: 200px 200px; /* 2列、各200px */
+        grid-template-rows: 150px 150px; /* 2行、各150px */
+        gap: 20px; /* グリッド間の余白 */
+        background-color: #f0f0f0;
+        padding: 20px;
+        width: fit-content;
+      }
+
+      /* Gridアイテム：中央揃え */
+      .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-radius: 8px;
+      }
+
+      .box1 {
+        background-color: #3b82f6;
+      }
+      .box2 {
+        background-color: #10b981;
+      }
+      .box3 {
+        background-color: #f59e0b;
+      }
+      .box4 {
+        background-color: #ef4444;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 2: 2×2グリッド</h1>
+
+    <div class="container">
+      <div class="box box1">ボックス1</div>
+      <div class="box box2">ボックス2</div>
+      <div class="box box3">ボックス3</div>
+      <div class="box box4">ボックス4</div>
+    </div>
+  </body>
+</html>

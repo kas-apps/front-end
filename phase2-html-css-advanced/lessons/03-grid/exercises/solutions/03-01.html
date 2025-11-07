@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 1: 基本的なグリッド</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+
+      /* Gridコンテナ */
+      .container {
+        display: grid; /* Gridを有効化 */
+        grid-template-columns: 1fr 1fr 1fr; /* 3列、等幅 */
+        grid-template-rows: 100px 100px; /* 2行、各100px */
+        gap: 10px; /* グリッド間の余白 */
+        background-color: #f0f0f0;
+        padding: 10px;
+      }
+
+      /* Gridアイテム */
+      .item {
+        background-color: #3b82f6;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        border-radius: 4px;
+      }
+
+      /* 各アイテムの色を変える */
+      .item:nth-child(2) {
+        background-color: #10b981;
+      }
+      .item:nth-child(3) {
+        background-color: #f59e0b;
+      }
+      .item:nth-child(4) {
+        background-color: #ef4444;
+      }
+      .item:nth-child(5) {
+        background-color: #8b5cf6;
+      }
+      .item:nth-child(6) {
+        background-color: #ec4899;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 1: 基本的なグリッド（2行×3列）</h1>
+
+    <div class="container">
+      <div class="item">アイテム1</div>
+      <div class="item">アイテム2</div>
+      <div class="item">アイテム3</div>
+      <div class="item">アイテム4</div>
+      <div class="item">アイテム5</div>
+      <div class="item">アイテム6</div>
+    </div>
+  </body>
+</html>

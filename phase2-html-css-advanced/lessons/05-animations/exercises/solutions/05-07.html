@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>チャレンジ 1：複雑なアニメーション - 解答例</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 50px;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+        opacity: 0.9;
+      }
+
+      /* ⭐ スライドイン + フェードインのアニメーション */
+      @keyframes slideInFade {
+        0% {
+          opacity: 0; /* 透明 */
+          transform: translateX(-50px); /* 左に50pxずれた位置 */
+        }
+        100% {
+          opacity: 1; /* 不透明 */
+          transform: translateX(0); /* 元の位置 */
+        }
+      }
+
+      /* カードのコンテナ（横並び） */
+      .card-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      /* カードのスタイル */
+      .card {
+        background-color: #ecf0f1;
+        width: 200px;
+        height: 150px;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        /* 最初は透明で左にずれた位置（アニメーション開始前の状態） */
+        opacity: 0;
+
+        /* ⭐ アニメーションを適用 */
+        animation: slideInFade 0.6s ease-out forwards;
+        /*                              ↑        ↑      */
+        /*                           速度   終了後の状態を保つ */
+      }
+
+      /* 各カードに時間差を設定 */
+      .card:nth-child(1) {
+        animation-delay: 0s; /* 1枚目：すぐに開始 */
+      }
+
+      .card:nth-child(2) {
+        animation-delay: 0.2s; /* 2枚目：0.2秒後に開始 */
+      }
+
+      .card:nth-child(3) {
+        animation-delay: 0.4s; /* 3枚目：0.4秒後に開始 */
+      }
+
+      .card h3 {
+        margin-top: 0;
+        color: #2c3e50;
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+
+      .card p {
+        color: #7f8c8d;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .explanation {
+        max-width: 800px;
+        margin: 50px auto 0;
+        padding: 30px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .explanation h2 {
+        color: #333;
+        margin-top: 0;
+      }
+
+      .explanation p {
+        color: #666;
+        line-height: 1.8;
+      }
+
+      .code-hint {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        color: #333;
+      }
+
+      .reload-hint {
+        margin-top: 20px;
+        padding: 15px;
+        background: #e3f2fd;
+        border-radius: 8px;
+        color: #1976d2;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>チャレンジ 1：複雑なアニメーション</h1>
+      <p class="subtitle">スライドイン + フェードイン + 時間差</p>
+    </div>
+
+    <div class="card-container">
+      <div class="card">
+        <h3>カード 1</h3>
+        <p>左からスライドしながら、ふわっと現れます。</p>
+      </div>
+
+      <div class="card">
+        <h3>カード 2</h3>
+        <p>0.2秒遅れて、同じアニメーションで現れます。</p>
+      </div>
+
+      <div class="card">
+        <h3>カード 3</h3>
+        <p>0.4秒遅れて、最後に現れます。</p>
+      </div>
+    </div>
+
+    <div class="explanation">
+      <h2>解説</h2>
+      <p><strong>複数の効果を組み合わせる</strong></p>
+      <p>
+        1つのアニメーション（@keyframes）の中で、<br />
+        opacity と transform を同時に変化させることで、<br />
+        スライドインとフェードインを組み合わせています。
+      </p>
+
+      <p><strong>時間差で表示する</strong></p>
+      <p>
+        animation-delay を使って、各カードの開始時間をずらしています。<br />
+        :nth-child() で各カードを個別に選択して、遅延時間を設定。
+      </p>
+
+      <p><strong>animation-fill-mode: forwards</strong></p>
+      <p>
+        アニメーション終了後も、最後の状態（opacity: 1, translateX(0)）を保ちます。<br />
+        これがないと、アニメーション終了後に opacity: 0 に戻ってしまいます。
+      </p>
+
+      <div class="code-hint">
+        <strong>CSS のポイント：</strong><br />
+        @keyframes slideInFade {<br />
+        &nbsp;&nbsp;0% {<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;opacity: 0;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;transform: translateX(-50px);<br />
+        &nbsp;&nbsp;}<br />
+        &nbsp;&nbsp;100% {<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;opacity: 1;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;transform: translateX(0);<br />
+        &nbsp;&nbsp;}<br />
+        }<br />
+        <br />
+        .card {<br />
+        &nbsp;&nbsp;opacity: 0;<br />
+        &nbsp;&nbsp;animation: slideInFade 0.6s ease-out forwards;<br />
+        }<br />
+        <br />
+        .card:nth-child(2) {<br />
+        &nbsp;&nbsp;animation-delay: 0.2s;<br />
+        }
+      </div>
+
+      <div class="reload-hint">
+        💡 ページを再読み込みすると、もう一度アニメーションが見られます！
+      </div>
+    </div>
+  </body>
+</html>

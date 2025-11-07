@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 2: 完全な中央配置</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+
+      /* Flexコンテナ：完全な中央配置 */
+      .container {
+        display: flex;
+        justify-content: center; /* 横方向の中央揃え */
+        align-items: center; /* 縦方向の中央揃え */
+        height: 300px;
+        background-color: #f0f0f0;
+        border: 2px solid #d1d5db;
+      }
+
+      /* 中央に配置されるボックス */
+      .box {
+        background-color: #3b82f6;
+        color: white;
+        padding: 40px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 2: 完全な中央配置</h1>
+
+    <div class="container">
+      <div class="box">完全に中央！</div>
+    </div>
+  </body>
+</html>

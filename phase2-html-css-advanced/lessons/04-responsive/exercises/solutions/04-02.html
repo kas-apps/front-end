@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 2: ブレークポイントで段階的に変化</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background-color: #f9fafb;
+      }
+
+      h1 {
+        text-align: center;
+        color: #1f2937;
+        margin-bottom: 1rem;
+      }
+
+      .info {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 2rem;
+      }
+
+      /* デスクトップ（768px以上）：横並び（デフォルト） */
+      .container {
+        display: flex;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .box {
+        flex: 1;
+        padding: 40px;
+        color: white;
+        text-align: center;
+        border-radius: 8px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 150px;
+      }
+
+      .box1 {
+        background-color: #3b82f6;
+      }
+      .box2 {
+        background-color: #10b981;
+      }
+      .box3 {
+        background-color: #f59e0b;
+      }
+
+      /* タブレット（481px〜767px）：2列のグリッド */
+      @media (max-width: 767px) and (min-width: 481px) {
+        .container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .box3 {
+          grid-column: 1; /* 最後のボックスを1列目に */
+        }
+
+        /* 背景色を変更 */
+        .box1 {
+          background-color: #8b5cf6;
+        }
+        .box2 {
+          background-color: #ec4899;
+        }
+        .box3 {
+          background-color: #06b6d4;
+        }
+      }
+
+      /* モバイル（480px以下）：縦並び */
+      @media (max-width: 480px) {
+        .container {
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* 背景色を変更 */
+        .box1 {
+          background-color: #ef4444;
+        }
+        .box2 {
+          background-color: #f97316;
+        }
+        .box3 {
+          background-color: #84cc16;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>演習 2: ブレークポイントで段階的に変化</h1>
+    <div class="info">
+      <p>画面幅を変えてみてください：</p>
+      <p>768px以上: 横並び（青系）</p>
+      <p>481px〜767px: 2列グリッド（紫系）</p>
+      <p>480px以下: 縦並び（赤系）</p>
+    </div>
+
+    <div class="container">
+      <div class="box box1">ボックス1</div>
+      <div class="box box2">ボックス2</div>
+      <div class="box box3">ボックス3</div>
+    </div>
+  </body>
+</html>
