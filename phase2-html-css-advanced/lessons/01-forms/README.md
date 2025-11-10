@@ -776,10 +776,10 @@ AI が生成したフォームを、自分で微調整する時のポイント�
 </select>
 
 <!-- チェックボックスを初期状態でチェック -->
-<label
-  ><input type="checkbox" name="newsletter" value="yes" checked />
-  ニュースレターを購読する</label
->
+<label>
+  <input type="checkbox" name="newsletter" value="yes" checked />
+  ニュースレターを購読する
+</label>
 ```
 
 ---
