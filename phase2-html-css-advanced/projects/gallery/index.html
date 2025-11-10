@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>フォトギャラリー</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="container">
+      <h1>📷 フォトギャラリー</h1>
+      <p class="subtitle">美しい瞬間を集めたコレクション</p>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main>
+    <div class="container">
+      <!-- フィルターボタン -->
+      <div class="filter-container">
+        <h2 class="filter-title">カテゴリー</h2>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">
+            すべて
+          </button>
+          <button class="filter-btn" data-filter="nature">
+            自然
+          </button>
+          <button class="filter-btn" data-filter="city">
+            都市
+          </button>
+          <button class="filter-btn" data-filter="people">
+            人物
+          </button>
+          <button class="filter-btn" data-filter="food">
+            フード
+          </button>
+        </div>
+      </div>
+
+      <!-- ギャラリーグリッド -->
+      <div class="gallery-grid">
+        <!-- ギャラリーアイテム 1 -->
+        <div class="gallery-item" data-category="nature">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <span class="image-placeholder">🌸</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>桜の花</h3>
+              <p>春の訪れを告げる美しい桜の花びら</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 2 -->
+        <div class="gallery-item" data-category="city">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <span class="image-placeholder">🏙️</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>東京の夜景</h3>
+              <p>輝く高層ビル群の美しい夜景</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 3 -->
+        <div class="gallery-item" data-category="nature">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <span class="image-placeholder">🌊</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>青い海</h3>
+              <p>透き通った青い海と白い砂浜</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 4 -->
+        <div class="gallery-item" data-category="people">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+            <span class="image-placeholder">👨‍👩‍👧‍👦</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>家族の笑顔</h3>
+              <p>幸せな家族の温かい瞬間</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 5 -->
+        <div class="gallery-item" data-category="food">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+            <span class="image-placeholder">🍜</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>ラーメン</h3>
+              <p>熱々の美味しいラーメン</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 6 -->
+        <div class="gallery-item" data-category="nature">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+            <span class="image-placeholder">🏔️</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>雪山</h3>
+              <p>雄大な雪に覆われた山々</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 7 -->
+        <div class="gallery-item" data-category="city">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+            <span class="image-placeholder">🌉</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>橋</h3>
+              <p>夕暮れ時の美しい橋の風景</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 8 -->
+        <div class="gallery-item" data-category="food">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+            <span class="image-placeholder">🍰</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>ケーキ</h3>
+              <p>美味しそうなデコレーションケーキ</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 9 -->
+        <div class="gallery-item" data-category="people">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);">
+            <span class="image-placeholder">🧑‍💻</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>開発者</h3>
+              <p>集中してコードを書く開発者</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 10 -->
+        <div class="gallery-item" data-category="nature">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);">
+            <span class="image-placeholder">🌺</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>熱帯の花</h3>
+              <p>色鮮やかな熱帯の花々</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 11 -->
+        <div class="gallery-item" data-category="city">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);">
+            <span class="image-placeholder">🏛️</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>歴史的建造物</h3>
+              <p>美しい建築の歴史的建造物</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ギャラリーアイテム 12 -->
+        <div class="gallery-item" data-category="food">
+          <div class="gallery-image" style="background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);">
+            <span class="image-placeholder">🍕</span>
+          </div>
+          <div class="overlay">
+            <div class="overlay-content">
+              <h3>ピザ</h3>
+              <p>チーズたっぷりの焼きたてピザ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 フォトギャラリー. All rights reserved.</p>
+      <p class="footer-note">
+        ※ フィルター機能は Phase 3 で JavaScript を使って実装します
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

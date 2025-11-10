@@ -249,7 +249,9 @@ CSS でアニメーションを作る方法は、主に 2 つあるよ：
 ```html
 <style>
   .card {
-    background-color: white;
+    width: 300px;
+    margin: 0 auto;
+    background-color: #befbff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -341,8 +343,10 @@ CSS でアニメーションを作る方法は、主に 2 つあるよ：
 ```html
 <style>
   .zoom-image {
+    display: block;
+    margin: 40px auto;
     width: 300px;
-    height: 200px;
+    height: 300px;
     object-fit: cover;
     border-radius: 8px;
     transition: transform 0.3s ease;
@@ -353,7 +357,7 @@ CSS でアニメーションを作る方法は、主に 2 つあるよ：
   }
 </style>
 
-<img class="zoom-image" src="image.jpg" alt="画像" />
+<img class="zoom-image" src="cat.jpg" alt="画像" />
 ```
 
 ---
@@ -374,11 +378,11 @@ CSS でアニメーションを作る方法は、主に 2 つあるよ：
   .rotate-icon {
     display: inline-block;
     font-size: 2rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.6s ease;
   }
 
   .rotate-icon:hover {
-    transform: rotate(180deg); /* 180度回転 */
+    transform: rotate(-180deg); /* -180度回転 */
   }
 </style>
 
@@ -613,6 +617,9 @@ CSS でアニメーションを作る方法は、主に 2 つあるよ：
 ## 実践例 5：フェードイン（スクロール時）
 
 ```html
+<div class="fade-in-up">要素1</div>
+<div class="fade-in-up">要素2</div>
+<div class="fade-in-up">要素3</div>
 <style>
   @keyframes fadeInUp {
     from {
@@ -641,10 +648,6 @@ CSS でアニメーションを作る方法は、主に 2 つあるよ：
     animation-delay: 0.4s;
   }
 </style>
-
-<div class="fade-in-up">要素1</div>
-<div class="fade-in-up">要素2</div>
-<div class="fade-in-up">要素3</div>
 ```
 
 **ポイント**：
