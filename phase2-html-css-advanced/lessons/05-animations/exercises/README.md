@@ -76,10 +76,15 @@
 - 100%：`opacity: 1;`（不透明）
 
 **ヒント**：
+
 ```css
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 h1 {
@@ -208,6 +213,8 @@ AI に以下の内容のアニメーションを作ってもらってくださ�
 - [ ] animation-iteration-count で無限ループを設定できる
 - [ ] animation-delay で時間差のあるアニメーションを作れる
 - [ ] AI に具体的な指示を出してアニメーションを生成できる
+
+[解答例と解説はこちら](solutions/README.md)で確認できます。
 
 ---
 

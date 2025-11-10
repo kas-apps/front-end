@@ -4,13 +4,13 @@
 
 ---
 
-## 演習 1：最初のFlexbox - 横並びレイアウト
+## 演習 1：最初の Flexbox - 横並びレイアウト
 
 ### 解答例：[02-01.html](02-01.html)
 
 ### ポイント解説
 
-#### 1. Flexboxの基本構造
+#### 1. Flexbox の基本構造
 
 ```css
 .container {
@@ -47,7 +47,7 @@
 - `padding`：ボックス内の余白
 - `margin`：ボックス外の余白（ボックス間の間隔）
 
-**より良い方法**：marginの代わりに親要素に `gap` を使う方が簡単！
+**より良い方法**：margin の代わりに親要素に `gap` を使う方が簡単！
 
 ```css
 .container {
@@ -112,13 +112,13 @@
 
 ---
 
-## 演習 3：space-betweenで両端配置
+## 演習 3：space-between で両端配置
 
 ### 解答例：[02-03.html](02-03.html)
 
 ### ポイント解説
 
-#### space-betweenの動作
+#### space-between の動作
 
 ```css
 .container {
@@ -130,29 +130,29 @@
 **結果**：
 
 ```text
-┌──┐             ┌──┐             ┌──┐
-│左│             │中央│             │右│
-└──┘             └──┘             └──┘
+┌──────┐        ┌──────┐        ┌──────┐
+│Left  │        │Center│        │Right │
+└──────┘        └──────┘        └──────┘
 ```
 
 - 最初の要素：左端
 - 最後の要素：右端
 - 間隔：均等
 
-#### space-betweenとspace-aroundの違い
+#### space-between と space-around の違い
 
 ```css
 /* space-between */
 justify-content: space-between;
-/* 結果：左|     要素     |     要素     |右 */
+/* 結果：|要素|------|要素|------|要素| */
 
 /* space-around */
 justify-content: space-around;
-/* 結果：  |  要素  |  要素  |  要素  |   */
+/* 結果：--|要素|----|要素|----|要素|--   */
 
 /* space-evenly */
 justify-content: space-evenly;
-/* 結果： | 要素 | 要素 | 要素 | */
+/* 結果：---|要素|---|要素|---|要素|--- */
 ```
 
 - **space-between**：端に余白なし、間隔は均等
@@ -167,7 +167,7 @@ justify-content: space-evenly;
 
 ### ポイント解説
 
-#### ネストされたFlexbox
+#### ネストされた Flexbox
 
 ```html
 <nav>
@@ -196,7 +196,7 @@ nav {
 }
 ```
 
-**ポイント**：Flexboxは**ネスト**できる！親も子も両方Flexコンテナにできます。
+**ポイント**：Flexbox は**ネスト**できる！親も子も両方 Flex コンテナにできます。
 
 #### リストのスタイルリセット
 
@@ -208,7 +208,7 @@ nav {
 }
 ```
 
-`<ul>` には、デフォルトでmargin、padding、リストマーカーがあるので、リセットします。
+`<ul>` には、デフォルトで margin、padding、リストマーカーがあるので、リセットします。
 
 ---
 
@@ -218,7 +218,7 @@ nav {
 
 ### ポイント解説
 
-#### flexプロパティで可変幅
+#### flex プロパティで可変幅
 
 ```css
 .card {
@@ -235,7 +235,7 @@ nav {
 - 余白があれば、各カードが均等に伸びる
 - 250px 以下になったら、次の行に折り返す（flex-wrap: wrap が必要）
 
-#### flex-wrapで折り返し
+#### flex-wrap で折り返し
 
 ```css
 .card-container {
@@ -251,19 +251,19 @@ nav {
 
 ```text
 【広い画面】
-┌────┬────┬────┐
-│カード1│カード2│カード3│
-└────┴────┴────┘
+┌───────┬───────┬───────┐
+│Card 1 │Card 2 │Card 3 │
+└───────┴───────┴───────┘
 
 【狭い画面】
-┌────┬────┐
-│カード1│カード2│
-├────┤
-│カード3│
-└────┘
+┌───────┬───────┐
+│Card 1 │Card 2 │
+├───────┼───────┘
+│Card 3 │
+└───────┘
 ```
 
-#### gapで余白を設定
+#### gap で余白を設定
 
 ```css
 .card-container {
@@ -271,7 +271,7 @@ nav {
 }
 ```
 
-**marginを使った方法（面倒）**：
+**margin を使った方法（面倒）**：
 
 ```css
 .card {
@@ -280,7 +280,7 @@ nav {
 /* でも、コンテナの外側にも余白ができてしまう... */
 ```
 
-**gapを使う（簡単）**：
+**gap を使う（簡単）**：
 
 ```css
 .card-container {
@@ -290,13 +290,13 @@ nav {
 
 ---
 
-## 演習 6：AIに指示して作ってもらおう
+## 演習 6：AI に指示して作ってもらおう
 
 ### 解答例：[02-06.html](02-06.html)
 
 ### ポイント解説
 
-#### AIへの良い指示の出し方
+#### AI への良い指示の出し方
 
 ```text
 ✅ 良い指示：
@@ -315,12 +315,12 @@ nav {
 
 **良い点**：
 
-- **Flexboxを使う**ことを明示
-- **具体的なプロパティ名**を指定（display, justify-content, gapなど）
+- **Flexbox を使う**ことを明示
+- **具体的なプロパティ名**を指定（display, justify-content, gap など）
 - **構造を説明**（親要素と子要素の両方）
 - **細かい仕様**も含める（サイズ、色、ホバー効果など）
 
-#### ネストされたFlexbox（縦並び）
+#### ネストされた Flexbox（縦並び）
 
 ```css
 /* 親：カードを横並び */
@@ -353,9 +353,9 @@ nav {
 }
 ```
 
-`transform: translateY(-5px);` で、要素が上に5px移動して「浮き上がる」効果になります。
+`transform: translateY(-5px);` で、要素が上に 5px 移動して「浮き上がる」効果になります。
 
-#### margin-top: autoで下に配置
+#### margin-top: auto で下に配置
 
 ```css
 .add-to-cart {
@@ -363,7 +363,7 @@ nav {
 }
 ```
 
-Flexboxの中で `margin-top: auto;` を使うと、その要素が下に配置されます！
+Flexbox の中で `margin-top: auto;` を使うと、その要素が下に配置されます！
 
 ---
 
@@ -373,7 +373,7 @@ Flexboxの中で `margin-top: auto;` を使うと、その要素が下に配置�
 
 ### 修正ポイント解説
 
-#### 問題1：containerに高さがない
+#### 問題 1：container に高さがない
 
 ```css
 /* 修正前 */
@@ -394,7 +394,7 @@ Flexboxの中で `margin-top: auto;` を使うと、その要素が下に配置�
 
 **解決策**：`height` または `min-height` を設定する。
 
-#### 問題2：itemにwidth: 100%がある
+#### 問題 2：item に width: 100%がある
 
 ```css
 /* 修正前 */
@@ -412,7 +412,7 @@ Flexboxの中で `margin-top: auto;` を使うと、その要素が下に配置�
 
 **解決策**：`width` を削除するか、`width: auto;` にする。
 
-#### 問題3：navにdisplay: flexがない
+#### 問題 3：nav に display: flex がない
 
 ```css
 /* 修正前 */
@@ -430,9 +430,9 @@ Flexboxの中で `margin-top: auto;` を使うと、その要素が下に配置�
 }
 ```
 
-**原因**：Flexboxを使うには、親要素に `display: flex;` が必要です。
+**原因**：Flexbox を使うには、親要素に `display: flex;` が必要です。
 
-#### 問題4と5：marginではなくgapを使う
+#### 問題 4 と 5：margin ではなく gap を使う
 
 ```css
 /* 修正前：marginで余白を設定（面倒） */
@@ -455,13 +455,13 @@ Flexboxの中で `margin-top: auto;` を使うと、その要素が下に配置�
 }
 ```
 
-**gapの利点**：
+**gap の利点**：
 
-- たった1行で設定できる
+- たった 1 行で設定できる
 - 要素間だけに余白が入る（最後の要素の後ろには入らない）
 - コードがシンプルになる
 
-#### 問題6：flex-wrapがない
+#### 問題 6：flex-wrap がない
 
 ```css
 /* 修正前 */
@@ -479,7 +479,7 @@ Flexboxの中で `margin-top: auto;` を使うと、その要素が下に配置�
 }
 ```
 
-**原因**：`flex-wrap: nowrap;`（デフォルト）だと、1行に無理やり収めようとして、要素が潰れます。
+**原因**：`flex-wrap: nowrap;`（デフォルト）だと、1 行に無理やり収めようとして、要素が潰れます。
 
 **解決策**：`flex-wrap: wrap;` を追加して、折り返しを有効にする。
 
@@ -489,49 +489,49 @@ Flexboxの中で `margin-top: auto;` を使うと、その要素が下に配置�
 
 ### よくある間違いと解決策
 
-| 間違い                       | 問題                   | 解決策                       |
-| ---------------------------- | ---------------------- | ---------------------------- |
-| 親要素にdisplay: flexがない  | 横並びにならない       | 親要素に `display: flex;`    |
-| 高さが設定されていない       | align-itemsが効かない  | `height` または `min-height` |
-| width: 100%がある            | 横並びにならない       | `width` を削除               |
-| marginで余白を設定           | コードが複雑           | `gap` を使う                 |
-| flex-wrapがない              | 画面が狭い時に潰れる   | `flex-wrap: wrap;`           |
-| flex-directionを忘れている   | 縦並びにならない       | `flex-direction: column;`    |
-| justify-contentとalign-items | どっちを使うか迷う     | 主軸=justify、交差軸=align   |
+| 間違い                         | 問題                   | 解決策                       |
+| ------------------------------ | ---------------------- | ---------------------------- |
+| 親要素に display: flex がない  | 横並びにならない       | 親要素に `display: flex;`    |
+| 高さが設定されていない         | align-items が効かない | `height` または `min-height` |
+| width: 100%がある              | 横並びにならない       | `width` を削除               |
+| margin で余白を設定            | コードが複雑           | `gap` を使う                 |
+| flex-wrap がない               | 画面が狭い時に潰れる   | `flex-wrap: wrap;`           |
+| flex-direction を忘れている    | 縦並びにならない       | `flex-direction: column;`    |
+| justify-content と align-items | どっちを使うか迷う     | 主軸=justify、交差軸=align   |
 
-### Flexboxの主要プロパティ
+### Flexbox の主要プロパティ
 
-**Flexコンテナ（親要素）に指定**：
+**Flex コンテナ（親要素）に指定**：
 
-- `display: flex;` - Flexboxを有効化
+- `display: flex;` - Flexbox を有効化
 - `flex-direction` - 並べる方向（row, column）
 - `justify-content` - 主軸方向の配置（横方向）
 - `align-items` - 交差軸方向の配置（縦方向）
 - `flex-wrap` - 折り返しの制御（wrap, nowrap）
 - `gap` - 要素間の余白
 
-**Flexアイテム（子要素）に指定**：
+**Flex アイテム（子要素）に指定**：
 
 - `flex` - 伸縮の制御（flex: 1 1 250px など）
 - `align-self` - 個別の交差軸方向の配置
 
 ### 学習のポイント
 
-- ✅ `display: flex;` で親要素をFlexコンテナにする
+- ✅ `display: flex;` で親要素を Flex コンテナにする
 - ✅ `justify-content` で横方向の配置を制御
 - ✅ `align-items` で縦方向の配置を制御（高さが必要）
 - ✅ `gap` で要素間の余白を簡単に設定
 - ✅ `flex-wrap: wrap;` でレスポンシブに対応
-- ✅ Flexboxはネストできる（親も子もFlexコンテナにできる）
-- ✅ AIに指示する時は、プロパティ名を具体的に指定する
+- ✅ Flexbox はネストできる（親も子も Flex コンテナにできる）
+- ✅ AI に指示する時は、プロパティ名を具体的に指定する
 
 ---
 
 **お疲れ様！** 🎉
 
-Flexboxの使い方をしっかりマスターできたね！
+Flexbox の使い方をしっかりマスターできたね！
 
-次は Lesson 3 で Grid を学んで、2次元レイアウトにも挑戦しよう！
+次は Lesson 3 で Grid を学んで、2 次元レイアウトにも挑戦しよう！
 
 ---
 

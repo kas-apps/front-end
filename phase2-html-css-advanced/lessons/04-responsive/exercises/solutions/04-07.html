@@ -18,6 +18,13 @@
       .container {
         display: grid;
         grid-template-columns: 1fr; /* 1列 */
+        grid-template-areas:
+          "header"
+          "main"
+          /* モバイルではサイドバーを結合 */
+          "sidebar-left"
+          "sidebar-right"
+          "footer";
         gap: 10px;
         min-height: 100vh;
         padding: 10px;
@@ -25,21 +32,25 @@
       }
 
       .header {
+        grid-area: header;
         background-color: #3b82f6;
         color: white;
         padding: 20px;
         text-align: center;
       }
 
+      .sidebar-left {
+        grid-area: sidebar-left;
+      }
+
+      .sidebar-right {
+        grid-area: sidebar-right;
+      }
+
       .sidebar-left,
       .sidebar-right {
         background-color: #f3f4f6;
         padding: 20px;
-      }
-
-      /* モバイルではサイドバーを結合 */
-      .sidebar-right {
-        display: none; /* モバイルでは非表示 */
       }
 
       .main {
@@ -84,6 +95,10 @@
         .container {
           grid-template-columns: 200px 1fr; /* サイドバー + メイン */
           grid-template-rows: auto 1fr auto;
+          grid-template-areas:
+            "header header"
+            "sidebar-left main"
+            "footer footer";
         }
 
         .header {
@@ -114,6 +129,10 @@
         .container {
           grid-template-columns: 200px 1fr 200px; /* 3列 */
           grid-template-rows: auto 1fr auto;
+          grid-template-areas:
+            "header header header"
+            "sidebar-left main sidebar-right"
+            "footer footer footer";
         }
 
         .header {
@@ -167,7 +186,9 @@
       <div class="main">
         <div class="content-card">
           <h3>コンテンツ1</h3>
-          <p>デスクトップでは2列、タブレット・モバイルでは1列で表示されます。</p>
+          <p>
+            デスクトップでは2列、タブレット・モバイルでは1列で表示されます。
+          </p>
         </div>
         <div class="content-card">
           <h3>コンテンツ2</h3>

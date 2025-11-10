@@ -369,7 +369,13 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 
 ```html
 <label for="password">パスワード（8文字以上）:</label>
-<input type="password" id="password" name="password" minlength="8" maxlength="20" />
+<input
+  type="password"
+  id="password"
+  name="password"
+  minlength="8"
+  maxlength="20"
+/>
 ```
 
 - **minlength**：最小文字数
@@ -393,7 +399,13 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 
 ```html
 <label for="zipcode">郵便番号（123-4567 形式）:</label>
-<input type="text" id="zipcode" name="zipcode" pattern="\d{3}-\d{4}" placeholder="123-4567" />
+<input
+  type="text"
+  id="zipcode"
+  name="zipcode"
+  pattern="\d{3}-\d{4}"
+  placeholder="123-4567"
+/>
 ```
 
 - **pattern**：正規表現で入力形式を指定
@@ -439,7 +451,13 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
       <!-- メールアドレス -->
       <div>
         <label for="email">メールアドレス（必須）:</label>
-        <input type="email" id="email" name="email" required placeholder="example@email.com" />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="example@email.com"
+        />
       </div>
 
       <!-- 電話番号 -->
@@ -731,7 +749,13 @@ AI が生成したフォームを、自分で微調整する時のポイント�
 <input type="number" name="age" min="18" max="120" required />
 
 <!-- 郵便番号の形式を指定 -->
-<input type="text" name="zipcode" pattern="\d{3}-\d{4}" placeholder="123-4567" required />
+<input
+  type="text"
+  name="zipcode"
+  pattern="\d{3}-\d{4}"
+  placeholder="123-4567"
+  required
+/>
 ```
 
 ### 2. placeholder の追加
@@ -752,7 +776,10 @@ AI が生成したフォームを、自分で微調整する時のポイント�
 </select>
 
 <!-- チェックボックスを初期状態でチェック -->
-<label><input type="checkbox" name="newsletter" value="yes" checked /> ニュースレターを購読する</label>
+<label
+  ><input type="checkbox" name="newsletter" value="yes" checked />
+  ニュースレターを購読する</label
+>
 ```
 
 ---
