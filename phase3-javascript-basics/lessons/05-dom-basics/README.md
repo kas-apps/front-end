@@ -25,7 +25,7 @@
 
 **DOM（Document Object Model）は、HTML をJavaScript で操作できるようにしたもの！**
 
-```
+```text
 HTML（静的な文書）
     ↓
 DOM（JavaScriptで操作できるオブジェクト）
@@ -144,6 +144,28 @@ const title = document.querySelector("#title");
 ```
 
 **注意**：`innerHTML` はセキュリティリスクがあるので、ユーザー入力を直接入れないように！ ⚠️
+
+#### XSS(クロスサイトスクリプティング)攻撃のデモ
+
+入力欄に`<img src=x onerror="alert('Hello')">`と入力して変更をクリックするとJavaScriptが実行される
+
+```html
+<div id="content">コンテンツ</div>
+
+<form>
+  <label for="text">テキスト：</label>
+  <input type="text" name="text" id="text" />
+  <input type="button" value="変更" onclick="change()" />
+</form>
+
+<script>
+  function change() {
+    const content = document.querySelector("#content");
+    const input = document.querySelector("#text");
+    content.innerHTML = input.value;
+  }
+</script>
+```
 
 ---
 
@@ -353,71 +375,6 @@ form.addEventListener("submit", (event) => {
 
 ---
 
-## 実践例：カウンター
-
-```html
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <title>カウンター</title>
-    <style>
-      .counter {
-        font-size: 48px;
-        text-align: center;
-        margin: 20px;
-      }
-      button {
-        font-size: 20px;
-        padding: 10px 20px;
-        margin: 5px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="counter" id="count">0</div>
-    <div style="text-align: center">
-      <button id="increment">+1</button>
-      <button id="decrement">-1</button>
-      <button id="reset">リセット</button>
-    </div>
-
-    <script>
-      let count = 0;
-      const countDisplay = document.querySelector("#count");
-      const incrementBtn = document.querySelector("#increment");
-      const decrementBtn = document.querySelector("#decrement");
-      const resetBtn = document.querySelector("#reset");
-
-      // 表示を更新する関数
-      function updateDisplay() {
-        countDisplay.textContent = count;
-      }
-
-      // +1ボタン
-      incrementBtn.addEventListener("click", () => {
-        count++;
-        updateDisplay();
-      });
-
-      // -1ボタン
-      decrementBtn.addEventListener("click", () => {
-        count--;
-        updateDisplay();
-      });
-
-      // リセットボタン
-      resetBtn.addEventListener("click", () => {
-        count = 0;
-        updateDisplay();
-      });
-    </script>
-  </body>
-</html>
-```
-
----
-
 ## 実践例：TODO リスト
 
 ```html
@@ -500,13 +457,78 @@ form.addEventListener("submit", (event) => {
 
 ---
 
+## 実践例：カウンター
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>カウンター</title>
+    <style>
+      .counter {
+        font-size: 48px;
+        text-align: center;
+        margin: 20px;
+      }
+      button {
+        font-size: 20px;
+        padding: 10px 20px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="counter" id="count">0</div>
+    <div style="text-align: center">
+      <button id="increment">+1</button>
+      <button id="decrement">-1</button>
+      <button id="reset">リセット</button>
+    </div>
+
+    <script>
+      let count = 0;
+      const countDisplay = document.querySelector("#count");
+      const incrementBtn = document.querySelector("#increment");
+      const decrementBtn = document.querySelector("#decrement");
+      const resetBtn = document.querySelector("#reset");
+
+      // 表示を更新する関数
+      function updateDisplay() {
+        countDisplay.textContent = count;
+      }
+
+      // +1ボタン
+      incrementBtn.addEventListener("click", () => {
+        count++;
+        updateDisplay();
+      });
+
+      // -1ボタン
+      decrementBtn.addEventListener("click", () => {
+        count--;
+        updateDisplay();
+      });
+
+      // リセットボタン
+      resetBtn.addEventListener("click", () => {
+        count = 0;
+        updateDisplay();
+      });
+    </script>
+  </body>
+</html>
+```
+
+---
+
 ## バイブコーディング実践
 
 ### AI への指示例
 
 #### 良い指示の例
 
-```
+```text
 「ボタンをクリックすると、段落のテキストが変わる
 JavaScriptコードを書いてください。
 querySelector と addEventListener を使ってください」

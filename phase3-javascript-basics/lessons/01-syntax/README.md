@@ -8,7 +8,7 @@
 
 Phase 1 と 2 では、HTML/CSS で**見た目**を作る方法を学んだね。でも、それだけでは「静的な文書」しか作れない。
 
-**「ボタンをクリックしたら〇〇する」「ユーザーの入力に応じて××する」みたいな動きのある Web ページを作るには、プログラミングが必要！**
+**「ボタンをクリックしたら〇〇する」「ユーザーの入力に応じて ×× する」みたいな動きのある Web ページを作るには、プログラミングが必要！**
 
 JavaScript は、Web ブラウザで動く唯一のプログラミング言語だよ。だから、フロントエンド開発には絶対に必要なんだ！
 
@@ -105,11 +105,11 @@ console.log("Hello!");
 
 **例え話**：変数は「ラベル付きの箱」みたいなもの！
 
-```
+```text
 ┌─────────────┐
 │  name       │ ← 変数名（箱のラベル）
 ├─────────────┤
-│  "太郎"     │ ← 値（箱の中身）
+│  "Alex"     │ ← 値（箱の中身）
 └─────────────┘
 ```
 
@@ -195,7 +195,7 @@ let age2 = 25; // 数字を含めてもOK
 
 // ❌ ダメな変数名
 let 2age = 25; // 数字から始まるのはNG
-let user-name = "太郎"; // ハイフンはNG
+let user-name = "太郎"; // ハイフンはNG（ケバブケース）
 let let = "test"; // 予約語はNG
 ```
 
@@ -235,12 +235,13 @@ console.log(billion); // → 1000000000
 **テキストデータは文字列型！シングルクォート `'` かダブルクォート `"` で囲むよ。**
 
 ```javascript
-let name = "太郎"; // ダブルクォート
-let greeting = "こんにちは"; // ダブルクォート
-let message = 'Hello!'; // シングルクォートでもOK
+let name = "太郎";           // ダブルクォート
+let greeting = "こんにちは";  // ダブルクォート
+let message = 'Hello!';     // シングルクォートでもOK
 
-console.log(name); // → 太郎
-console.log(greeting); // → こんにちは
+console.log(name);      // → 太郎
+console.log(greeting);  // → こんにちは
+console.log(message);   // → Hello!
 ```
 
 **どちらを使ってもいいけど、プロジェクト内で統一するのがベスト！** ✨
@@ -266,9 +267,9 @@ console.log(fullName); // → 山田 太郎
 **文字列の中で特殊な文字を使うには、バックスラッシュ `\` を使うよ。**
 
 ```javascript
-let quote = "彼は言った：「こんにちは」"; // ダブルクォートの中でダブルクォートを使う
-let path = "C:\\Users\\name\\Desktop"; // バックスラッシュ
-let multiLine = "1行目\n2行目"; // 改行
+let quote = "彼は言った：\"こんにちは\"";   // ダブルクォートの中でダブルクォートを使う
+let path = "C:\\Users\\name\\Desktop";  // バックスラッシュ
+let multiLine = "1行目\n2行目";          // 改行
 
 console.log(quote);
 console.log(path);
@@ -351,6 +352,7 @@ console.log(typeof name); // → "string"
 console.log(typeof isAdult); // → "boolean"
 console.log(typeof emptyValue); // → "object" （これはバグ！歴史的理由）
 console.log(typeof notAssigned); // → "undefined"
+console.log(typeof notDefined); // → "undefined"
 ```
 
 **デバッグする時に超便利！「この変数、何型だっけ？」って時に使おう！** 🔍
@@ -537,9 +539,9 @@ console.log(multiLine);
 
 ```javascript
 let price = 1000;
-let tax = 0.1;
+let taxRate = 0.1;
 
-let message = `合計金額は${price + price * tax}円です。`;
+let message = `合計金額は${price + price * taxRate}円です。`;
 console.log(message);
 // → 合計金額は1100円です。
 
@@ -638,7 +640,7 @@ ${age}歳で、${country}に住んでいます。
 
 #### 良い指示の例
 
-```
+```text
 「3つの変数（name, age, city）を宣言して、
 テンプレートリテラルを使って自己紹介文を
 console.logで出力するJavaScriptを書いてください。
@@ -651,7 +653,7 @@ console.logで出力するJavaScriptを書いてください。
 
 #### 悪い指示の例
 
-```
+```text
 「変数を使って何か表示して」
 ```
 
@@ -937,7 +939,7 @@ console.log(unknownVariable);
 
 基礎文法が理解できたら、次は**条件分岐とループ**を学ぼう！
 
-- 「もし〇〇なら××する」という処理（if 文）
+- 「もし〇〇なら ×× する」という処理（if 文）
 - 同じ処理を繰り返す（for, while）
 - プログラミングの楽しさが一気に広がるよ！
 

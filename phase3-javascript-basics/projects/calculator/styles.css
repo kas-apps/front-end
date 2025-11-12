@@ -1,0 +1,236 @@
+/* ===================================
+   基本設定
+   =================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.container {
+  max-width: 400px;
+  width: 100%;
+}
+
+/* ===================================
+   計算機本体
+   =================================== */
+
+.calculator {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* ===================================
+   ヘッダー
+   =================================== */
+
+.calculator-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.calculator-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* ===================================
+   ディスプレイ
+   =================================== */
+
+.display {
+  background-color: #1f2937;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: right;
+  padding: 2rem 1.5rem;
+  min-height: 100px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+/* ===================================
+   ボタングリッド（Grid）
+   =================================== */
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background-color: #e5e7eb;
+  padding: 1px;
+}
+
+/* ===================================
+   ボタンの基本スタイル
+   =================================== */
+
+.btn {
+  background-color: white;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #f3f4f6;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* ===================================
+   ボタンの種類別スタイル
+   =================================== */
+
+/* 数字ボタン */
+.btn-number {
+  color: #1f2937;
+}
+
+/* 演算子ボタン */
+.btn-operator {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.btn-operator:hover {
+  background-color: #d97706;
+}
+
+/* イコールボタン */
+.btn-equals {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  grid-row: span 2;
+}
+
+.btn-equals:hover {
+  opacity: 0.9;
+}
+
+/* クリアボタン */
+.btn-clear {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-clear:hover {
+  background-color: #dc2626;
+}
+
+/* 0ボタン（横幅2倍） */
+.btn-zero {
+  grid-column: span 2;
+}
+
+/* ===================================
+   説明文
+   =================================== */
+
+.instructions {
+  margin-top: 2rem;
+  text-align: center;
+  color: white;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.instructions p {
+  margin-bottom: 0.5rem;
+}
+
+/* ===================================
+   レスポンシブデザイン
+   =================================== */
+
+/* モバイル（480px 以下） */
+@media (max-width: 480px) {
+  .display {
+    font-size: 2rem;
+    padding: 1.5rem 1rem;
+    min-height: 80px;
+  }
+
+  .btn {
+    font-size: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  .calculator-header h1 {
+    font-size: 1.25rem;
+  }
+}
+
+/* 小型デバイス（360px 以下） */
+@media (max-width: 360px) {
+  .display {
+    font-size: 1.75rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .btn {
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+}
+
+/* ===================================
+   アクセシビリティ
+   =================================== */
+
+/* フォーカス表示 */
+.btn:focus-visible {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* 動きを抑えたい人向け */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===================================
+   アニメーション
+   =================================== */
+
+/* ボタンが押された時のアニメーション */
+@keyframes press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn:active {
+  animation: press 0.1s ease;
+}

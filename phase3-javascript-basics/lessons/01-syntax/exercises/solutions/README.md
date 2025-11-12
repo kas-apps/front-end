@@ -393,7 +393,7 @@ if (age === 20) {
 
 次は**Lesson 2: 条件分岐とループ**で、「もし〇〇なら××する」という処理や、繰り返し処理を学ぼう！
 
-👉 [Lesson 2 へ進む](../../02-control-flow/README.md)
+👉 [Lesson 2 へ進む](../../../02-control-flow/README.md)
 
 ---
 
