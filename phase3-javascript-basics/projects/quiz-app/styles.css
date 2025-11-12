@@ -1,0 +1,368 @@
+/* ===================================
+   基本設定
+   =================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ===================================
+   ヘッダー
+   =================================== */
+
+header {
+  text-align: center;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+/* ===================================
+   共通: ユーティリティクラス
+   =================================== */
+
+.hidden {
+  display: none !important;
+}
+
+/* ===================================
+   クイズコンテナ
+   =================================== */
+
+.quiz-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+}
+
+/* ===================================
+   プログレスバー
+   =================================== */
+
+.progress-container {
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar::before {
+  content: '';
+  display: block;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ===================================
+   問題カード
+   =================================== */
+
+.question-card {
+  background-color: #f9fafb;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+#question {
+  font-size: 1.5rem;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+/* ===================================
+   選択肢（Flexbox）
+   =================================== */
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.choice-btn {
+  padding: 1.25rem 1.5rem;
+  background-color: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.choice-btn:hover {
+  border-color: #667eea;
+  background-color: #f9fafb;
+  transform: translateX(5px);
+}
+
+.choice-btn:active {
+  transform: scale(0.98);
+}
+
+/* 選択された選択肢 */
+.choice-btn.selected {
+  border-color: #667eea;
+  background-color: #ede9fe;
+}
+
+/* 正解の選択肢 */
+.choice-btn.correct {
+  border-color: #10b981;
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* 不正解の選択肢 */
+.choice-btn.incorrect {
+  border-color: #ef4444;
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* 無効化された選択肢 */
+.choice-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ===================================
+   フィードバック
+   =================================== */
+
+.feedback {
+  padding: 1.25rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.feedback.correct {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 2px solid #10b981;
+}
+
+.feedback.incorrect {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 2px solid #ef4444;
+}
+
+/* ===================================
+   次へボタン
+   =================================== */
+
+.btn-next {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-next:active {
+  transform: translateY(0);
+}
+
+/* ===================================
+   結果画面
+   =================================== */
+
+.result-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.result-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.result-container h2 {
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.result-score {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.result-percentage {
+  font-size: 1.25rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.result-message {
+  font-size: 1.1rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.btn-restart {
+  padding: 1rem 3rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-restart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* ===================================
+   レスポンシブデザイン
+   =================================== */
+
+/* モバイル（480px 以下） */
+@media (max-width: 480px) {
+  body {
+    padding: 1rem 0.5rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .quiz-container,
+  .result-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .question-card {
+    padding: 1.5rem 1rem;
+  }
+
+  #question {
+    font-size: 1.25rem;
+  }
+
+  .choice-btn {
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .result-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .result-container h2 {
+    font-size: 1.75rem;
+  }
+
+  .result-score {
+    font-size: 2.5rem;
+  }
+}
+
+/* ===================================
+   アニメーション
+   =================================== */
+
+/* フェードイン */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.question-card,
+.choices,
+.feedback {
+  animation: fadeIn 0.4s ease;
+}
+
+/* ===================================
+   アクセシビリティ
+   =================================== */
+
+/* フォーカス表示 */
+*:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* 動きを抑えたい人向け */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

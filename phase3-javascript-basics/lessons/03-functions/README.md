@@ -25,14 +25,14 @@ Lesson 1 と 2 で、変数、条件分岐、ループを学んだね。でも�
 
 **関数は「処理をまとめたもの」！入力を受け取って、処理をして、結果を返すよ。**
 
-```
-入力（引数）
+```text
+input: 入力（引数）
     ↓
 ┌──────────┐
-│   関数   │ ← 処理をまとめたもの
+│ function │ ← 関数（処理をまとめたもの）
 └──────────┘
     ↓
-出力（戻り値）
+output: 出力（戻り値）
 ```
 
 ---
@@ -243,18 +243,20 @@ const sayHello2 = function () {
 ### 基本の書き方
 
 ```javascript
-// 従来の関数式
-const add1 = function (a, b) {
+// 関数宣言
+function add1(a, b) {
+  return a + b;
+}
+
+// 関数式
+const add2 = function (a, b) {
   return a + b;
 };
 
 // アロー関数
-const add2 = (a, b) => {
+const add3 = (a, b) => {
   return a + b;
 };
-
-// さらに短く（1行で書ける）
-const add3 = (a, b) => a + b;
 
 console.log(add3(5, 3)); // → 8
 ```
@@ -269,10 +271,14 @@ console.log(add3(5, 3)); // → 8
 
 ```javascript
 // 通常
-const double1 = (n) => n * 2;
+const double1 = (n) => {
+  return n * 2;
+}
 
 // 省略
-const double2 = n => n * 2;
+const double2 = n => {
+  return n * 2;
+}
 
 console.log(double2(5)); // → 10
 ```
@@ -283,12 +289,12 @@ console.log(double2(5)); // → 10
 
 ```javascript
 // 通常
-const square1 = (n) => {
+const square1 = n => {
   return n * n;
 };
 
 // 省略
-const square2 = (n) => n * n;
+const square2 = n => n * n;
 
 console.log(square2(4)); // → 16
 ```
@@ -302,13 +308,13 @@ console.log(square2(4)); // → 16
 const sayHello = () => console.log("こんにちは");
 
 // 引数1つ
-const double = (n) => n * 2;
+const double = n => n * 2;
 
 // 引数複数
 const add = (a, b) => a + b;
 
 // 複数行の処理
-const greet = (name) => {
+const greet = name => {
   const message = `こんにちは、${name}さん`;
   console.log(message);
   return message;
@@ -492,7 +498,7 @@ console.log(calculateFinalPrice(10000, 0.1, 0.2)); // → 8800
 
 #### 良い指示の例
 
-```
+```text
 「2つの数値を引数に取り、その合計を返す関数を
 アロー関数で書いてください」
 
@@ -508,7 +514,7 @@ console.log(calculateFinalPrice(10000, 0.1, 0.2)); // → 8800
 
 #### 悪い指示の例
 
-```
+```text
 「関数を作って」
 「計算する関数」
 「何かする関数」

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO リスト</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- ヘッダー -->
+    <header>
+      <h1>✅ TODO リスト</h1>
+      <p class="subtitle">タスクを管理しよう</p>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+      <!-- 入力エリア -->
+      <div class="input-container">
+        <input
+          type="text"
+          id="taskInput"
+          placeholder="新しいタスクを入力してください"
+          aria-label="新しいタスク"
+        >
+        <button id="addButton" class="btn-add">
+          追加
+        </button>
+      </div>
+
+      <!-- 統計情報 -->
+      <div class="stats">
+        <span>全タスク: <strong id="totalTasks">0</strong></span>
+        <span>未完了: <strong id="incompleteTasks">0</strong></span>
+        <span>完了: <strong id="completedTasks">0</strong></span>
+      </div>
+
+      <!-- タスクリスト -->
+      <ul id="taskList" class="task-list">
+        <!-- JavaScriptで動的に追加される -->
+      </ul>
+
+      <!-- 空の状態のメッセージ -->
+      <div id="emptyMessage" class="empty-message">
+        <p>📝 タスクがありません</p>
+        <p class="empty-hint">上の入力欄からタスクを追加してみよう！</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- JavaScriptファイルを読み込み -->
+  <script src="script.js"></script>
+</body>
+</html>

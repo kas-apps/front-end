@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クイズアプリ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- ヘッダー -->
+    <header>
+      <h1>🎯 JavaScriptクイズ</h1>
+      <p class="subtitle">基礎知識をチェックしよう</p>
+    </header>
+
+    <!-- クイズ画面 -->
+    <div id="quizContainer" class="quiz-container">
+      <!-- プログレスバー -->
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <p class="progress-text" id="progressText">問題 1 / 10</p>
+      </div>
+
+      <!-- 問題カード -->
+      <div class="question-card">
+        <h2 id="question">問題文がここに表示されます</h2>
+      </div>
+
+      <!-- 選択肢 -->
+      <div id="choices" class="choices">
+        <!-- JavaScriptで動的に生成 -->
+      </div>
+
+      <!-- フィードバック -->
+      <div id="feedback" class="feedback hidden">
+        <p id="feedbackText"></p>
+      </div>
+
+      <!-- 次へボタン -->
+      <button id="nextButton" class="btn-next hidden">次へ</button>
+    </div>
+
+    <!-- 結果画面 -->
+    <div id="resultContainer" class="result-container hidden">
+      <!-- JavaScriptで結果を表示 -->
+    </div>
+  </div>
+
+  <!-- JavaScriptファイルを読み込み -->
+  <script src="script.js"></script>
+</body>
+</html>

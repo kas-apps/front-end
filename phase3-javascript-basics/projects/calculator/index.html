@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>計算機</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 計算機 -->
+    <div class="calculator">
+      <!-- ヘッダー -->
+      <div class="calculator-header">
+        <h1>🔢 計算機</h1>
+      </div>
+
+      <!-- ディスプレイ -->
+      <div class="display" id="display">0</div>
+
+      <!-- ボタン -->
+      <div class="buttons">
+        <!-- 1行目 -->
+        <button class="btn btn-clear" data-value="C">C</button>
+        <button class="btn btn-operator" data-value="÷">÷</button>
+        <button class="btn btn-operator" data-value="×">×</button>
+        <button class="btn btn-operator" data-value="-">-</button>
+
+        <!-- 2行目 -->
+        <button class="btn btn-number" data-value="7">7</button>
+        <button class="btn btn-number" data-value="8">8</button>
+        <button class="btn btn-number" data-value="9">9</button>
+        <button class="btn btn-operator" data-value="+">+</button>
+
+        <!-- 3行目 -->
+        <button class="btn btn-number" data-value="4">4</button>
+        <button class="btn btn-number" data-value="5">5</button>
+        <button class="btn btn-number" data-value="6">6</button>
+        <button class="btn btn-equals" data-value="=" rowspan="2">=</button>
+
+        <!-- 4行目 -->
+        <button class="btn btn-number" data-value="1">1</button>
+        <button class="btn btn-number" data-value="2">2</button>
+        <button class="btn btn-number" data-value="3">3</button>
+
+        <!-- 5行目 -->
+        <button class="btn btn-number btn-zero" data-value="0">0</button>
+        <button class="btn btn-number" data-value=".">.</button>
+      </div>
+    </div>
+
+    <!-- 説明 -->
+    <div class="instructions">
+      <p>数字と演算子を入力して、= ボタンで計算結果を表示します。</p>
+      <p>C ボタンでクリアできます。</p>
+    </div>
+  </div>
+
+  <!-- JavaScriptファイルを読み込み -->
+  <script src="script.js"></script>
+</body>
+</html>
