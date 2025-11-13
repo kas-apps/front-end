@@ -1,0 +1,1122 @@
+# Lesson 4: Tailwind CSS 実践テクニック 🚀
+
+前回のレッスンで Tailwind CSS の基礎をマスターしたね！このレッスンでは、**実践的なテクニック**と**プロレベルのカスタマイズ方法**を学んでいこう。
+
+このレッスンを終えると、Tailwind CSS を使って**本格的なプロジェクト**を作れるようになるよ！
+
+---
+
+## 📚 このレッスンで学ぶこと
+
+- ✅ Tailwind CSS のカスタマイズ設定（tailwind.config.js）
+- ✅ コンポーネントの再利用テクニック（@apply）
+- ✅ ダークモードの実装
+- ✅ アニメーション＆トランジションの活用
+- ✅ 便利なプラグインの紹介
+- ✅ 実践的なテクニック（group、peer、arbitrary values）
+- ✅ パフォーマンス最適化
+- ✅ 本格的なプロジェクトの構築
+
+---
+
+## 1. Tailwind CSS のカスタマイズ設定 ⚙️
+
+### tailwind.config.js とは？
+
+Tailwind CSS は、**設定ファイル**を使って自分好みにカスタマイズできるよ！
+
+`tailwind.config.js` ファイルで、カラー、フォント、スペーシング、ブレークポイントなどを自由に変更できる。
+
+### 基本的な tailwind.config.js
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{html,js}',  // スキャン対象のファイル
+  ],
+  theme: {
+    extend: {
+      // ここにカスタマイズを追加
+    },
+  },
+  plugins: [],
+}
+```
+
+---
+
+### カスタムカラーの追加
+
+プロジェクト専用のブランドカラーを追加しよう！
+
+```javascript
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        // ブランドカラーを追加
+        brand: {
+          50: '#e6f7ff',
+          100: '#bae7ff',
+          200: '#91d5ff',
+          300: '#69c0ff',
+          400: '#40a9ff',
+          500: '#1890ff',  // メインカラー
+          600: '#096dd9',
+          700: '#0050b3',
+          800: '#003a8c',
+          900: '#002766',
+        },
+        // シンプルに1色だけ追加
+        primary: '#1890ff',
+        secondary: '#52c41a',
+        danger: '#ff4d4f',
+      },
+    },
+  },
+}
+```
+
+これで、`bg-brand-500` や `text-primary` のように使えるようになる！
+
+```html
+<button class="bg-brand-500 text-white px-6 py-3 rounded-lg hover:bg-brand-600">
+  ブランドカラーのボタン
+</button>
+
+<div class="bg-primary text-white p-4 rounded">
+  プライマリカラー
+</div>
+```
+
+---
+
+### カスタムフォントの追加
+
+Google Fonts などのカスタムフォントを追加しよう！
+
+```javascript
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        // 日本語フォント
+        ja: ['"Noto Sans JP"', 'sans-serif'],
+        // 英語フォント
+        en: ['"Roboto"', 'sans-serif'],
+        // コード用フォント
+        code: ['"Fira Code"', 'monospace'],
+      },
+    },
+  },
+}
+```
+
+HTML の head に Google Fonts を読み込む：
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+```
+
+使い方：
+
+```html
+<p class="font-ja">これは日本語フォントです。</p>
+<p class="font-en">This is English font.</p>
+<code class="font-code">const hello = 'world';</code>
+```
+
+---
+
+### カスタムスペーシングの追加
+
+デフォルトにない間隔を追加したい時：
+
+```javascript
+module.exports = {
+  theme: {
+    extend: {
+      spacing: {
+        '72': '18rem',    // 288px
+        '84': '21rem',    // 336px
+        '96': '24rem',    // 384px
+        '128': '32rem',   // 512px
+      },
+    },
+  },
+}
+```
+
+使い方：
+
+```html
+<div class="mt-72 mb-128">
+  カスタムスペーシング
+</div>
+```
+
+---
+
+### カスタムブレークポイントの追加
+
+デフォルトのブレークポイントに加えて、独自のブレークポイントを追加できる：
+
+```javascript
+module.exports = {
+  theme: {
+    screens: {
+      'xs': '480px',     // 追加
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+      '3xl': '1920px',   // 追加
+    },
+  },
+}
+```
+
+使い方：
+
+```html
+<div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 3xl:grid-cols-4">
+  <!-- 480px以上で2列、768px以上で3列、1920px以上で4列 -->
+</div>
+```
+
+---
+
+## 2. コンポーネントの再利用テクニック ♻️
+
+### @apply ディレクティブ
+
+同じユーティリティクラスの組み合わせを何度も使う場合、`@apply` で再利用可能なクラスを作れるよ！
+
+**CSS ファイル**（例：`styles.css`）
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* カスタムコンポーネント */
+@layer components {
+  .btn-primary {
+    @apply bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold;
+    @apply hover:bg-blue-600 transition;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-500 text-white px-6 py-3 rounded-lg font-semibold;
+    @apply hover:bg-gray-600 transition;
+  }
+
+  .card {
+    @apply bg-white shadow-lg rounded-lg p-6;
+  }
+
+  .input-field {
+    @apply border border-gray-300 rounded-lg px-4 py-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+}
+```
+
+**HTML での使い方**
+
+```html
+<!-- シンプルになった！ -->
+<button class="btn-primary">Primary Button</button>
+<button class="btn-secondary">Secondary Button</button>
+
+<div class="card">
+  <h3 class="text-xl font-bold mb-2">カードタイトル</h3>
+  <p>カードの内容</p>
+</div>
+
+<input type="text" class="input-field" placeholder="メールアドレス" />
+```
+
+---
+
+### ユーティリティクラス vs コンポーネントクラス
+
+**いつユーティリティクラスを使う？**
+- 1 回だけ使うスタイル
+- 微調整が必要な場所
+- レイアウトやスペーシング
+
+**いつコンポーネントクラス（@apply）を使う？**
+- プロジェクト全体で何度も使うスタイル
+- ボタン、カード、入力フィールドなど
+- チーム全体で統一したいデザイン
+
+**良いバランスの例**
+
+```html
+<!-- ボタンは共通クラス、レイアウトはユーティリティ -->
+<div class="flex gap-4 mt-8">
+  <button class="btn-primary">保存</button>
+  <button class="btn-secondary">キャンセル</button>
+</div>
+```
+
+---
+
+## 3. ダークモードの実装 🌙
+
+Tailwind CSS には、**ダークモード**を簡単に実装できる機能が組み込まれているよ！
+
+### ダークモードの有効化
+
+`tailwind.config.js` でダークモードを有効にする：
+
+```javascript
+module.exports = {
+  darkMode: 'class', // 'class' または 'media'
+  // ...
+}
+```
+
+- **`'class'`**：手動で切り替え（`<html class="dark">` を追加/削除）
+- **`'media'`**：OS の設定に従う（自動）
+
+---
+
+### dark: プレフィックスの使い方
+
+`dark:` を使って、ダークモード時のスタイルを指定できる：
+
+```html
+<!-- ライトモード：白背景＋黒文字、ダークモード：黒背景＋白文字 -->
+<div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-8">
+  <h1 class="text-3xl font-bold mb-4">ダークモード対応</h1>
+  <p class="text-gray-600 dark:text-gray-400">
+    ダークモードに自動的に対応したコンテンツです。
+  </p>
+  <button class="bg-blue-500 dark:bg-blue-600 text-white px-6 py-3 rounded-lg">
+    ボタン
+  </button>
+</div>
+```
+
+---
+
+### 手動でダークモードを切り替える
+
+JavaScript でダークモードを切り替える例：
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ダークモード切り替え</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">ダークモード対応アプリ</h1>
+      <button
+        id="theme-toggle"
+        class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-lg"
+      >
+        🌙 ダークモード切り替え
+      </button>
+    </div>
+
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
+      <h2 class="text-2xl font-bold mb-4">カードタイトル</h2>
+      <p class="text-gray-600 dark:text-gray-400">
+        ダークモードに対応したカードコンテンツです。
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    toggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      // ローカルストレージに保存
+      if (html.classList.contains('dark')) {
+        localStorage.theme = 'dark';
+        toggle.textContent = '☀️ ライトモード切り替え';
+      } else {
+        localStorage.theme = 'light';
+        toggle.textContent = '🌙 ダークモード切り替え';
+      }
+    });
+
+    // ページ読み込み時にテーマを復元
+    if (localStorage.theme === 'dark') {
+      html.classList.add('dark');
+      toggle.textContent = '☀️ ライトモード切り替え';
+    }
+  </script>
+</body>
+</html>
+```
+
+---
+
+### ダークモードのカラー設計
+
+ダークモードでは、色の選び方が重要！
+
+| 要素 | ライトモード | ダークモード |
+|------|-------------|--------------|
+| 背景 | `bg-white` | `dark:bg-gray-900` |
+| 2nd 背景 | `bg-gray-100` | `dark:bg-gray-800` |
+| テキスト | `text-gray-900` | `dark:text-white` |
+| 2nd テキスト | `text-gray-600` | `dark:text-gray-400` |
+| ボーダー | `border-gray-300` | `dark:border-gray-700` |
+
+**例**
+
+```html
+<div class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 p-6 rounded-lg">
+  <h3 class="text-gray-900 dark:text-white font-bold mb-2">タイトル</h3>
+  <p class="text-gray-600 dark:text-gray-400">説明文</p>
+</div>
+```
+
+---
+
+## 4. アニメーション＆トランジション ✨
+
+### transition ユーティリティ
+
+スムーズな変化を実現する `transition` クラス：
+
+```html
+<!-- 全てのプロパティに transition -->
+<button class="bg-blue-500 hover:bg-blue-600 transition">
+  Hover してみて
+</button>
+
+<!-- 特定のプロパティだけ transition -->
+<button class="bg-blue-500 hover:bg-blue-600 transition-colors">
+  色だけ変化
+</button>
+
+<button class="transform hover:scale-110 transition-transform">
+  拡大するボタン
+</button>
+
+<!-- duration と ease のカスタマイズ -->
+<button class="bg-blue-500 hover:bg-blue-600 transition duration-500 ease-in-out">
+  ゆっくり変化
+</button>
+```
+
+**transition の種類**
+
+| クラス | 対象 |
+|--------|------|
+| `transition` | 全てのプロパティ |
+| `transition-colors` | 色だけ |
+| `transition-opacity` | 透明度だけ |
+| `transition-shadow` | 影だけ |
+| `transition-transform` | 変形だけ |
+
+---
+
+### transform と scale/rotate/translate
+
+要素を変形させる：
+
+```html
+<!-- 拡大 -->
+<div class="transform scale-110 hover:scale-125 transition">
+  Hover で拡大
+</div>
+
+<!-- 回転 -->
+<div class="transform rotate-45 hover:rotate-90 transition">
+  回転する
+</div>
+
+<!-- 移動 -->
+<div class="transform translate-x-4 hover:translate-x-8 transition">
+  右に移動
+</div>
+
+<!-- 組み合わせ -->
+<div class="transform hover:scale-110 hover:-translate-y-2 hover:rotate-3 transition">
+  複合的な変化
+</div>
+```
+
+---
+
+### animate- クラス（組み込みアニメーション）
+
+Tailwind CSS には、いくつかの**組み込みアニメーション**があるよ！
+
+```html
+<!-- スピン（ローディングアイコンに最適） -->
+<div class="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+
+<!-- パルス（通知など） -->
+<div class="animate-pulse bg-blue-500 w-12 h-12 rounded-full"></div>
+
+<!-- バウンス -->
+<div class="animate-bounce bg-red-500 w-12 h-12 rounded-full"></div>
+
+<!-- ピン（ベル通知など） -->
+<div class="animate-ping bg-green-500 w-4 h-4 rounded-full"></div>
+```
+
+**実用例：ローディングスピナー**
+
+```html
+<div class="flex items-center justify-center min-h-screen">
+  <div class="relative">
+    <div class="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
+    <p class="text-center mt-4 text-gray-600">読み込み中...</p>
+  </div>
+</div>
+```
+
+---
+
+### カスタムアニメーションの追加
+
+`tailwind.config.js` で独自のアニメーションを追加できる：
+
+```javascript
+module.exports = {
+  theme: {
+    extend: {
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'slide-in': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
+      animation: {
+        'fade-in': 'fade-in 0.5s ease-out',
+        'slide-in': 'slide-in 0.3s ease-out',
+      },
+    },
+  },
+}
+```
+
+使い方：
+
+```html
+<div class="animate-fade-in">
+  フェードインするコンテンツ
+</div>
+
+<div class="animate-slide-in">
+  スライドインするコンテンツ
+</div>
+```
+
+---
+
+## 5. 実践的なテクニック 🛠️
+
+### group と group-hover
+
+親要素に `group` を付けると、子要素で `group-hover:` が使える！
+
+```html
+<div class="group bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition cursor-pointer">
+  <img
+    src="https://via.placeholder.com/400x300"
+    alt="画像"
+    class="w-full h-48 object-cover rounded mb-4 group-hover:scale-105 transition"
+  />
+  <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition">
+    カードタイトル
+  </h3>
+  <p class="text-gray-600">
+    カード全体を hover すると、画像とタイトルが変化します。
+  </p>
+  <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded group-hover:bg-blue-600 transition">
+    詳しく見る
+  </button>
+</div>
+```
+
+**ポイント**：親に `group`、子に `group-hover:` を付けるだけ！
+
+---
+
+### peer と peer-checked
+
+兄弟要素の状態に応じてスタイルを変える：
+
+```html
+<!-- チェックボックスの状態に応じて、ラベルの色を変える -->
+<div class="flex items-center space-x-3">
+  <input
+    type="checkbox"
+    id="task1"
+    class="peer w-5 h-5 text-blue-500 rounded"
+  />
+  <label
+    for="task1"
+    class="text-gray-700 peer-checked:text-blue-500 peer-checked:line-through"
+  >
+    タスク 1
+  </label>
+</div>
+
+<!-- ラジオボタンで色を変える -->
+<div class="space-y-4">
+  <label class="flex items-center space-x-3 cursor-pointer">
+    <input type="radio" name="color" value="blue" class="peer sr-only" />
+    <div class="w-6 h-6 bg-blue-500 rounded-full peer-checked:ring-4 peer-checked:ring-blue-300"></div>
+    <span class="peer-checked:font-bold">青</span>
+  </label>
+
+  <label class="flex items-center space-x-3 cursor-pointer">
+    <input type="radio" name="color" value="red" class="peer sr-only" />
+    <div class="w-6 h-6 bg-red-500 rounded-full peer-checked:ring-4 peer-checked:ring-red-300"></div>
+    <span class="peer-checked:font-bold">赤</span>
+  </label>
+</div>
+```
+
+**ポイント**：input に `peer`、兄弟要素に `peer-checked:` を付ける！
+
+---
+
+### arbitrary values（任意の値）
+
+Tailwind にない値を使いたい時は、`[]` で任意の値を指定できる：
+
+```html
+<!-- 特殊なサイズ -->
+<div class="w-[137px] h-[42px] bg-blue-500"></div>
+
+<!-- 特殊な色 -->
+<div class="bg-[#1da1f2] text-white p-4">
+  Twitter ブルー
+</div>
+
+<!-- 特殊なグリッド -->
+<div class="grid grid-cols-[200px_1fr_200px] gap-4">
+  <div>サイドバー</div>
+  <div>メインコンテンツ</div>
+  <div>サイドバー</div>
+</div>
+
+<!-- 特殊なマージン -->
+<div class="mt-[13px] mb-[7.5rem]">
+  任意のマージン
+</div>
+```
+
+**ポイント**：デザインカンプ通りに実装したい時に便利！
+
+---
+
+### important modifier（!強制）
+
+他の CSS を上書きしたい時に `!` を使う：
+
+```html
+<!-- 他のスタイルより優先される -->
+<div class="text-blue-500 !text-red-500">
+  赤色が優先される
+</div>
+
+<button class="bg-gray-500 hover:!bg-red-600">
+  hover 時に強制的に赤
+</button>
+```
+
+**注意**：多用しすぎると保守性が下がるので、最小限にとどめよう。
+
+---
+
+## 6. 便利なプラグイン 🧩
+
+Tailwind CSS には、公式プラグインや コミュニティプラグインがたくさんあるよ！
+
+### @tailwindcss/forms
+
+フォーム要素を美しくスタイリングするプラグイン。
+
+**インストール**
+
+```bash
+npm install @tailwindcss/forms
+```
+
+**tailwind.config.js**
+
+```javascript
+module.exports = {
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
+}
+```
+
+**効果**
+
+自動的に、input、textarea、select、checkbox、radio がきれいにスタイリングされる！
+
+```html
+<!-- プラグインなし：デフォルトの見た目 -->
+<!-- プラグインあり：モダンでクリーンな見た目 -->
+<input type="text" placeholder="メールアドレス" class="rounded-lg" />
+<input type="checkbox" /> チェックボックス
+```
+
+---
+
+### @tailwindcss/typography
+
+記事コンテンツを美しくスタイリングする `prose` クラスを追加。
+
+**インストール**
+
+```bash
+npm install @tailwindcss/typography
+```
+
+**tailwind.config.js**
+
+```javascript
+module.exports = {
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
+}
+```
+
+**使い方**
+
+```html
+<article class="prose lg:prose-xl">
+  <h1>記事のタイトル</h1>
+  <p>
+    この <code>prose</code> クラスを付けるだけで、記事コンテンツが美しくスタイリングされます。
+  </p>
+  <ul>
+    <li>リスト項目 1</li>
+    <li>リスト項目 2</li>
+  </ul>
+  <blockquote>
+    引用も自動的にスタイリング
+  </blockquote>
+</article>
+```
+
+**ダークモード対応**
+
+```html
+<article class="prose dark:prose-invert">
+  <!-- ダークモードでも読みやすい -->
+</article>
+```
+
+---
+
+### その他の便利なプラグイン
+
+| プラグイン | 説明 |
+|-----------|------|
+| `@tailwindcss/aspect-ratio` | アスペクト比を簡単に設定 |
+| `@tailwindcss/line-clamp` | テキストの行数制限 |
+| `daisyui` | コンポーネントライブラリ（ボタン、カード、Modal など） |
+| `tailwindcss-animate` | より多くのアニメーション |
+
+---
+
+## 7. パフォーマンス最適化 ⚡
+
+### 本番環境での最適化
+
+Tailwind CSS は、**使っていないクラスを自動的に削除**してくれる！
+
+`tailwind.config.js` の `content` セクションで、スキャン対象のファイルを指定：
+
+```javascript
+module.exports = {
+  content: [
+    './src/**/*.{html,js,jsx,ts,tsx}',  // src 配下の全てのファイル
+    './pages/**/*.{html,js,jsx,ts,tsx}',
+    './components/**/*.{html,js,jsx,ts,tsx}',
+  ],
+  // ...
+}
+```
+
+これで、本番ビルド時に**使っていないクラスが削除**され、CSS ファイルサイズが劇的に小さくなる！
+
+---
+
+### JIT モード（Just-In-Time）
+
+Tailwind CSS v3 以降は、デフォルトで **JIT モード**が有効になっているよ。
+
+**JIT モードのメリット**：
+- ⚡ 開発時のビルドが超高速
+- 🎨 任意の値（`w-[137px]` など）が使える
+- 📦 ファイルサイズが小さい
+
+JIT モードは自動的に有効なので、特に設定は不要！
+
+---
+
+## 8. バイブコーディング実践：Tailwind CSS カスタマイズ編 🤖💻
+
+ここまで学んだ実践テクニックを、**AI と一緒に使う**方法を見ていこう！
+
+### AI への指示例：カスタマイズ設定
+
+**良い指示の例**
+
+```
+Tailwind CSS の設定ファイル（tailwind.config.js）を作成してください。
+
+要件：
+- ブランドカラー「brand」を追加（メインカラー: #1890ff）
+- カスタムフォント「Noto Sans JP」を追加（font-ja）
+- カスタムスペーシング：72（18rem）、128（32rem）
+- ダークモードを「class」方式で有効化
+```
+
+**曖昧な指示の例**
+
+```
+Tailwind の設定ファイルを作って。色とかフォントとか追加して。
+```
+
+**AI が生成したコードのチェックポイント**：
+- ✅ `module.exports` の形式になっているか
+- ✅ `theme.extend` でカスタマイズしているか（デフォルトを上書きしていないか）
+- ✅ `content` セクションで適切なファイルパスが指定されているか
+
+---
+
+### AI への指示例：ダークモード対応
+
+**良い指示の例**
+
+```
+この HTML をダークモード対応にしてください。
+
+- 背景：白 → 濃いグレー（gray-900）
+- テキスト：黒 → 白
+- セカンダリテキスト：gray-600 → gray-400
+- カードの背景：gray-100 → gray-800
+- ボーダー：gray-300 → gray-700
+
+dark: プレフィックスを使って、全ての要素に対応してください。
+```
+
+**曖昧な指示の例**
+
+```
+これをダークモードにして。
+```
+
+**AI が生成したコードのチェックポイント**：
+- ✅ すべての背景色に `dark:bg-*` が付いているか
+- ✅ テキスト色に `dark:text-*` が付いているか
+- ✅ コントラストが十分確保されているか（読みやすいか）
+- ✅ `<html>` に `class="dark"` を付けたときに正しく表示されるか
+
+---
+
+### AI への指示例：アニメーション
+
+**良い指示の例**
+
+```
+カードコンポーネントに、以下のアニメーションを追加してください：
+
+1. hover 時にカード全体が少し浮く（shadow を強く、上に2px移動）
+2. hover 時に画像が 1.05 倍に拡大
+3. hover 時にタイトルが青色に変化
+4. 全てのアニメーションを 300ms で滑らかに
+
+group と group-hover を使って実装してください。
+```
+
+**曖昧な指示の例**
+
+```
+カードをかっこよくして。
+```
+
+**AI が生成したコードのチェックポイント**：
+- ✅ 親要素に `group` が付いているか
+- ✅ 子要素に `group-hover:` が付いているか
+- ✅ `transition` が付いているか
+- ✅ 実際に hover してスムーズに動作するか
+
+---
+
+### AI への指示例：カスタムコンポーネント（@apply）
+
+**良い指示の例**
+
+```
+以下のボタンスタイルを、@apply を使って再利用可能なクラスにしてください：
+
+- .btn-primary: 青背景、白文字、パディング px-6 py-3、角丸 lg、hover で濃い青
+- .btn-secondary: グレー背景、白文字、同じパディング、hover で濃いグレー
+- .btn-outline: 透明背景、青枠線、青文字、hover で青背景＋白文字
+
+全てのボタンに transition を付けてください。
+```
+
+**AI が生成したコードのチェックポイント**：
+- ✅ `@layer components` で囲まれているか
+- ✅ `@apply` が正しく使われているか
+- ✅ hover 効果が含まれているか
+- ✅ transition が含まれているか
+
+---
+
+### よくある問題と修正方法
+
+#### 問題 1：tailwind.config.js が反映されない
+
+**原因**：
+- ファイルパスが間違っている
+- ビルドツールを再起動していない
+
+**修正方法**：
+1. `content` セクションのファイルパスを確認
+2. 開発サーバーを再起動
+3. ブラウザのキャッシュをクリア
+
+---
+
+#### 問題 2：ダークモードが動かない
+
+**原因**：
+- `darkMode: 'class'` が設定されていない
+- `<html class="dark">` が追加されていない
+
+**修正方法**：
+1. `tailwind.config.js` で `darkMode: 'class'` を確認
+2. JavaScript で `document.documentElement.classList.add('dark')` を実行
+3. ブラウザの開発者ツールで `<html>` に `dark` クラスがあるか確認
+
+---
+
+#### 問題 3：カスタムカラーが効かない
+
+**原因**：
+- `theme.extend` ではなく `theme.colors` で上書きしている（デフォルトカラーが消える）
+
+**修正方法**：
+```javascript
+// ❌ 悪い例：デフォルトカラーが消える
+module.exports = {
+  theme: {
+    colors: {
+      brand: '#1890ff',
+    },
+  },
+}
+
+// ✅ 良い例：デフォルトカラーを残す
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#1890ff',
+      },
+    },
+  },
+}
+```
+
+---
+
+## 9. 実践プロジェクト例 🎨
+
+### ダッシュボード UI
+
+```html
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ダッシュボード</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+  <!-- サイドバー -->
+  <div class="flex min-h-screen">
+    <aside class="w-64 bg-white dark:bg-gray-800 shadow-lg">
+      <div class="p-6">
+        <h1 class="text-2xl font-bold text-blue-600">Dashboard</h1>
+      </div>
+      <nav class="px-4">
+        <a href="#" class="flex items-center px-4 py-3 bg-blue-500 text-white rounded-lg mb-2">
+          <span class="mr-3">📊</span> ダッシュボード
+        </a>
+        <a href="#" class="flex items-center px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg mb-2 transition">
+          <span class="mr-3">👥</span> ユーザー
+        </a>
+        <a href="#" class="flex items-center px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg mb-2 transition">
+          <span class="mr-3">⚙️</span> 設定
+        </a>
+      </nav>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-1 p-8">
+      <div class="mb-8">
+        <h2 class="text-3xl font-bold mb-2">ダッシュボード</h2>
+        <p class="text-gray-600 dark:text-gray-400">ようこそ、管理画面へ</p>
+      </div>
+
+      <!-- 統計カード -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- カード1 -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-gray-600 dark:text-gray-400">総ユーザー数</h3>
+            <span class="text-3xl">👥</span>
+          </div>
+          <p class="text-4xl font-bold text-blue-600">1,234</p>
+          <p class="text-green-500 text-sm mt-2">↑ 12% 先月比</p>
+        </div>
+
+        <!-- カード2 -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-gray-600 dark:text-gray-400">売上</h3>
+            <span class="text-3xl">💰</span>
+          </div>
+          <p class="text-4xl font-bold text-green-600">¥567,890</p>
+          <p class="text-green-500 text-sm mt-2">↑ 8% 先月比</p>
+        </div>
+
+        <!-- カード3 -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-gray-600 dark:text-gray-400">新規登録</h3>
+            <span class="text-3xl">📈</span>
+          </div>
+          <p class="text-4xl font-bold text-purple-600">89</p>
+          <p class="text-red-500 text-sm mt-2">↓ 3% 先月比</p>
+        </div>
+      </div>
+
+      <!-- テーブル -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-bold mb-4">最近のユーザー</h3>
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th class="text-left py-3 px-4">名前</th>
+              <th class="text-left py-3 px-4">メール</th>
+              <th class="text-left py-3 px-4">ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="py-3 px-4">山田太郎</td>
+              <td class="py-3 px-4 text-gray-600 dark:text-gray-400">yamada@example.com</td>
+              <td class="py-3 px-4">
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                  アクティブ
+                </span>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="py-3 px-4">佐藤花子</td>
+              <td class="py-3 px-4 text-gray-600 dark:text-gray-400">sato@example.com</td>
+              <td class="py-3 px-4">
+                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
+                  保留
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
+```
+
+---
+
+## 10. まとめ 📝
+
+このレッスンで学んだこと：
+
+✅ **カスタマイズ設定**
+- tailwind.config.js でカラー、フォント、スペーシングをカスタマイズ
+- プロジェクトに合わせた独自のデザインシステムを作成
+
+✅ **コンポーネントの再利用**
+- @apply でよく使うスタイルを再利用可能に
+- ユーティリティクラスとコンポーネントクラスのバランス
+
+✅ **ダークモード**
+- dark: プレフィックスで簡単に対応
+- 手動切り替えと自動切り替えの実装
+
+✅ **アニメーション**
+- transition、transform、animate- クラスでリッチな UI
+- カスタムアニメーションの追加方法
+
+✅ **実践テクニック**
+- group/group-hover、peer/peer-checked
+- arbitrary values、important modifier
+
+✅ **プラグイン**
+- @tailwindcss/forms、@tailwindcss/typography などの便利なプラグイン
+
+✅ **パフォーマンス最適化**
+- 未使用クラスの自動削除
+- JIT モードで高速開発
+
+✅ **バイブコーディング**
+- AI への効果的な指示の出し方
+- 生成コードのチェックポイント
+
+---
+
+## 次のステップ 🚀
+
+おめでとう！Tailwind CSS の実践テクニックをマスターしたね！
+
+次は、**演習問題**で実際に手を動かして、学んだことを定着させよう！
+
+- [演習問題はこちら](./exercises/README.md)
+- [解答例はこちら](./exercises/solutions/README.md)
+
+**Tailwind CSS を使えば、どんな UI でも自由自在！楽しんで学んでいこう！** 💪✨
