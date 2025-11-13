@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 1-1: 2カラムレイアウト</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- コンテナ -->
+    <div class="container mt-5">
+      <h1 class="mb-4">演習 1-1: 2カラムレイアウト</h1>
+
+      <!-- 2カラムレイアウト -->
+      <div class="row">
+        <!-- 左カラム（8カラム分 = 2/3） -->
+        <div class="col-8">
+          <div class="bg-light p-3 border rounded">
+            <h2>メインコンテンツ</h2>
+            <p>
+              ここは左側のメインコンテンツエリアです。8カラム分（全体の2/3）を占めています。
+            </p>
+            <p>
+              ブログ記事、商品詳細、メイン情報など、主要なコンテンツがここに配置されます。
+            </p>
+            <p>
+              Bootstrap のグリッドシステムは、画面を12分割して要素を配置します。
+              この左カラムは8/12（約67%）の幅を持っています。
+            </p>
+          </div>
+        </div>
+
+        <!-- 右カラム（4カラム分 = 1/3） -->
+        <div class="col-4">
+          <div class="bg-info bg-opacity-25 p-3 border rounded">
+            <h3>サイドバー</h3>
+            <p>
+              ここは右側のサイドバーエリアです。4カラム分（全体の1/3）を占めています。
+            </p>
+            <h4>メニュー</h4>
+            <ul>
+              <li>カテゴリー1</li>
+              <li>カテゴリー2</li>
+              <li>カテゴリー3</li>
+            </ul>
+            <h4>最新記事</h4>
+            <ul>
+              <li>記事タイトル1</li>
+              <li>記事タイトル2</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 補足説明 -->
+      <div class="alert alert-info mt-5" role="alert">
+        <h4 class="alert-heading">✓ ポイント</h4>
+        <ul class="mb-0">
+          <li>
+            <strong>container</strong>: 中央寄せと左右の余白を自動設定
+          </li>
+          <li>
+            <strong>row</strong>: カラムを横並びにするための行
+          </li>
+          <li>
+            <strong>col-8</strong> + <strong>col-4</strong> = 12カラム（合計が12）
+          </li>
+          <li>
+            <strong>mt-5</strong>: 上マージン（margin-top: 3rem）
+          </li>
+          <li>
+            <strong>p-3</strong>: パディング（padding: 1rem）
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bootstrap JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

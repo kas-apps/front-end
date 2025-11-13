@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 1-3: カードコンポーネント</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4 text-center">演習 1-3: カードコンポーネント</h1>
+
+      <!-- 商品カード -->
+      <div class="card mx-auto" style="max-width: 400px">
+        <!-- カード画像 -->
+        <img
+          src="https://via.placeholder.com/400x200/0d6efd/ffffff?text=Product+Image"
+          class="card-img-top"
+          alt="商品画像"
+        />
+
+        <!-- カード本体 -->
+        <div class="card-body">
+          <h5 class="card-title">商品名</h5>
+          <p class="card-text">
+            この商品の説明文がここに入ります。Bootstrap
+            のカードコンポーネントを使うと、画像、テキスト、ボタンを含む美しいカードレイアウトが簡単に作れます。
+          </p>
+          <p class="card-text">
+            <strong class="text-primary">価格: ¥2,980</strong>
+          </p>
+          <a href="#" class="btn btn-primary w-100">カートに追加</a>
+        </div>
+      </div>
+
+      <!-- 補足説明 -->
+      <div class="alert alert-info mt-5" role="alert">
+        <h4 class="alert-heading">✓ ポイント</h4>
+        <ul class="mb-0">
+          <li>
+            <strong>card</strong>: カードコンポーネントの基本クラス
+          </li>
+          <li>
+            <strong>card-img-top</strong>: カードの上部に画像を配置
+          </li>
+          <li>
+            <strong>card-body</strong>: カードのコンテンツエリア
+          </li>
+          <li>
+            <strong>card-title</strong>: カードのタイトル（h5推奨）
+          </li>
+          <li>
+            <strong>card-text</strong>: カードの本文
+          </li>
+          <li>
+            <strong>mx-auto</strong>: 左右の余白を自動調整（中央寄せ）
+          </li>
+          <li>
+            <strong>max-width: 400px</strong>: カードの最大幅を制限
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bootstrap JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 1-4: レスポンシブ3カラムレイアウト</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4 text-center">演習 1-4: レスポンシブ3カラムレイアウト</h1>
+      <p class="text-center text-muted mb-4">
+        画面幅を変えてレイアウトの変化を確認してください！<br />
+        スマホ（< 768px）: 1列 | タブレット（768px-991px）: 2列 | PC（≥ 992px）: 3列
+      </p>
+
+      <!-- レスポンシブグリッド -->
+      <div class="row g-4">
+        <!-- カード1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">
+                <span class="badge bg-primary">1</span> カード 1
+              </h5>
+              <p class="card-text">
+                このカードはレスポンシブに対応しています。スマホでは縦並び、タブレットでは2列、PCでは3列になります。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">
+                <span class="badge bg-success">2</span> カード 2
+              </h5>
+              <p class="card-text">
+                Bootstrap のグリッドシステムを使えば、複雑なメディアクエリを書かずにレスポンシブ対応ができます。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">
+                <span class="badge bg-danger">3</span> カード 3
+              </h5>
+              <p class="card-text">
+                col-12（スマホ）、col-md-6（タブレット）、col-lg-4（PC）の組み合わせで実現しています。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード4 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">
+                <span class="badge bg-warning">4</span> カード 4
+              </h5>
+              <p class="card-text">
+                h-100 クラスを使うことで、全てのカードの高さが揃います。コンテンツ量が違っても美しく表示されます。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード5 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">
+                <span class="badge bg-info">5</span> カード 5
+              </h5>
+              <p class="card-text">
+                g-4 クラスで row に余白（gap）を設定しています。カード間の間隔が自動的に調整されます。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- カード6 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">
+                <span class="badge bg-secondary">6</span> カード 6
+              </h5>
+              <p class="card-text">
+                この仕組みを理解すれば、様々なレスポンシブレイアウトを自由自在に作れるようになります！
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 補足説明 -->
+      <div class="alert alert-info mt-5" role="alert">
+        <h4 class="alert-heading">✓ ポイント</h4>
+        <ul class="mb-0">
+          <li>
+            <strong>col-12 col-md-6 col-lg-4</strong>:
+            レスポンシブクラスの組み合わせ
+          </li>
+          <li>
+            <strong>col-12</strong>: デフォルト（全画面サイズ）で12カラム = 全幅
+          </li>
+          <li>
+            <strong>col-md-6</strong>: 768px以上で6カラム = 2列レイアウト
+          </li>
+          <li>
+            <strong>col-lg-4</strong>: 992px以上で4カラム = 3列レイアウト
+          </li>
+          <li>
+            <strong>h-100</strong>: 高さ100%でカードの高さを揃える
+          </li>
+          <li>
+            <strong>g-4</strong>: ガター（カラム間の余白）を1.5rem に設定
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bootstrap JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
