@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>様々なスタイルのボタン</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-8">
+    <div class="bg-white rounded-xl shadow-lg p-8 max-w-2xl w-full">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">様々なスタイルのボタン</h1>
+
+        <!-- ボタンコレクション -->
+        <div class="space-y-6">
+            <!-- 1. プライマリーボタン -->
+            <div>
+                <h2 class="text-sm font-semibold text-gray-600 mb-2">1. プライマリーボタン</h2>
+                <button class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 transition duration-300">
+                    プライマリーボタン
+                </button>
+            </div>
+
+            <!-- 2. セカンダリーボタン -->
+            <div>
+                <h2 class="text-sm font-semibold text-gray-600 mb-2">2. セカンダリーボタン</h2>
+                <button class="bg-gray-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300">
+                    セカンダリーボタン
+                </button>
+            </div>
+
+            <!-- 3. アウトラインボタン -->
+            <div>
+                <h2 class="text-sm font-semibold text-gray-600 mb-2">3. アウトラインボタン</h2>
+                <button class="bg-transparent border-2 border-blue-500 text-blue-500 px-6 py-3 rounded hover:bg-blue-500 hover:text-white transition duration-300">
+                    アウトラインボタン
+                </button>
+            </div>
+
+            <!-- 4. 大きいボタン -->
+            <div>
+                <h2 class="text-sm font-semibold text-gray-600 mb-2">4. 大きいボタン</h2>
+                <button class="bg-blue-500 text-white px-8 py-4 text-lg rounded hover:bg-blue-600 transition duration-300">
+                    大きいボタン
+                </button>
+            </div>
+
+            <!-- 5. 無効化ボタン -->
+            <div>
+                <h2 class="text-sm font-semibold text-gray-600 mb-2">5. 無効化ボタン</h2>
+                <button class="bg-gray-400 text-gray-200 px-6 py-3 rounded cursor-not-allowed opacity-50" disabled>
+                    無効化ボタン
+                </button>
+            </div>
+        </div>
+
+        <!-- 説明 -->
+        <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+            <p class="text-sm text-blue-800">
+                <strong>ポイント：</strong>Tailwind CSSでは、bg-{color}-{shade}、hover:bg-{color}-{shade}などのユーティリティクラスを組み合わせて、簡単にボタンをスタイリングできます！
+            </p>
+        </div>
+    </div>
+</body>
+</html>

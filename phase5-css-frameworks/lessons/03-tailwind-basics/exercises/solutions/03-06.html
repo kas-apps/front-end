@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アラート・通知コンポーネント</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-12">
+    <div class="max-w-3xl mx-auto px-4">
+        <!-- ページタイトル -->
+        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">
+            アラート・通知コンポーネント
+        </h1>
+
+        <!-- アラート集 -->
+        <div class="space-y-6">
+
+            <!-- 1. 成功アラート -->
+            <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-lg shadow-md flex items-start">
+                <div class="flex-shrink-0 mr-3">
+                    <span class="text-2xl">✓</span>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-1">成功しました！</h3>
+                    <p class="text-sm">操作が正常に完了しました。データは正しく保存されています。</p>
+                </div>
+            </div>
+
+            <!-- 2. エラーアラート -->
+            <div class="bg-red-50 border-l-4 border-red-500 text-red-800 p-4 rounded-lg shadow-md flex items-start">
+                <div class="flex-shrink-0 mr-3">
+                    <span class="text-2xl">✗</span>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-1">エラーが発生しました</h3>
+                    <p class="text-sm">申し訳ございません。処理中にエラーが発生しました。もう一度お試しください。</p>
+                </div>
+            </div>
+
+            <!-- 3. 警告アラート -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-lg shadow-md flex items-start">
+                <div class="flex-shrink-0 mr-3">
+                    <span class="text-2xl">⚠</span>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-1">注意が必要です</h3>
+                    <p class="text-sm">この操作は元に戻せません。続行する前にもう一度確認してください。</p>
+                </div>
+            </div>
+
+            <!-- 4. 情報アラート -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-lg shadow-md flex items-start">
+                <div class="flex-shrink-0 mr-3">
+                    <span class="text-2xl">ℹ</span>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-1">お知らせ</h3>
+                    <p class="text-sm">システムメンテナンスのため、明日の午前2時〜4時の間サービスを一時停止いたします。</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- デザインの説明 -->
+        <div class="mt-12 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                デザインのポイント
+            </h2>
+            <div class="space-y-3 text-gray-700">
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <p><strong>bg-{color}-50：</strong>背景に薄い色を設定</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <p><strong>border-l-4 border-{color}-500：</strong>左側に太い色付きボーダー</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <p><strong>text-{color}-800：</strong>テキストカラーを設定</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <p><strong>flex items-start：</strong>アイコンとテキストを横並びに配置</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <p><strong>shadow-md：</strong>控えめな影で奥行きを演出</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- アラートの使い分け -->
+        <div class="mt-6 bg-gray-800 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">アラートの使い分け</h3>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <p class="text-green-400 font-bold mb-1">✓ 成功（Success）</p>
+                    <p class="text-gray-300">操作が正常に完了した時</p>
+                </div>
+                <div>
+                    <p class="text-red-400 font-bold mb-1">✗ エラー（Error）</p>
+                    <p class="text-gray-300">問題が発生した時</p>
+                </div>
+                <div>
+                    <p class="text-yellow-400 font-bold mb-1">⚠ 警告（Warning）</p>
+                    <p class="text-gray-300">注意が必要な時</p>
+                </div>
+                <div>
+                    <p class="text-blue-400 font-bold mb-1">ℹ 情報（Info）</p>
+                    <p class="text-gray-300">お知らせやヒントを表示する時</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
