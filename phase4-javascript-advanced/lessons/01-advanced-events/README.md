@@ -335,12 +335,12 @@ Phase 3 で、`addEventListener` を使って基本的なイベント処理を�
         console.log("祖父要素がクリックされました");
       }, true);
 
-      child.addEventListener("click", function () {
-        console.log("子要素がクリックされました");
-      }, true);
-
       parent.addEventListener("click", function () {
         console.log("親要素がクリックされました");
+      }, true);
+
+      child.addEventListener("click", function () {
+        console.log("子要素がクリックされました");
       }, true);
     </script>
   </body>
