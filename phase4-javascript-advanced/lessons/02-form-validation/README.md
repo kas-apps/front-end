@@ -308,7 +308,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 
       <!-- パターン指定（電話番号） -->
       <label for="phone">電話番号（例: 090-1234-5678）： </label>
-      <input　type="tel"　name="phone"　id="phone"　pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"　placeholder="090-1234-5678"　/>
+      <input type="tel" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="090-1234-5678" />
       <br />
 
       <!-- URL -->
