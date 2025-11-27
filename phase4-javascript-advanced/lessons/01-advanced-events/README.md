@@ -45,7 +45,7 @@ Phase 3 で、`addEventListener` を使って基本的なイベント処理を�
     <button id="myButton">クリックしてね</button>
 
     <script>
-      const button = document.getElementById("myButton");
+      const button = document.querySelector("#myButton");
 
       // イベントリスナーの関数は、自動的にイベントオブジェクトを受け取る
       button.addEventListener("click", function (event) {
@@ -126,7 +126,7 @@ Phase 3 で、`addEventListener` を使って基本的なイベント処理を�
     </div>
 
     <script>
-      const parent = document.getElementById("parent");
+      const parent = document.querySelector("#parent");
 
       parent.addEventListener("click", function (event) {
         console.log("target:", event.target); // → クリックされた要素（親 or 子）
@@ -146,23 +146,40 @@ Phase 3 で、`addEventListener` を使って基本的なイベント処理を�
 
 #### 3. マウスイベントのプロパティ
 
-```javascript
-button.addEventListener("click", function (event) {
-  // マウスの座標（ビューポート基準）
-  console.log("clientX:", event.clientX); // → 100
-  console.log("clientY:", event.clientY); // → 200
+```html
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>マウスイベントのプロパティ</title>
+  </head>
+  <body>
+    <button id="myButton">ここをクリック！</button>
 
-  // マウスの座標（ページ基準）
-  console.log("pageX:", event.pageX);
-  console.log("pageY:", event.pageY);
+    <script>
+      const button = document.querySelector("#myButton");
 
-  // マウスの座標（画面基準）
-  console.log("screenX:", event.screenX);
-  console.log("screenY:", event.screenY);
+      // mousedown イベントで全てのマウスボタンを検出
+      button.addEventListener("mousedown", function (event) {
+        // マウスの座標（ビューポート基準）
+        console.log("clientX:", event.clientX);
+        console.log("clientY:", event.clientY);
 
-  // どのボタンがクリックされたか
-  console.log("button:", event.button); // → 0: 左, 1: 中央, 2: 右
-});
+        // マウスの座標（ページ基準）
+        console.log("pageX:", event.pageX);
+        console.log("pageY:", event.pageY);
+
+        // マウスの座標（画面基準）
+        console.log("screenX:", event.screenX);
+        console.log("screenY:", event.screenY);
+
+        // どのボタンがクリックされたか
+        // 0: 左クリック, 1: 中クリック, 2: 右クリック
+        console.log("button:", event.button);
+      });
+    </script>
+  </body>
+</html>
 ```
 
 **マウスの位置を取得して、カスタムメニューやツールチップを表示できる！** 🖱️
@@ -182,7 +199,7 @@ button.addEventListener("click", function (event) {
     <input type="text" id="textInput" placeholder="何か入力してね" />
 
     <script>
-      const input = document.getElementById("textInput");
+      const input = document.querySelector("#textInput");
 
       input.addEventListener("keydown", function (event) {
         // 押されたキー
@@ -216,7 +233,7 @@ button.addEventListener("click", function (event) {
 
 ### イベント伝播の 3 つのフェーズ
 
-```
+```text
 1. キャプチャリングフェーズ：親 → 子 へ伝播
      ↓
 2. ターゲットフェーズ：イベントが発生した要素
@@ -238,38 +255,26 @@ button.addEventListener("click", function (event) {
   <head>
     <meta charset="UTF-8" />
     <title>イベントバブリング</title>
-    <style>
-      #grandparent {
-        padding: 40px;
-        background: lightblue;
-      }
-      #parent {
-        padding: 30px;
-        background: lightgreen;
-      }
-      #child {
-        padding: 20px;
-        background: lightcoral;
-      }
-    </style>
   </head>
   <body>
-    <div id="grandparent">
+    <div id="grandparent" style="padding: 40px; background: lightblue">
       祖父要素
-      <div id="parent">
+      <div id="parent" style="padding: 30px; background: lightgreen">
         親要素
-        <div id="child">子要素（クリックしてね）</div>
+        <div id="child" style="padding: 20px; background: lightcoral">
+          子要素（クリックしてね）
+        </div>
       </div>
     </div>
 
     <script>
-      const grandparent = document.getElementById("grandparent");
-      const parent = document.getElementById("parent");
-      const child = document.getElementById("child");
+      const grandparent = document.querySelector("#grandparent");
+      const parent = document.querySelector("#parent");
+      const child = document.querySelector("#child");
 
-      // 子要素のクリック
-      child.addEventListener("click", function () {
-        console.log("子要素がクリックされました");
+      // 祖父要素のクリック
+      grandparent.addEventListener("click", function () {
+        console.log("祖父要素がクリックされました");
       });
 
       // 親要素のクリック
@@ -277,9 +282,9 @@ button.addEventListener("click", function (event) {
         console.log("親要素がクリックされました");
       });
 
-      // 祖父要素のクリック
-      grandparent.addEventListener("click", function () {
-        console.log("祖父要素がクリックされました");
+      // 子要素のクリック
+      child.addEventListener("click", function () {
+        console.log("子要素がクリックされました");
       });
     </script>
   </body>
@@ -288,7 +293,7 @@ button.addEventListener("click", function (event) {
 
 **子要素をクリックすると、以下の順で実行される**：
 
-```
+```text
 1. 子要素がクリックされました
 2. 親要素がクリックされました
 3. 祖父要素がクリックされました
@@ -308,59 +313,35 @@ button.addEventListener("click", function (event) {
   <head>
     <meta charset="UTF-8" />
     <title>イベントキャプチャリング</title>
-    <style>
-      #grandparent {
-        padding: 40px;
-        background: lightblue;
-      }
-      #parent {
-        padding: 30px;
-        background: lightgreen;
-      }
-      #child {
-        padding: 20px;
-        background: lightcoral;
-      }
-    </style>
   </head>
   <body>
-    <div id="grandparent">
+    <div id="grandparent" style="padding: 40px; background: lightblue">
       祖父要素
-      <div id="parent">
+      <div id="parent" style="padding: 30px; background: lightgreen">
         親要素
-        <div id="child">子要素（クリックしてね）</div>
+        <div id="child" style="padding: 20px; background: lightcoral">
+          子要素（クリックしてね）
+        </div>
       </div>
     </div>
 
     <script>
-      const grandparent = document.getElementById("grandparent");
-      const parent = document.getElementById("parent");
-      const child = document.getElementById("child");
+      const grandparent = document.querySelector("#grandparent");
+      const parent = document.querySelector("#parent");
+      const child = document.querySelector("#child");
 
       // キャプチャリングフェーズで処理（第3引数をtrue）
-      child.addEventListener(
-        "click",
-        function () {
-          console.log("子要素がクリックされました");
-        },
-        true
-      );
+      grandparent.addEventListener("click", function () {
+        console.log("祖父要素がクリックされました");
+      }, true);
 
-      parent.addEventListener(
-        "click",
-        function () {
-          console.log("親要素がクリックされました");
-        },
-        true
-      );
+      parent.addEventListener("click", function () {
+        console.log("親要素がクリックされました");
+      }, true);
 
-      grandparent.addEventListener(
-        "click",
-        function () {
-          console.log("祖父要素がクリックされました");
-        },
-        true
-      );
+      child.addEventListener("click", function () {
+        console.log("子要素がクリックされました");
+      }, true);
     </script>
   </body>
 </html>
@@ -368,7 +349,7 @@ button.addEventListener("click", function (event) {
 
 **子要素をクリックすると、以下の順で実行される**：
 
-```
+```text
 1. 祖父要素がクリックされました
 2. 親要素がクリックされました
 3. 子要素がクリックされました
@@ -395,7 +376,7 @@ button.addEventListener("click", function (event) {
     <a href="https://www.google.com" id="myLink">Google へ（でも遷移しない）</a>
 
     <script>
-      const link = document.getElementById("myLink");
+      const link = document.querySelector("#myLink");
 
       link.addEventListener("click", function (event) {
         // デフォルトの動作（ページ遷移）をキャンセル
@@ -428,7 +409,7 @@ button.addEventListener("click", function (event) {
     </form>
 
     <script>
-      const form = document.getElementById("myForm");
+      const form = document.querySelector("#myForm");
 
       form.addEventListener("submit", function (event) {
         // デフォルトの動作（フォーム送信）をキャンセル
@@ -464,7 +445,7 @@ button.addEventListener("click", function (event) {
     </div>
 
     <script>
-      const area = document.getElementById("customArea");
+      const area = document.querySelector("#customArea");
 
       area.addEventListener("contextmenu", function (event) {
         // デフォルトの右クリックメニューをキャンセル
@@ -492,26 +473,18 @@ button.addEventListener("click", function (event) {
   <head>
     <meta charset="UTF-8" />
     <title>stopPropagation</title>
-    <style>
-      #parent {
-        padding: 40px;
-        background: lightblue;
-      }
-      #child {
-        padding: 20px;
-        background: lightcoral;
-      }
-    </style>
   </head>
   <body>
-    <div id="parent">
+    <div id="parent" style="padding: 40px; background: lightblue">
       親要素（クリックすると親のイベント発火）
-      <div id="child">子要素（クリックしても親のイベントは発火しない）</div>
+      <div id="child" style="padding: 20px; background: lightcoral">
+        子要素（クリックしても親のイベントは発火しない）
+      </div>
     </div>
 
     <script>
-      const parent = document.getElementById("parent");
-      const child = document.getElementById("child");
+      const parent = document.querySelector("#parent");
+      const child = document.querySelector("#child");
 
       // 親要素のクリック
       parent.addEventListener("click", function () {
@@ -532,7 +505,7 @@ button.addEventListener("click", function (event) {
 
 **子要素をクリックすると**：
 
-```
+```text
 子要素がクリックされました
 （親要素のイベントは発火しない！）
 ```
@@ -554,30 +527,39 @@ button.addEventListener("click", function (event) {
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>非効率なイベント設定</title>
+    <title>イベント委譲</title>
   </head>
   <body>
     <ul id="todoList">
       <li>タスク 1 <button class="delete">削除</button></li>
       <li>タスク 2 <button class="delete">削除</button></li>
       <li>タスク 3 <button class="delete">削除</button></li>
-      <!-- 1000個のタスクがあったら... -->
     </ul>
 
-    <script>
-      // 非効率！各ボタンにイベントを設定
-      const deleteButtons = document.querySelectorAll(".delete");
+    <button id="addTask">新しいタスクを追加</button>
 
-      deleteButtons.forEach((button) => {
-        button.addEventListener("click", function () {
+    <script>
+      const todoList = document.querySelector("#todoList");
+      const addTaskButton = document.querySelector("#addTask");
+      let count = todoList.children.length;
+
+      // 親要素（ul）にイベントを1つだけ設定（効率的！）
+      todoList.addEventListener("click", function (event) {
+        // クリックされた要素が削除ボタンか確認
+        if (event.target.classList.contains("delete")) {
           // 削除処理
-          this.parentElement.remove();
-        });
+          event.target.parentElement.remove();
+          console.log("タスクを削除しました");
+        }
       });
 
-      // 問題点：
-      // 1. 1000個のボタンがあると、1000個のイベントリスナーを作る（メモリ無駄）
-      // 2. 動的に追加されたボタンには、イベントが設定されない
+      // 新しいタスクを動的に追加
+      addTaskButton.addEventListener("click", function () {
+        const newTask = document.createElement("li");
+        newTask.innerHTML = `タスク ${++count} <button class="delete">削除</button>`;
+        todoList.appendChild(newTask);
+        // イベント委譲のおかげで、新しいボタンにもイベントが効く！
+      });
     </script>
   </body>
 </html>
@@ -604,8 +586,8 @@ button.addEventListener("click", function (event) {
     <button id="addTask">新しいタスクを追加</button>
 
     <script>
-      const todoList = document.getElementById("todoList");
-      const addTaskButton = document.getElementById("addTask");
+      const todoList = document.querySelector("#todoList");
+      const addTaskButton = document.querySelector("#addTask");
 
       // 親要素（ul）にイベントを1つだけ設定（効率的！）
       todoList.addEventListener("click", function (event) {
@@ -664,9 +646,9 @@ button.addEventListener("click", function (event) {
     <ul id="taskList"></ul>
 
     <script>
-      const taskInput = document.getElementById("taskInput");
-      const addButton = document.getElementById("addButton");
-      const taskList = document.getElementById("taskList");
+      const taskInput = document.querySelector("#taskInput");
+      const addButton = document.querySelector("#addButton");
+      const taskList = document.querySelector("#taskList");
 
       // タスクを追加
       addButton.addEventListener("click", function () {
@@ -701,11 +683,11 @@ button.addEventListener("click", function (event) {
 
         // 完了ボタンがクリックされた場合
         if (target.classList.contains("toggle")) {
-          const li = target.parentElement;
-          li.classList.toggle("completed");
+          const task = target.previousElementSibling;
+          task.classList.toggle("completed");
 
           // ボタンのテキストを変更
-          if (li.classList.contains("completed")) {
+          if (task.classList.contains("completed")) {
             target.textContent = "未完了";
           } else {
             target.textContent = "完了";
@@ -737,8 +719,8 @@ button.addEventListener("click", function (event) {
     <div id="listener">イベントを待機中...</div>
 
     <script>
-      const triggerButton = document.getElementById("triggerButton");
-      const listener = document.getElementById("listener");
+      const triggerButton = document.querySelector("#triggerButton");
+      const listener = document.querySelector("#listener");
 
       // カスタムイベントを待機
       document.addEventListener("myCustomEvent", function (event) {
@@ -776,7 +758,7 @@ button.addEventListener("click", function (event) {
 
 #### ⭕ 良い指示の例
 
-```
+```text
 「TODO リストを作成してください。以下の機能を実装してください：
 
 1. タスクを追加できる（入力欄とボタン）
@@ -800,7 +782,7 @@ HTML、CSS、JavaScriptをすべて含めてください。」
 
 #### ❌ 曖昧な指示の例
 
-```
+```text
 「イベントを使ってリストを作って」
 ```
 
@@ -868,17 +850,17 @@ AI がイベント処理のコードを生成したら、以下をチェック�
 
 4. **event.target を適切に使っているか？**
 
-   ```javascript
-   // ✅ Good: event.target でクリックされた要素を取得
-   element.addEventListener("click", function (event) {
-     console.log("クリックされた要素:", event.target);
-   });
+    ```javascript
+    // ✅ Good: event.target でクリックされた要素を取得
+    element.addEventListener("click", function (event) {
+      console.log("クリックされた要素:", event.target);
+    });
 
-// ❌ Bad: this を使っている（アロー関数では意図通りに動作しないことがある）
-element.addEventListener("click", () => {
-  console.log(this); // → アロー関数は自身の`this`を持たないため、外側のスコープの`this`（この場合は`window`または`undefined`）を参照します
-});
-   ```
+    // ❌ Bad: this を使っている（アロー関数では意図通りに動作しないことがある）
+    element.addEventListener("click", () => {
+      console.log(this); // → アロー関数は自身の`this`を持たないため、外側のスコープの`this`（この場合は`window`または`undefined`）を参照します
+    });
+    ```
 
 5. **動的に追加された要素にもイベントが効くか？**
 
@@ -941,7 +923,7 @@ deleteButtons.forEach((button) => {
 });
 
 // ✅ 修正後：イベント委譲を使う
-const container = document.getElementById("container");
+const container = document.querySelector("#container");
 container.addEventListener("click", function (event) {
   if (event.target.classList.contains("delete")) {
     event.target.parentElement.remove();
@@ -1053,7 +1035,7 @@ buttons.forEach((button) => {
 });
 
 // ✅ 修正後：イベント委譲を使う
-const container = document.getElementById("container");
+const container = document.querySelector("#container");
 container.addEventListener("click", function (event) {
   if (event.target.tagName === "BUTTON") {
     // 処理

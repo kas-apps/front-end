@@ -42,7 +42,7 @@
 
 **レストランの例え話**：
 
-```
+```text
 あなた: 「ハンバーガーください！」
 店員: 「かしこまりました！」
 （料理が完成するまでじっと待つ...5分）
@@ -63,6 +63,7 @@
   </head>
   <body>
     <h1>同期処理</h1>
+    <button type="button">クリック</button>
 
     <script>
       console.log("1. 処理開始");
@@ -101,7 +102,7 @@
 
 **レストランの例え話**：
 
-```
+```text
 あなた: 「ハンバーガーとコーラください！」
 店員: 「かしこまりました！番号札どうぞ」
 あなた: （席に座ってスマホをいじる📱）
@@ -119,6 +120,7 @@
   </head>
   <body>
     <h1>非同期処理</h1>
+    <button type="button">クリック</button>
 
     <script>
       console.log("1. 処理開始");
@@ -146,7 +148,7 @@
 
 ### 視覚的に理解しよう
 
-```
+```text
 【同期処理】
 タスクA → タスクB → タスクC
   ↓        ↓        ↓
@@ -196,7 +198,7 @@
 
 **実行結果**：
 
-```
+```text
 今から3秒後にメッセージが表示されるよ
 このメッセージは先に表示されるよ
 （3秒後）
@@ -242,11 +244,11 @@
   <body>
     <h1>カウントダウンタイマー</h1>
     <div id="countdown">5</div>
-    <button id="startButton">スタート</button>
+    <button type="button" id="startButton">スタート</button>
 
     <script>
-      const countdownElement = document.getElementById("countdown");
-      const startButton = document.getElementById("startButton");
+      const countdownElement = document.querySelector("#countdown");
+      const startButton = document.querySelector("#startButton");
 
       startButton.addEventListener("click", function () {
         let count = 5;
@@ -290,12 +292,12 @@ setTimeout は**キャンセル**もできるよ！
   </head>
   <body>
     <h1>タイマーをキャンセル</h1>
-    <button id="startButton">3秒後にアラート</button>
-    <button id="cancelButton">キャンセル</button>
+    <button type="button" id="startButton">3秒後にアラート</button>
+    <button type="button" id="cancelButton">キャンセル</button>
 
     <script>
-      const startButton = document.getElementById("startButton");
-      const cancelButton = document.getElementById("cancelButton");
+      const startButton = document.querySelector("#startButton");
+      const cancelButton = document.querySelector("#cancelButton");
 
       let timerId; // タイマーIDを保存
 
@@ -338,13 +340,13 @@ setTimeout は**キャンセル**もできるよ！
   <body>
     <h1>setInterval</h1>
     <div id="time">0</div>
-    <button id="startButton">開始</button>
-    <button id="stopButton">停止</button>
+    <button type="button" id="startButton">開始</button>
+    <button type="button" id="stopButton">停止</button>
 
     <script>
-      const timeElement = document.getElementById("time");
-      const startButton = document.getElementById("startButton");
-      const stopButton = document.getElementById("stopButton");
+      const timeElement = document.querySelector("#time");
+      const startButton = document.querySelector("#startButton");
+      const stopButton = document.querySelector("#stopButton");
 
       let count = 0;
       let intervalId;
@@ -408,8 +410,8 @@ setTimeout は**キャンセル**もできるよ！
     <div id="date">0000年00月00日</div>
 
     <script>
-      const clockElement = document.getElementById("clock");
-      const dateElement = document.getElementById("date");
+      const clockElement = document.querySelector("#clock");
+      const dateElement = document.querySelector("#date");
 
       function updateClock() {
         const now = new Date();
@@ -578,7 +580,7 @@ setTimeout は**キャンセル**もできるよ！
 
 Promiseには3つの状態があるよ：
 
-```
+```text
 1. Pending（保留中）: 処理が進行中
 2. Fulfilled（成功）: 処理が成功して完了
 3. Rejected（失敗）: 処理が失敗
@@ -586,7 +588,7 @@ Promiseには3つの状態があるよ：
 
 **レストランの例え話**：
 
-```
+```text
 Pending（保留中）: 「料理を作っています...」
     ↓
 Fulfilled（成功）: 「料理ができました！🍕」
@@ -815,9 +817,9 @@ Rejected（失敗）: 「材料切れでした😢」
     <div id="result"></div>
 
     <script>
-      const fetchButton = document.getElementById("fetchButton");
-      const loadingElement = document.getElementById("loading");
-      const resultElement = document.getElementById("result");
+      const fetchButton = document.querySelector("#fetchButton");
+      const loadingElement = document.querySelector("#loading");
+      const resultElement = document.querySelector("#result");
 
       function fetchData() {
         return new Promise(function (resolve, reject) {
@@ -996,8 +998,8 @@ Rejected（失敗）: 「材料切れでした😢」
     <div id="log"></div>
 
     <script>
-      const cookButton = document.getElementById("cookButton");
-      const logElement = document.getElementById("log");
+      const cookButton = document.querySelector("#cookButton");
+      const logElement = document.querySelector("#log");
 
       function log(message) {
         const p = document.createElement("p");
@@ -1101,8 +1103,8 @@ async/await では、**try-catch**を使ってエラーを捕まえるよ！
     <div id="result"></div>
 
     <script>
-      const fetchButton = document.getElementById("fetchButton");
-      const resultElement = document.getElementById("result");
+      const fetchButton = document.querySelector("#fetchButton");
+      const resultElement = document.querySelector("#result");
 
       // データを取得する関数（失敗する可能性あり）
       function fetchData() {
@@ -1177,38 +1179,37 @@ try {
         padding: 50px;
       }
       #trafficLight {
-        width: 150px;
-        height: 400px;
-        background: #333;
+        width: 450px;
+        height: 150px;
+        background: #ddd;
         margin: 30px auto;
-        border-radius: 20px;
-        padding: 20px;
+        border-radius: 70px;
         display: flex;
-        flex-direction: column;
-        gap: 20px;
+        flex-direction: row;
+        justify-content: space-evenly;
         align-items: center;
       }
       .light {
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        background: #555;
+        background: #777;
         transition: all 0.3s;
       }
       .light.on {
         box-shadow: 0 0 30px currentColor;
       }
-      #red.on {
-        background: #ff4444;
-        color: #ff4444;
+      #green.on {
+        background: #44ff44;
+        color: #44ff44;
       }
       #yellow.on {
         background: #ffff44;
         color: #ffff44;
       }
-      #green.on {
-        background: #44ff44;
-        color: #44ff44;
+      #red.on {
+        background: #ff4444;
+        color: #ff4444;
       }
       button {
         font-size: 18px;
@@ -1236,29 +1237,29 @@ try {
     <div id="status"></div>
 
     <div id="trafficLight">
-      <div class="light" id="red"></div>
-      <div class="light" id="yellow"></div>
       <div class="light" id="green"></div>
+      <div class="light" id="yellow"></div>
+      <div class="light" id="red"></div>
     </div>
 
     <button id="startButton">信号を動かす</button>
     <button id="stopButton">停止</button>
 
     <script>
-      const redLight = document.getElementById("red");
-      const yellowLight = document.getElementById("yellow");
-      const greenLight = document.getElementById("green");
-      const statusElement = document.getElementById("status");
-      const startButton = document.getElementById("startButton");
-      const stopButton = document.getElementById("stopButton");
+      const greenLight = document.querySelector("#green");
+      const yellowLight = document.querySelector("#yellow");
+      const redLight = document.querySelector("#red");
+      const statusElement = document.querySelector("#status");
+      const startButton = document.querySelector("#startButton");
+      const stopButton = document.querySelector("#stopButton");
 
       let isRunning = false;
 
       // すべての信号を消す
       function turnOffAll() {
-        redLight.classList.remove("on");
-        yellowLight.classList.remove("on");
         greenLight.classList.remove("on");
+        yellowLight.classList.remove("on");
+        redLight.classList.remove("on");
       }
 
       // 指定時間待つ
@@ -1266,12 +1267,12 @@ try {
         return new Promise((resolve) => setTimeout(resolve, ms));
       }
 
-      // 赤信号
-      async function showRed() {
+      // 青信号
+      async function showGreen() {
         turnOffAll();
-        redLight.classList.add("on");
-        statusElement.textContent = "🔴 止まれ";
-        statusElement.style.color = "#ff4444";
+        greenLight.classList.add("on");
+        statusElement.textContent = "🟢 進め";
+        statusElement.style.color = "#44ff44";
         await wait(3000); // 3秒
       }
 
@@ -1284,25 +1285,25 @@ try {
         await wait(2000); // 2秒
       }
 
-      // 青信号
-      async function showGreen() {
+      // 赤信号
+      async function showRed() {
         turnOffAll();
-        greenLight.classList.add("on");
-        statusElement.textContent = "🟢 進め";
-        statusElement.style.color = "#44ff44";
+        redLight.classList.add("on");
+        statusElement.textContent = "🔴 止まれ";
+        statusElement.style.color = "#ff4444";
         await wait(3000); // 3秒
       }
 
       // 信号サイクル（赤 → 青 → 黄 → 赤 → ...）
       async function runTrafficLight() {
         while (isRunning) {
-          await showRed(); // 赤（3秒）
-          if (!isRunning) break;
-
           await showGreen(); // 青（3秒）
           if (!isRunning) break;
 
           await showYellow(); // 黄（2秒）
+          if (!isRunning) break;
+
+          await showRed(); // 赤（3秒）
           if (!isRunning) break;
         }
       }
@@ -1338,7 +1339,7 @@ try {
 
 #### ⭕ 良い指示の例
 
-```
+```text
 「画像を非同期で読み込むローダーを作成してください：
 
 1. 「画像を読み込む」ボタンをクリックすると、複数の画像をPromise.allで並行読み込み
@@ -1362,7 +1363,7 @@ HTML、CSS、JavaScriptをすべて含めてください。」
 
 #### ❌ 曖昧な指示の例
 
-```
+```text
 「非同期で何か作って」
 ```
 
