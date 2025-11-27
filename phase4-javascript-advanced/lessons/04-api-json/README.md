@@ -19,20 +19,20 @@
 
 ### データのやり取りの流れ
 
-```
-【あなたのアプリ】         【サーバー】
-    (ブラウザ)              (どこか遠くのコンピューター)
-       |                           |
-       | "ユーザー一覧ちょうだい！"   |
-       |-------------------------->|
-       |                           |
-       |   [JSON形式でデータを送信]  |
-       |<--------------------------|
-       |                           |
-    画面に表示！                データベースから取得
+```text
+【あなたのアプリ】              【サーバー】
+  (ブラウザ)            (どこか遠くのコンピューター)
+      |                           |
+      | "ユーザー一覧ちょうだい！"    |
+      |-------------------------->|
+      |                           |
+      |     [JSON形式でデータを送信] |
+      |<--------------------------|
+      |                           |
+  画面に表示！               データベースから取得
 ```
 
-この「データのやり取り」を可能にするのが**API（Application Programming Interface）**なんだ！
+この「データのやり取り」を可能にするのが **API（Application Programming Interface）** なんだ！
 
 ### APIって何？
 
@@ -40,7 +40,7 @@
 
 **レストランの例え話**：
 
-```
+```text
 あなた（お客さん）= あなたのアプリ
 ウェイター        = API
 厨房（キッチン）  = サーバー（データベース）
@@ -55,7 +55,7 @@ APIは、あなたが「データがほしい」とリクエストすると、�
 
 ### JSONって何？
 
-**JSON（JavaScript Object Notation）**は、データをやり取りするときの「共通語」みたいなもの！
+**JSON（JavaScript Object Notation）** は、データをやり取りするときの「共通語」みたいなもの！
 
 プログラミング言語は色々あるよね：JavaScript、Python、Java、PHP...
 でも**JSON形式でデータを書けば、どの言語でも理解できる！** だからWebの世界で大人気なんだ！✨
@@ -132,11 +132,14 @@ JSONは、JavaScriptのオブジェクトにすごく似ているけど、**い�
 }
 ```
 
-**使えないもの**：
-- ❌ `undefined`（`null`を使う）
-- ❌ 関数
-- ❌ `Date`オブジェクト（文字列に変換する）
-- ❌ シンボル
+**JSONで使えないデータ型**：
+
+| 使えないもの | 理由 | 代替案 |
+|-------------|------|--------|
+| `undefined` | JSON仕様にない | `null`を使う |
+| 関数 | 実行可能コードは含められない | 文字列として保存（または除外） |
+| `Date`オブジェクト | オブジェクト型だが特殊 | ISO文字列に変換（`"2025-01-01T00:00:00Z"`） |
+| `Symbol` | JavaScriptに特有 | 文字列に変換するか除外 |
 
 ---
 
@@ -174,14 +177,12 @@ const jsonString = `{
 
 ### 視覚的な比較
 
-```
-【JavaScriptオブジェクト】      【JSON】
-        ↓                       ↓
-    メモリ上に存在           文字列として存在
-    プログラムで直接使える    ネットワーク送信可能
-    関数も含められる         データのみ（関数は不可）
-    柔軟な書き方OK          厳格なルールがある
-```
+| 特徴 | JavaScriptオブジェクト | JSON |
+|------|----------------------|------|
+| 存在形式 | メモリ上に存在 | 文字列として存在 |
+| 使用方法 | プログラムで直接使える | ネットワーク送信可能 |
+| 含められるもの | 関数も含められる | データのみ（関数は不可） |
+| 書き方 | 柔軟な書き方OK | 厳格なルールがある |
 
 ---
 
@@ -215,9 +216,10 @@ const jsonString = `{
       console.log("型:", typeof user); // "object"
 
       // これでオブジェクトとして使える！
-      console.log("名前:", user.name);   // "太郎"
-      console.log("年齢:", user.age);    // 25
-      console.log("都市:", user.city);   // "東京"
+      const {name, age, city} = user; // オブジェクトの分割代入
+      console.log("名前:", name);      // "太郎"
+      console.log("年齢:", age);       // 25
+      console.log("都市:", city);      // "東京"
 
       // ドット記法でアクセスできる！
       document.body.innerHTML += `<p>${user.name}さんは${user.age}歳です</p>`;
@@ -227,7 +229,8 @@ const jsonString = `{
 ```
 
 **結果**：
-```
+
+```text
 JSON文字列: {"name":"太郎","age":25,"city":"東京"}
 型: string
 パース後: {name: "太郎", age: 25, city: "東京"}
@@ -284,6 +287,7 @@ JSON文字列: {"name":"太郎","age":25,"city":"東京"}
 ```
 
 **結果**：
+
 ```javascript
 // 整形されたJSON:
 {
@@ -420,8 +424,8 @@ fetchData();
     <div id="result"></div>
 
     <script>
-      const fetchBtn = document.getElementById("fetchBtn");
-      const result = document.getElementById("result");
+      const fetchBtn = document.querySelector("#fetchBtn");
+      const result = document.querySelector("#result");
 
       // ボタンをクリックしたら、ユーザー情報を取得
       fetchBtn.addEventListener("click", async () => {
@@ -431,9 +435,8 @@ fetchData();
 
           // JSONPlaceholder API からユーザー情報を取得
           // これは誰でも練習用に使える無料のAPIだよ！
-          const response = await fetch(
-            "https://jsonplaceholder.typicode.com/users/1"
-          );
+          const url = "https://jsonplaceholder.typicode.com/users/1";
+          const response = await fetch(url);
 
           // レスポンスが成功したかチェック
           if (!response.ok) {
@@ -446,14 +449,15 @@ fetchData();
           console.log("取得したユーザー:", user);
 
           // 画面に表示
+          const { name, username, email, phone, website, company } = user; // オブジェクトの分割代入
           result.innerHTML = `
             <div class="user-card">
-              <h2>${user.name}</h2>
-              <p><strong>ユーザー名:</strong> ${user.username}</p>
-              <p><strong>メール:</strong> ${user.email}</p>
-              <p><strong>電話:</strong> ${user.phone}</p>
-              <p><strong>ウェブサイト:</strong> ${user.website}</p>
-              <p><strong>会社:</strong> ${user.company.name}</p>
+              <h2>${name}</h2>
+              <p><strong>ユーザー名:</strong> ${username}</p>
+              <p><strong>メール:</strong> ${email}</p>
+              <p><strong>電話:</strong> ${phone}</p>
+              <p><strong>ウェブサイト:</strong> ${website}</p>
+              <p><strong>会社:</strong> ${company.name}</p>
             </div>
           `;
         } catch (error) {
@@ -536,17 +540,16 @@ console.log(user.name);  // ユーザー名を表示
     <div id="userList"></div>
 
     <script>
-      const fetchBtn = document.getElementById("fetchBtn");
-      const userList = document.getElementById("userList");
+      const fetchBtn = document.querySelector("#fetchBtn");
+      const userList = document.querySelector("#userList");
 
       fetchBtn.addEventListener("click", async () => {
         try {
           userList.innerHTML = "<p>読み込み中...⏳</p>";
 
           // 全ユーザーを取得（配列が返ってくる）
-          const response = await fetch(
-            "https://jsonplaceholder.typicode.com/users"
-          );
+          const url = "https://jsonplaceholder.typicode.com/users";
+          const response = await fetch(url);
 
           if (!response.ok) {
             throw new Error(`HTTPエラー: ${response.status}`);
@@ -558,15 +561,15 @@ console.log(user.name);  // ユーザー名を表示
           // 配列をループして表示
           let html = "";
           users.forEach((user) => {
+            const { name, email, company } = user;
             html += `
               <div class="user-card">
-                <h3>${user.name}</h3>
-                <p>📧 ${user.email}</p>
-                <p>🏢 ${user.company.name}</p>
+                <h3>${name}</h3>
+                <p>📧 ${email}</p>
+                <p>🏢 ${company.name}</p>
               </div>
             `;
           });
-
           userList.innerHTML = html;
         } catch (error) {
           console.error("エラー:", error);
@@ -585,6 +588,7 @@ console.log(user.name);  // ユーザー名を表示
 **POSTリクエスト**は、サーバーにデータを「送信」するときに使うよ！
 
 例：
+
 - ユーザー登録
 - ブログ記事の投稿
 - コメントの送信
@@ -668,35 +672,25 @@ fetch(URL, {
     <h1>📝 新しい投稿を作成</h1>
 
     <form id="postForm">
-      <input
-        type="text"
-        id="title"
-        placeholder="タイトル"
-        required
-      />
-      <textarea
-        id="body"
-        rows="5"
-        placeholder="本文"
-        required
-      ></textarea>
+      <input type="text" id="title" placeholder="タイトル" required />
+      <textarea id="body" rows="5" placeholder="本文" required></textarea>
       <button type="submit" id="submitBtn">投稿する</button>
     </form>
 
     <div id="result"></div>
 
     <script>
-      const postForm = document.getElementById("postForm");
-      const submitBtn = document.getElementById("submitBtn");
-      const result = document.getElementById("result");
+      const postForm = document.querySelector("#postForm");
+      const submitBtn = document.querySelector("#submitBtn");
+      const result = document.querySelector("#result");
 
       postForm.addEventListener("submit", async (e) => {
         // フォームのデフォルト動作（ページリロード）を防ぐ
         e.preventDefault();
 
         // 入力値を取得
-        const title = document.getElementById("title").value;
-        const body = document.getElementById("body").value;
+        const title = document.querySelector("#title").value;
+        const body = document.querySelector("#body").value;
 
         // 送信するデータを準備
         const newPost = {
@@ -713,16 +707,14 @@ fetch(URL, {
           submitBtn.textContent = "送信中...⏳";
 
           // POSTリクエストを送信
-          const response = await fetch(
-            "https://jsonplaceholder.typicode.com/posts",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json", // JSON形式で送信
-              },
-              body: JSON.stringify(newPost), // オブジェクトをJSON文字列に変換
-            }
-          );
+          const url = "https://jsonplaceholder.typicode.com/posts";
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json", // JSON形式で送信
+            },
+            body: JSON.stringify(newPost), // オブジェクトをJSON文字列に変換
+          });
 
           if (!response.ok) {
             throw new Error(`HTTPエラー: ${response.status}`);
@@ -734,11 +726,12 @@ fetch(URL, {
 
           // 成功メッセージ
           result.className = "success";
+          const { id, title, body } = createdPost;
           result.innerHTML = `
             <h3>✅ 投稿に成功しました！</h3>
-            <p><strong>ID:</strong> ${createdPost.id}</p>
-            <p><strong>タイトル:</strong> ${createdPost.title}</p>
-            <p><strong>本文:</strong> ${createdPost.body}</p>
+            <p><strong>ID:</strong> ${id}</p>
+            <p><strong>タイトル:</strong> ${title}</p>
+            <p><strong>本文:</strong> ${body}</p>
           `;
 
           // フォームをリセット
@@ -871,14 +864,13 @@ if (response.status === 404) {
     <div id="result"></div>
 
     <script>
-      const result = document.getElementById("result");
+      const result = document.querySelector("#result");
 
       // 成功するリクエスト
       async function fetchSuccess() {
         try {
-          const response = await fetch(
-            "https://jsonplaceholder.typicode.com/users/1"
-          );
+          const url = "https://jsonplaceholder.typicode.com/users/1";
+          const response = await fetch(url);
 
           console.log("ステータスコード:", response.status);
           console.log("response.ok:", response.ok);
@@ -903,9 +895,8 @@ if (response.status === 404) {
       // 失敗するリクエスト（存在しないID）
       async function fetchNotFound() {
         try {
-          const response = await fetch(
-            "https://jsonplaceholder.typicode.com/users/999999"
-          );
+          const url = "https://jsonplaceholder.typicode.com/users/999999";
+          const response = await fetch(url);
 
           console.log("ステータスコード:", response.status);
           console.log("response.ok:", response.ok);
@@ -927,10 +918,8 @@ if (response.status === 404) {
               default:
                 errorMessage = `エラーが発生しました（${response.status}）`;
             }
-
             throw new Error(errorMessage);
           }
-
           const data = await response.json();
         } catch (error) {
           showError(error);
@@ -1123,11 +1112,28 @@ try {
         margin: 20px auto;
       }
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
       #result {
         margin-top: 20px;
+      }
+      .posts {
+        background: white;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .error {
+        background: #f8d7da;
+        padding: 15px;
+        border-radius: 5px;
+        color: #721c24;
       }
     </style>
   </head>
@@ -1143,9 +1149,9 @@ try {
     <div id="result"></div>
 
     <script>
-      const fetchBtn = document.getElementById("fetchBtn");
-      const loading = document.getElementById("loading");
-      const result = document.getElementById("result");
+      const fetchBtn = document.querySelector("#fetchBtn");
+      const loading = document.querySelector("#loading");
+      const result = document.querySelector("#result");
 
       fetchBtn.addEventListener("click", async () => {
         // ローディング開始
@@ -1157,9 +1163,8 @@ try {
           // 意図的に遅延を追加（ローディングを見やすくするため）
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
-          const response = await fetch(
-            "https://jsonplaceholder.typicode.com/posts"
-          );
+          const url = "https://jsonplaceholder.typicode.com/posts";
+          const response = await fetch(url);
 
           if (!response.ok) {
             throw new Error(`HTTPエラー: ${response.status}`);
@@ -1168,19 +1173,23 @@ try {
           const posts = await response.json();
 
           // 最初の5件だけ表示
-          const html = posts.slice(0, 5).map(post => `
-            <div style="background: white; padding: 15px; margin: 10px 0; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          const html = posts
+            .slice(0, 5)
+            .map(
+              (post) => `
+            <div class="posts">
               <h3>${post.title}</h3>
               <p>${post.body}</p>
             </div>
-          `).join("");
+          `
+            )
+            .join("");
 
           result.innerHTML = `<h3>✅ ${posts.length}件の投稿を取得しました</h3>${html}`;
-
         } catch (error) {
           console.error("エラー:", error);
           result.innerHTML = `
-            <div style="background: #f8d7da; padding: 15px; border-radius: 5px; color: #721c24;">
+            <div class="error">
               ❌ ${error.message}
             </div>
           `;
@@ -1204,7 +1213,7 @@ try {
 
 ### 利用できるエンドポイント
 
-```
+```text
 https://jsonplaceholder.typicode.com/users      → ユーザー一覧
 https://jsonplaceholder.typicode.com/posts      → 投稿一覧
 https://jsonplaceholder.typicode.com/comments   → コメント一覧
@@ -1282,8 +1291,8 @@ https://jsonplaceholder.typicode.com/posts/1    → ID=1の投稿
     <div id="posts"></div>
 
     <script>
-      const loadBtn = document.getElementById("loadBtn");
-      const postsDiv = document.getElementById("posts");
+      const loadBtn = document.querySelector("#loadBtn");
+      const postsDiv = document.querySelector("#posts");
 
       loadBtn.addEventListener("click", async () => {
         try {
@@ -1355,7 +1364,7 @@ https://jsonplaceholder.typicode.com/posts/1    → ID=1の投稿
 
 #### 良い指示の例 ✅
 
-```
+```text
 「JSONPlaceholder APIを使って、TODOリストアプリを作成してください：
 
 要件：
@@ -1369,6 +1378,7 @@ https://jsonplaceholder.typicode.com/posts/1    → ID=1の投稿
 ```
 
 **なぜ良い？**：
+
 - 使用するAPI URLを具体的に指定
 - 必要な機能を箇条書きで明確に
 - UI要件も含めている
@@ -1376,11 +1386,12 @@ https://jsonplaceholder.typicode.com/posts/1    → ID=1の投稿
 
 #### 曖昧な指示の例 ❌
 
-```
+```text
 「APIを使ってデータを表示して」
 ```
 
 **なぜダメ？**：
+
 - どのAPIを使うか不明
 - どんなデータを表示するか不明
 - どう表示するか不明
@@ -1479,6 +1490,7 @@ console.log(data);  // ちゃんとデータが取得できる！
 ```
 
 **修正方法**：
+
 - `fetch()` と `response.json()` の両方に `await` を付ける
 - 関数を `async function` にするのを忘れずに！
 
@@ -1486,7 +1498,7 @@ console.log(data);  // ちゃんとデータが取得できる！
 
 #### 問題2：CORSエラーが出る
 
-```
+```text
 Access to fetch at 'https://example.com/api' from origin 'http://localhost'
 has been blocked by CORS policy
 ```
@@ -1495,17 +1507,20 @@ has been blocked by CORS policy
 サーバー側が、あなたのドメインからのアクセスを許可していない。
 
 **CORS（Cross-Origin Resource Sharing）とは？**
+
 - ブラウザのセキュリティ機能
 - 異なるドメインへのリクエストを制限
 - サーバー側が許可しないとアクセスできない
 
 **対処法**：
+
 1. **練習用には JSONPlaceholder を使う**（CORSエラーが出ない）
 2. サーバー側の設定を変更する（自分のサーバーの場合）
 3. プロキシサーバーを経由する（開発環境）
 
 **AIへの指示例**：
-```
+
+```text
 「CORSエラーを避けるために、JSONPlaceholder API（https://jsonplaceholder.typicode.com）
 を使って、ユーザー一覧を取得するコードを書いてください」
 ```
@@ -1539,6 +1554,7 @@ try {
 ```
 
 **修正方法**：
+
 - `try-catch` で囲む
 - `response.ok` でHTTPエラーをチェック
 - エラーメッセージを画面に表示
@@ -1572,6 +1588,7 @@ button.addEventListener("click", async () => {
 ```
 
 **修正方法**：
+
 - リクエスト前に `button.disabled = true`
 - `finally` ブロックで `button.disabled = false`
 
@@ -1611,6 +1628,7 @@ try {
 ```
 
 **修正方法**：
+
 - `response.ok` でHTTPステータスをチェック
 - エラーの場合は `throw new Error()` で例外をスロー
 
@@ -1702,6 +1720,8 @@ data.forEach(item => {
 - エラーが起きても適切に処理できる
 - ローディング中の状態を表示できる
 - 実際のWebアプリケーションのようなデータ連携ができる
+
+---
 
 ### 次のステップ
 

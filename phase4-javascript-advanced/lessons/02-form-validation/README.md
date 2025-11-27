@@ -13,12 +13,14 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 ### よくあるフォームの問題
 
 ❌ **悪いフォームの例**：
+
 - 送信ボタンを押すまでエラーが分からない
 - エラーメッセージが分かりにくい（「入力が不正です」だけ）
 - どのフィールドに問題があるか分からない
 - せっかく入力したのに、エラーで全部消える
 
 ✅ **良いフォームの例**：
+
 - リアルタイムで入力内容をチェック
 - 具体的なエラーメッセージを表示（「8文字以上で入力してください」）
 - 問題のあるフィールドがすぐ分かる
@@ -55,36 +57,34 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
   </head>
   <body>
     <form id="myForm">
-      <label>
-        名前：
-        <input type="text" id="username" />
-      </label>
-      <label>
-        メールアドレス：
-        <input type="email" id="email" />
-      </label>
+      <label for="name">名前： </label>
+      <input type="text" id="name" /><br />
+      <label for="email">メールアドレス： </label>
+      <input type="email" id="email" /><br />
       <button type="button" id="submitBtn">送信</button>
     </form>
 
     <div id="result"></div>
 
     <script>
-      const submitBtn = document.getElementById("submitBtn");
-      const result = document.getElementById("result");
+      const submitBtn = document.querySelector("#submitBtn");
+      const result = document.querySelector("#result");
+      const inputName = document.querySelector("#name");
+      const inputEmail = document.querySelector("#email");
 
       submitBtn.addEventListener("click", function () {
         // 各inputのvalueプロパティで値を取得
-        const username = document.getElementById("username").value;
-        const email = document.getElementById("email").value;
+        const name = inputName.value;
+        const email = inputEmail.value;
 
         // コンソールに表示
-        console.log("名前:", username);
+        console.log("名前:", name);
         console.log("メール:", email);
 
         // ページに表示
         result.innerHTML = `
-          <p>名前: ${username}</p>
-          <p>メール: ${email}</p>
+          <div>名前: ${name}</div>
+          <div>メール: ${email}</div>
         `;
       });
     </script>
@@ -93,6 +93,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 ```
 
 **ポイント**：
+
 - `input.value` で現在の入力値を取得できる
 - 空の場合は空文字列（`""`）が返る
 - リアルタイムで取得できる
@@ -112,36 +113,25 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
   </head>
   <body>
     <form id="registrationForm">
-      <label>
-        名前：
-        <input type="text" name="username" />
-      </label>
-      <br />
-      <label>
-        メール：
-        <input type="email" name="email" />
-      </label>
-      <br />
-      <label>
-        年齢：
-        <input type="number" name="age" />
-      </label>
-      <br />
-      <label>
-        性別：
-        <select name="gender">
-          <option value="">選択してください</option>
-          <option value="male">男性</option>
-          <option value="female">女性</option>
-          <option value="other">その他</option>
-        </select>
-      </label>
+      <label for="name">名前： </label>
+      <input type="text" name="name" id="name" /><br />
+      <label for="email">メール： </label>
+      <input type="email" name="email" id="email" /><br />
+      <label for="age">年齢： </label>
+      <input type="number" name="age" id="age" /><br />
+      <label for="gender">性別： </label>
+      <select name="gender" id="gender">
+        <option value="">選択してください</option>
+        <option value="male">男性</option>
+        <option value="female">女性</option>
+        <option value="other">その他</option>
+      </select>
       <br />
       <button type="submit">登録</button>
     </form>
 
     <script>
-      const form = document.getElementById("registrationForm");
+      const form = document.querySelector("#registrationForm");
 
       form.addEventListener("submit", function (event) {
         // デフォルトのフォーム送信を防ぐ（ページがリロードされない）
@@ -151,7 +141,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
         const formData = new FormData(form);
 
         // 方法1: get()メソッドで個別に取得
-        console.log("名前:", formData.get("username"));
+        console.log("名前:", formData.get("name"));
         console.log("メール:", formData.get("email"));
         console.log("年齢:", formData.get("age"));
         console.log("性別:", formData.get("gender"));
@@ -165,7 +155,6 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
         // 方法3: オブジェクトに変換（便利！）
         const data = Object.fromEntries(formData);
         console.log("オブジェクト形式:", data);
-        // → { username: "太郎", email: "taro@example.com", age: "25", gender: "male" }
       });
     </script>
   </body>
@@ -173,6 +162,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 ```
 
 **FormData の便利なポイント**：
+
 - ✅ `name` 属性を持つ全ての入力フィールドを自動取得
 - ✅ ファイルアップロードにも対応
 - ✅ サーバーへの送信が簡単
@@ -196,39 +186,25 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
   <body>
     <form id="surveyForm">
       <h3>好きな果物を選んでください（複数選択可）</h3>
-      <label>
-        <input type="checkbox" name="fruits" value="apple" />
-        りんご
-      </label>
-      <label>
-        <input type="checkbox" name="fruits" value="banana" />
-        バナナ
-      </label>
-      <label>
-        <input type="checkbox" name="fruits" value="orange" />
-        オレンジ
-      </label>
+      <input type="checkbox" name="fruits" value="apple" id="apple" />
+      <label for="apple">りんご</label>
+      <input type="checkbox" name="fruits" value="banana" id="banana" />
+      <label for="banana">バナナ</label>
+      <input type="checkbox" name="fruits" value="orange" id="orange" />
+      <label for="orange">オレンジ</label>
 
       <h3>お住まいの地域を選んでください</h3>
-      <label>
-        <input type="radio" name="region" value="hokkaido" />
-        北海道
-      </label>
-      <label>
-        <input type="radio" name="region" value="kanto" />
-        関東
-      </label>
-      <label>
-        <input type="radio" name="region" value="kansai" />
-        関西
-      </label>
-
-      <br />
+      <input type="radio" name="region" value="hokkaido" id="hokkaido" />
+      <label for="hokkaido">北海道</label>
+      <input type="radio" name="region" value="kanto" id="kanto" />
+      <label for="kanto">関東</label>
+      <input type="radio" name="region" value="kansai" id="kansai" />
+      <label for="kansai">関西</label><br />
       <button type="submit">送信</button>
     </form>
 
     <script>
-      const form = document.getElementById("surveyForm");
+      const form = document.querySelector("#surveyForm");
 
       form.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -237,21 +213,24 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
         // 方法1: FormDataのgetAll()で取得
         const formData = new FormData(form);
         const selectedFruits = formData.getAll("fruits");
-        console.log("選択された果物:", selectedFruits);
-        // → ["apple", "orange"] など
+        console.log("選択された果物（方法1）:", selectedFruits);
 
         // 方法2: querySelectorAllで取得
-        const checkboxes = document.querySelectorAll('input[name="fruits"]:checked');
+        const checkboxes = document.querySelectorAll(
+          'input[name="fruits"]:checked'
+        );
         const fruits = Array.from(checkboxes).map((cb) => cb.value);
         console.log("選択された果物（方法2）:", fruits);
 
         // ===== ラジオボタン（単一選択）の取得 =====
         // 方法1: FormDataのget()で取得
         const selectedRegion = formData.get("region");
-        console.log("選択された地域:", selectedRegion);
+        console.log("選択された地域（方法1）:", selectedRegion);
 
         // 方法2: querySelectorで取得
-        const radioButton = document.querySelector('input[name="region"]:checked');
+        const radioButton = document.querySelector(
+          'input[name="region"]:checked'
+        );
         const region = radioButton ? radioButton.value : null;
         console.log("選択された地域（方法2）:", region);
       });
@@ -261,6 +240,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 ```
 
 **ポイント**：
+
 - チェックボックス（複数選択）は `formData.getAll()` で配列として取得
 - ラジオボタン（単一選択）は `formData.get()` で値を取得
 - `:checked` 擬似クラスで選択されている要素だけ取得できる
@@ -306,50 +286,34 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
     <h2>ユーザー登録フォーム</h2>
     <form>
       <!-- 必須項目 -->
-      <label>
-        ユーザー名（必須）：
-        <input type="text" name="username" required minlength="3" maxlength="20" />
-      </label>
+      <!-- ユーザー名（3文字以上20文字以下） -->
+      <label for="username">ユーザー名（必須）： </label>
+      <input　type="text"　name="username"　id="username"　required　minlength="3"　maxlength="20"　/>
       <br />
 
       <!-- メールアドレス（type="email"で自動検証） -->
-      <label>
-        メールアドレス（必須）：
-        <input type="email" name="email" required />
-      </label>
+      <label for="email">メールアドレス（必須）： </label>
+      <input type="email" name="email" id="email" required />
       <br />
 
       <!-- パスワード（最低8文字） -->
-      <label>
-        パスワード（8文字以上）：
-        <input type="password" name="password" required minlength="8" />
-      </label>
+      <label for="password">パスワード（8文字以上）： </label>
+      <input　type="password"　name="password"　id="password"　required　minlength="8"　/>
       <br />
 
       <!-- 数値（範囲指定） -->
-      <label>
-        年齢（18歳以上）：
-        <input type="number" name="age" required min="18" max="120" />
-      </label>
+      <label for="age">年齢（18歳以上）： </label>
+      <input type="number" name="age" id="age" required min="18" max="120" />
       <br />
 
       <!-- パターン指定（電話番号） -->
-      <label>
-        電話番号（例: 090-1234-5678）：
-        <input
-          type="tel"
-          name="phone"
-          pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-          placeholder="090-1234-5678"
-        />
-      </label>
+      <label for="phone">電話番号（例: 090-1234-5678）： </label>
+      <input　type="tel"　name="phone"　id="phone"　pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"　placeholder="090-1234-5678"　/>
       <br />
 
       <!-- URL -->
-      <label>
-        ウェブサイト：
-        <input type="url" name="website" placeholder="https://example.com" />
-      </label>
+      <label for="website">ウェブサイト： </label>
+      <input type="url" name="website" placeholder="https://example.com" />
       <br />
 
       <button type="submit">登録</button>
@@ -359,16 +323,19 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 ```
 
 **試してみよう！** このフォームで：
+
 - ユーザー名を2文字だけ入力して送信してみて → エラーになる
 - メールアドレスに「abc」だけ入力して送信してみて → エラーになる
 - 年齢に「15」を入力して送信してみて → エラーになる
 
 **HTML5 バリデーションの良いところ**：
+
 - ✅ JavaScript を書かなくても動く
 - ✅ ブラウザが自動でエラーメッセージを表示
 - ✅ 送信前に自動チェック
 
 **HTML5 バリデーションの制限**：
+
 - ❌ エラーメッセージのカスタマイズが難しい
 - ❌ 複雑な検証ロジックには対応できない
 - ❌ リアルタイムのバリデーションには不向き
@@ -470,15 +437,15 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 
     <script>
       // 要素を取得
-      const usernameInput = document.getElementById("username");
-      const emailInput = document.getElementById("email");
-      const passwordInput = document.getElementById("password");
+      const usernameInput = document.querySelector("#username");
+      const emailInput = document.querySelector("#email");
+      const passwordInput = document.querySelector("#password");
 
       // ===== ユーザー名のバリデーション =====
       usernameInput.addEventListener("input", function () {
         const value = usernameInput.value;
-        const errorMsg = document.getElementById("usernameError");
-        const successMsg = document.getElementById("usernameSuccess");
+        const errorMsg = document.querySelector("#usernameError");
+        const successMsg = document.querySelector("#usernameSuccess");
 
         if (value.length === 0) {
           // 空の場合
@@ -504,8 +471,8 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
       // ===== メールアドレスのバリデーション =====
       emailInput.addEventListener("input", function () {
         const value = emailInput.value;
-        const errorMsg = document.getElementById("emailError");
-        const successMsg = document.getElementById("emailSuccess");
+        const errorMsg = document.querySelector("#emailError");
+        const successMsg = document.querySelector("#emailSuccess");
 
         // 簡易的なメールアドレスのパターン
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -531,8 +498,8 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
       // ===== パスワードのバリデーション =====
       passwordInput.addEventListener("input", function () {
         const value = passwordInput.value;
-        const errorMsg = document.getElementById("passwordError");
-        const successMsg = document.getElementById("passwordSuccess");
+        const errorMsg = document.querySelector("#passwordError");
+        const successMsg = document.querySelector("#passwordSuccess");
 
         if (value.length === 0) {
           passwordInput.classList.remove("valid", "invalid");
@@ -553,7 +520,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
       });
 
       // ===== フォーム送信時のバリデーション =====
-      const form = document.getElementById("realtimeForm");
+      const form = document.querySelector("#realtimeForm");
       form.addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -578,6 +545,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 ```
 
 **このコードのポイント**：
+
 - 🎯 `input` イベントでリアルタイムにチェック（入力するたびに実行）
 - 🎨 CSS クラス（`valid`/`invalid`）で視覚的にフィードバック
 - 💬 具体的なエラーメッセージを表示
@@ -592,11 +560,13 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 リアルタイムバリデーションには、主に2つのイベントを使うよ。
 
 **`input` イベント**：
+
 - 入力するたびに発火（1文字入力するたび）
 - 即座にフィードバックできる
 - ユーザーが入力中に何度もエラーが表示されるので、少し煩わしい場合も
 
 **`blur` イベント**：
+
 - フィールドからフォーカスが外れた時に発火
 - 入力が完了してからチェックされる
 - ユーザー体験が良い場合が多い
@@ -616,6 +586,7 @@ usernameInput.addEventListener("blur", function () {
 ```
 
 **どっちを使うべき？**
+
 - パスワードの強度チェックなど、リアルタイムに表示したい → `input`
 - 基本的なバリデーション → `blur`
 - **両方組み合わせるのもあり！**（blur で初回チェック、その後は input でリアルタイム）
@@ -724,9 +695,9 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
     </form>
 
     <script>
-      const passwordInput = document.getElementById("password");
-      const strengthBar = document.getElementById("strengthBar");
-      const strengthText = document.getElementById("strengthText");
+      const passwordInput = document.querySelector("#password");
+      const strengthBar = document.querySelector("#strengthBar");
+      const strengthText = document.querySelector("#strengthText");
 
       passwordInput.addEventListener("input", function () {
         const password = passwordInput.value;
@@ -777,7 +748,7 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
 
       // 要件の表示を更新する関数
       function updateRequirement(id, isMet) {
-        const element = document.getElementById(id);
+        const element = document.querySelector(`#${id}`);
         if (isMet) {
           element.classList.add("met");
           element.classList.remove("unmet");
@@ -794,6 +765,7 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
 ```
 
 **このコードのポイント**：
+
 - 📊 パスワードの強度を視覚的に表示（プログレスバー）
 - ✅ 各要件を個別にチェックして表示
 - 🎨 満たしている要件を緑色で表示
@@ -867,7 +839,7 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
       <div class="form-group">
         <label for="confirmPassword">パスワード（確認）</label>
         <input type="password" id="confirmPassword" />
-        <div class="error-message" id="confirmError"></div>
+        <div class="error-message" id="confirmError">✗ パスワードが一致しません</div>
         <div class="success-message" id="confirmSuccess">✓ パスワードが一致しています</div>
       </div>
 
@@ -875,10 +847,10 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
     </form>
 
     <script>
-      const passwordInput = document.getElementById("password");
-      const confirmPasswordInput = document.getElementById("confirmPassword");
-      const confirmError = document.getElementById("confirmError");
-      const confirmSuccess = document.getElementById("confirmSuccess");
+      const passwordInput = document.querySelector("#password");
+      const confirmPasswordInput = document.querySelector("#confirmPassword");
+      const confirmError = document.querySelector("#confirmError");
+      const confirmSuccess = document.querySelector("#confirmSuccess");
 
       // パスワード確認フィールドの検証
       function validatePasswordMatch() {
@@ -897,7 +869,6 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
         if (password !== confirmPassword) {
           confirmPasswordInput.classList.add("invalid");
           confirmPasswordInput.classList.remove("valid");
-          confirmError.textContent = "パスワードが一致しません";
           confirmError.classList.add("show");
           confirmSuccess.classList.remove("show");
           return false;
@@ -927,6 +898,7 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
 ```
 
 **ポイント**：
+
 - 2つのフィールドの値を比較
 - どちらのフィールドが変更されても再検証
 - 確認フィールドが空の場合は検証しない（UX 向上）
@@ -1003,8 +975,8 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
     </form>
 
     <script>
-      const usernameInput = document.getElementById("username");
-      const usernameMessage = document.getElementById("usernameMessage");
+      const usernameInput = document.querySelector("#username");
+      const usernameMessage = document.querySelector("#usernameMessage");
 
       // 既に使われているユーザー名（実際はサーバーから取得）
       const existingUsernames = ["admin", "user", "test"];
@@ -1184,9 +1156,9 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
     </form>
 
     <script>
-      const phoneContainer = document.getElementById("phoneContainer");
-      const addPhoneBtn = document.getElementById("addPhoneBtn");
-      const form = document.getElementById("contactForm");
+      const phoneContainer = document.querySelector("#phoneContainer");
+      const addPhoneBtn = document.querySelector("#addPhoneBtn");
+      const form = document.querySelector("#contactForm");
 
       // 電話番号フィールドのカウンター
       let phoneCount = 1;
@@ -1250,6 +1222,7 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
 ```
 
 **このコードのポイント**：
+
 - ➕ ボタンで新しいフィールドを動的に追加
 - 🗑️ 削除ボタンで不要なフィールドを削除
 - 🔢 ラベルの番号を自動で振り直し
@@ -1262,6 +1235,7 @@ HTML5 のバリデーションだけでは対応できない、**複雑な検証
 ## エラーメッセージの表示：分かりやすく伝えよう！
 
 **良いエラーメッセージ**の条件：
+
 - ✅ 何が問題なのか明確
 - ✅ どうすれば解決できるか分かる
 - ✅ 視覚的に分かりやすい
@@ -1375,7 +1349,8 @@ if (username.length < 3) {
 
       <div class="form-group">
         <label for="email">メールアドレス</label>
-        <input type="email" id="email" />
+        <!-- ブラウザのバリデーションを回避するためtype="text"を指定 -->
+        <input type="text" id="email" />
         <div class="error-message" id="emailError"></div>
       </div>
 
@@ -1395,14 +1370,14 @@ if (username.length < 3) {
     </form>
 
     <script>
-      const form = document.getElementById("registrationForm");
-      const errorSummary = document.getElementById("errorSummary");
-      const errorList = document.getElementById("errorList");
+      const form = document.querySelector("#registrationForm");
+      const errorSummary = document.querySelector("#errorSummary");
+      const errorList = document.querySelector("#errorList");
 
       // エラーメッセージを表示する関数
       function showError(inputId, errorId, message) {
-        const input = document.getElementById(inputId);
-        const errorDiv = document.getElementById(errorId);
+        const input = document.querySelector(`#${inputId}`);
+        const errorDiv = document.querySelector(`#${errorId}`);
 
         input.classList.add("error");
         errorDiv.textContent = message;
@@ -1411,8 +1386,8 @@ if (username.length < 3) {
 
       // エラーメッセージをクリアする関数
       function clearError(inputId, errorId) {
-        const input = document.getElementById(inputId);
-        const errorDiv = document.getElementById(errorId);
+        const input = document.querySelector(`#${inputId}`);
+        const errorDiv = document.querySelector(`#${errorId}`);
 
         input.classList.remove("error");
         errorDiv.classList.remove("show");
@@ -1445,7 +1420,7 @@ if (username.length < 3) {
         const errors = [];
 
         // ===== ユーザー名のバリデーション =====
-        const username = document.getElementById("username").value.trim();
+        const username = document.querySelector("#username").value.trim();
         if (username.length === 0) {
           showError("username", "usernameError", "ユーザー名を入力してください");
           errors.push("ユーザー名を入力してください");
@@ -1462,7 +1437,7 @@ if (username.length < 3) {
         }
 
         // ===== メールアドレスのバリデーション =====
-        const email = document.getElementById("email").value.trim();
+        const email = document.querySelector("#email").value.trim();
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (email.length === 0) {
           showError("email", "emailError", "メールアドレスを入力してください");
@@ -1473,7 +1448,7 @@ if (username.length < 3) {
         }
 
         // ===== パスワードのバリデーション =====
-        const password = document.getElementById("password").value;
+        const password = document.querySelector("#password").value;
         if (password.length === 0) {
           showError("password", "passwordError", "パスワードを入力してください");
           errors.push("パスワードを入力してください");
@@ -1483,7 +1458,7 @@ if (username.length < 3) {
         }
 
         // ===== 年齢のバリデーション =====
-        const age = document.getElementById("age").value;
+        const age = document.querySelector("#age").value;
         if (age.length === 0) {
           showError("age", "ageError", "年齢を入力してください");
           errors.push("年齢を入力してください");
@@ -1537,6 +1512,7 @@ if (username.length < 3) {
 ```
 
 **このコードの優れたポイント**：
+
 - 📋 **エラーサマリー**：全てのエラーを一箇所にまとめて表示
 - 🎯 **各フィールドにエラーメッセージ**：どこが問題か一目瞭然
 - 🔄 **リアルタイムエラークリア**：修正を始めたらエラーが消える
@@ -1553,7 +1529,8 @@ if (username.length < 3) {
 #### 例 1: シンプルなログインフォーム
 
 ✅ **良い指示**：
-```
+
+```text
 ログインフォームを作ってください。以下の仕様でお願いします：
 
 【フィールド】
@@ -1572,11 +1549,13 @@ if (username.length < 3) {
 ```
 
 ❌ **悪い指示**：
-```
+
+```text
 ログインフォームを作って
 ```
 
 **なぜ良い指示が重要？**
+
 - AI は具体的な指示があると、より的確なコードを生成できる
 - 後から修正する手間が減る
 - 技術用語を使うと、より高度な実装が可能
@@ -1586,7 +1565,8 @@ if (username.length < 3) {
 #### 例 2: 動的なフィールド追加
 
 ✅ **良い指示**：
-```
+
+```text
 趣味を複数登録できるフォームを作ってください。
 
 【機能】
@@ -1607,7 +1587,8 @@ if (username.length < 3) {
 #### 例 3: パスワード強度チェック
 
 ✅ **良い指示**：
-```
+
+```text
 パスワード強度チェック機能付きの入力フォームを作ってください。
 
 【強度チェックの条件】
@@ -1891,36 +1872,43 @@ if (!validators.alphanumeric(username)) {
 ### 学んだこと
 
 ✅ **フォームデータの取得**
+
 - `input.value` で個別取得
 - `FormData` API で一括取得
 - チェックボックス・ラジオボタンの扱い方
 
 ✅ **HTML5 バリデーション**
+
 - `required`, `minlength`, `pattern` などの属性
 - ブラウザの組み込みバリデーション機能
 - 限界と JavaScript の必要性
 
 ✅ **リアルタイムバリデーション**
+
 - `input` イベントと `blur` イベント
 - 即座にフィードバックする実装
 - エラー状態の視覚化
 
 ✅ **カスタムバリデーション**
+
 - パスワード強度チェック
 - パスワード確認（2つのフィールドを比較）
 - 非同期検証（重複チェックなど）
 
 ✅ **動的フォームフィールド**
+
 - フィールドの追加・削除
 - イベントリスナーの動的設定
 - 配列としてデータを取得
 
 ✅ **エラーメッセージの表示**
+
 - 分かりやすいエラーメッセージ
 - エラーサマリーの表示
 - リアルタイムエラークリア
 
 ✅ **バイブコーディング実践**
+
 - AI への効果的な指示の出し方
 - 生成されたコードのチェックポイント
 - よくある問題と修正方法
@@ -1952,6 +1940,7 @@ if (!validators.alphanumeric(username)) {
 フォーム操作ができるようになったら、次は**非同期処理と API 通信**を学ぼう！
 
 実際の Web アプリでは：
+
 - フォームのデータをサーバーに送信
 - サーバーから返ってきたデータを処理
 - ローディング表示やエラーハンドリング
