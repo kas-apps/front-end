@@ -288,7 +288,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
       <!-- 必須項目 -->
       <!-- ユーザー名（3文字以上20文字以下） -->
       <label for="username">ユーザー名（必須）： </label>
-      <input　type="text"　name="username"　id="username"　required　minlength="3"　maxlength="20"　/>
+      <input type="text" name="username" id="username" required minlength="3" maxlength="20" />
       <br />
 
       <!-- メールアドレス（type="email"で自動検証） -->
