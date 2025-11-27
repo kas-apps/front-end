@@ -298,7 +298,7 @@ Web アプリケーションで**最も重要な機能の一つがフォーム**
 
       <!-- パスワード（最低8文字） -->
       <label for="password">パスワード（8文字以上）： </label>
-      <input　type="password"　name="password"　id="password"　required　minlength="8"　/>
+      <input type="password" name="password" id="password" required minlength="8" />
       <br />
 
       <!-- 数値（範囲指定） -->
