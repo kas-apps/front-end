@@ -148,15 +148,18 @@ Tailwind CSS を使うには、**たった 1 行追加するだけ**！
     <br /><br />
 
     <!-- Tailwind ボタン -->
-    <button class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600">
+    <button class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 transition">
       Primary ボタン
     </button>
 
-    <button class="bg-green-500 text-white px-6 py-3 rounded hover:bg-green-600 ml-2">
+    <br /><br />
+
+    <!-- Tailwind ボタン -->
+    <button class="bg-green-500 text-white px-6 py-3 rounded hover:bg-green-600 ml-2 transition">
       Success ボタン
     </button>
 
-    <button class="bg-red-500 text-white px-6 py-3 rounded hover:bg-red-600 ml-2">
+    <button class="bg-red-500 text-white px-6 py-3 rounded hover:bg-red-600 ml-2 transition">
       Danger ボタン
     </button>
   </body>
