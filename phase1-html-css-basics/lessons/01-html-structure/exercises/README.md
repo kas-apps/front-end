@@ -80,7 +80,7 @@ AI に以下の内容の HTML ファイルを作ってもらってください�
 
 **ヒント**：少なくとも 3 つの問題があるよ！
 
-<details>
+<details markdown="1">
 <summary>答えを見る</summary>
 
 **問題点**：

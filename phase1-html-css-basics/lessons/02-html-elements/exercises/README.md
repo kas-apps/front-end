@@ -18,7 +18,7 @@
 
 **解答例**：[02-01.html](solutions/02-01.html)
 
-<details>
+<details markdown="1">
 <summary>ヒントを見る</summary>
 
 ```html

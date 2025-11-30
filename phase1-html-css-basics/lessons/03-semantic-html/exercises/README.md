@@ -73,7 +73,7 @@ sectionタグで『材料』『作り方』の2セクション、
 4. 記事の補足情報（コラム） → `<?>` ? `</?>` ?
 5. 記事内の各章 → `<?>` ? `</?>` ?
 
-<details>
+<details markdown="1">
 <summary>答えを見る</summary>
 
 1. `<article>` - 単独で意味が完結するから
@@ -126,7 +126,7 @@ sectionタグで『材料』『作り方』の2セクション、
 
 **ヒント**：少なくとも 4 つの問題があるよ！
 
-<details>
+<details markdown="1">
 <summary>答えを見る</summary>
 
 **問題点**：
