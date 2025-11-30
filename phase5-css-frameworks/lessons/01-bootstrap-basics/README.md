@@ -552,7 +552,7 @@ Bootstrap には、**よく使うスタイルを簡単に適用できるクラ�
 **フォーマット**：`{property}{sides}-{size}`
 
 - **property**：`m`（margin）または `p`（padding）
-- **sides**：方向（`t`=上、`b`=下、`s`=左、`e`=右、`x`=左右、`y`=上下）
+- **sides**：方向（`t`=上、`b`=下、`s`=開始位置(start)、`e`=終了位置(end)、`x`=左右、`y`=上下）
 - **size**：0〜5（0=0px、1=0.25rem、2=0.5rem、3=1rem、4=1.5rem、5=3rem）
 
 **よく使う例**：
