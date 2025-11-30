@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>peer を使ったタブ切り替え</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
+  <!-- メインコンテナ -->
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-3">
+      JavaScriptなしのタブ切り替え
+    </h1>
+    <p class="text-gray-600 mb-8">
+      peer機能とラジオボタンを使った純粋なCSSタブ実装
+    </p>
+
+    <!-- タブコンテナ -->
+    <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+
+      <!-- タブヘッダー -->
+      <div class="flex border-b border-gray-200">
+
+        <!-- タブ1: プロフィール -->
+        <div class="flex-1">
+          <!-- ラジオボタン（非表示） -->
+          <input type="radio" name="tabs" id="tab1" class="peer/tab1 sr-only" checked>
+          <!-- タブラベル -->
+          <label for="tab1"
+                 class="block text-center px-6 py-4 cursor-pointer font-semibold
+                        text-gray-600 hover:text-blue-600 hover:bg-blue-50
+                        peer-checked/tab1:text-blue-600 peer-checked/tab1:bg-blue-50
+                        peer-checked/tab1:border-b-2 peer-checked/tab1:border-blue-600
+                        transition duration-200">
+            プロフィール
+          </label>
+        </div>
+
+        <!-- タブ2: 設定 -->
+        <div class="flex-1">
+          <!-- ラジオボタン（非表示） -->
+          <input type="radio" name="tabs" id="tab2" class="peer/tab2 sr-only">
+          <!-- タブラベル -->
+          <label for="tab2"
+                 class="block text-center px-6 py-4 cursor-pointer font-semibold
+                        text-gray-600 hover:text-green-600 hover:bg-green-50
+                        peer-checked/tab2:text-green-600 peer-checked/tab2:bg-green-50
+                        peer-checked/tab2:border-b-2 peer-checked/tab2:border-green-600
+                        transition duration-200">
+            設定
+          </label>
+        </div>
+
+        <!-- タブ3: 通知 -->
+        <div class="flex-1">
+          <!-- ラジオボタン（非表示） -->
+          <input type="radio" name="tabs" id="tab3" class="peer/tab3 sr-only">
+          <!-- タブラベル -->
+          <label for="tab3"
+                 class="block text-center px-6 py-4 cursor-pointer font-semibold
+                        text-gray-600 hover:text-purple-600 hover:bg-purple-50
+                        peer-checked/tab3:text-purple-600 peer-checked/tab3:bg-purple-50
+                        peer-checked/tab3:border-b-2 peer-checked/tab3:border-purple-600
+                        transition duration-200">
+            通知
+          </label>
+        </div>
+      </div>
+
+      <!-- タブコンテンツエリア -->
+      <div class="p-8">
+
+        <!-- タブ1のコンテンツ -->
+        <div class="hidden peer-checked/tab1:block" id="content1">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <span class="text-blue-600 mr-2">👤</span>
+            ユーザープロフィール
+          </h2>
+
+          <div class="space-y-4">
+            <div class="flex items-center space-x-4">
+              <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+                A
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-gray-800">山田 太郎</h3>
+                <p class="text-gray-600">yamada@example.com</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-6">
+              <div class="p-4 bg-blue-50 rounded-lg">
+                <p class="text-sm text-gray-600 mb-1">登録日</p>
+                <p class="text-lg font-semibold text-gray-800">2024年1月15日</p>
+              </div>
+              <div class="p-4 bg-blue-50 rounded-lg">
+                <p class="text-sm text-gray-600 mb-1">投稿数</p>
+                <p class="text-lg font-semibold text-gray-800">42件</p>
+              </div>
+            </div>
+
+            <div class="p-4 bg-gray-50 rounded-lg">
+              <h4 class="font-semibold text-gray-800 mb-2">自己紹介</h4>
+              <p class="text-gray-600">
+                フロントエンド開発が大好きなエンジニアです。
+                Tailwind CSSの便利さに感動して日々学習中です！
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- タブ2のコンテンツ -->
+        <div class="hidden peer-checked/tab2:block" id="content2">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <span class="text-green-600 mr-2">⚙️</span>
+            アカウント設定
+          </h2>
+
+          <div class="space-y-4">
+            <div class="p-4 border border-gray-200 rounded-lg">
+              <h4 class="font-semibold text-gray-800 mb-3">表示設定</h4>
+              <div class="space-y-3">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="w-5 h-5 text-green-600" checked>
+                  <span class="text-gray-700">ダークモードを有効にする</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="w-5 h-5 text-green-600">
+                  <span class="text-gray-700">コンパクト表示</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="p-4 border border-gray-200 rounded-lg">
+              <h4 class="font-semibold text-gray-800 mb-3">プライバシー</h4>
+              <div class="space-y-3">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="w-5 h-5 text-green-600" checked>
+                  <span class="text-gray-700">プロフィールを公開</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="w-5 h-5 text-green-600" checked>
+                  <span class="text-gray-700">メールアドレスを表示</span>
+                </label>
+              </div>
+            </div>
+
+            <button class="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-3
+                           rounded-lg font-semibold transition duration-300 shadow-md hover:shadow-lg">
+              設定を保存
+            </button>
+          </div>
+        </div>
+
+        <!-- タブ3のコンテンツ -->
+        <div class="hidden peer-checked/tab3:block" id="content3">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <span class="text-purple-600 mr-2">🔔</span>
+            通知設定
+          </h2>
+
+          <div class="space-y-3">
+            <div class="p-4 bg-purple-50 border-l-4 border-purple-500 rounded">
+              <div class="flex items-start">
+                <span class="text-2xl mr-3">📧</span>
+                <div>
+                  <h4 class="font-semibold text-gray-800">新しいメッセージ</h4>
+                  <p class="text-sm text-gray-600 mt-1">
+                    田中さんから新しいメッセージが届いています
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">5分前</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 bg-purple-50 border-l-4 border-purple-500 rounded">
+              <div class="flex items-start">
+                <span class="text-2xl mr-3">👍</span>
+                <div>
+                  <h4 class="font-semibold text-gray-800">いいねされました</h4>
+                  <p class="text-sm text-gray-600 mt-1">
+                    あなたの投稿に10件のいいねがつきました
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">1時間前</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 bg-purple-50 border-l-4 border-purple-500 rounded">
+              <div class="flex items-start">
+                <span class="text-2xl mr-3">🎉</span>
+                <div>
+                  <h4 class="font-semibold text-gray-800">新しいフォロワー</h4>
+                  <p class="text-sm text-gray-600 mt-1">
+                    佐藤さんがあなたをフォローしました
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">3時間前</p>
+                </div>
+              </div>
+            </div>
+
+            <button class="w-full bg-purple-500 hover:bg-purple-600 text-white px-6 py-3
+                           rounded-lg font-semibold transition duration-300 shadow-md hover:shadow-lg">
+              すべて既読にする
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 説明セクション -->
+    <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">
+        peer機能の仕組み
+      </h3>
+
+      <div class="space-y-3 text-sm">
+        <div class="flex items-start">
+          <span class="text-blue-600 font-bold mr-2">1.</span>
+          <p class="text-gray-700">
+            <code class="bg-gray-100 px-2 py-1 rounded">peer/tab1</code> でラジオボタンに名前をつける
+          </p>
+        </div>
+
+        <div class="flex items-start">
+          <span class="text-blue-600 font-bold mr-2">2.</span>
+          <p class="text-gray-700">
+            <code class="bg-gray-100 px-2 py-1 rounded">peer-checked/tab1:block</code> で選択状態に応じて表示
+          </p>
+        </div>
+
+        <div class="flex items-start">
+          <span class="text-blue-600 font-bold mr-2">3.</span>
+          <p class="text-gray-700">
+            <code class="bg-gray-100 px-2 py-1 rounded">sr-only</code> でラジオボタンは視覚的に隠す
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-4 p-4 bg-green-50 rounded-lg">
+        <p class="text-sm text-gray-700">
+          <strong>✨ メリット:</strong> JavaScriptを一切使わずに、
+          完全にCSSだけでタブ切り替えを実装できます！
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

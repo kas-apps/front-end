@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>演習 1-5: アラートメッセージシステム</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">演習 1-5: アラートメッセージシステム</h1>
+
+      <!-- Success Alert（成功） -->
+      <div class="alert alert-success" role="alert">
+        ✓ 登録が完了しました！
+      </div>
+
+      <!-- Info Alert（情報） -->
+      <div class="alert alert-info" role="alert">
+        ℹ️ 新機能が追加されました。詳細を確認してください。
+      </div>
+
+      <!-- Warning Alert（警告） -->
+      <div class="alert alert-warning" role="alert">
+        ⚠️ パスワードの有効期限が近づいています。
+      </div>
+
+      <!-- Danger Alert（エラー） -->
+      <div class="alert alert-danger" role="alert">
+        ❌ エラーが発生しました。もう一度お試しください。
+      </div>
+
+      <!-- 見出しと区切り線付きアラート -->
+      <h2 class="mt-5 mb-3">見出しと区切り線付きアラート</h2>
+      <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">登録完了！</h4>
+        <p>ユーザー登録が正常に完了しました。確認メールを送信しましたので、ご確認ください。</p>
+        <hr />
+        <p class="mb-0">
+          ログインして、サービスをご利用いただけます。<a href="#" class="alert-link">ログインページへ</a>
+        </p>
+      </div>
+
+      <!-- 閉じるボタン付きアラート -->
+      <h2 class="mt-5 mb-3">閉じるボタン付きアラート</h2>
+      <p class="text-muted">
+        <small>「×」ボタンをクリックして閉じることができます</small>
+      </p>
+
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>⚠️ メンテナンスのお知らせ</strong><br />
+        2024年1月15日（月）2:00-4:00の間、システムメンテナンスを実施します。
+        この時間帯はサービスがご利用いただけません。
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>ℹ️ 新機能リリース</strong><br />
+        ダークモード機能を追加しました。設定画面から有効化できます。
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>❌ 重要なお知らせ</strong><br />
+        セキュリティ上の理由により、パスワードの変更をお願いします。
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <!-- 補足説明 -->
+      <div class="alert alert-info mt-5" role="alert">
+        <h4 class="alert-heading">✓ ポイント</h4>
+        <ul class="mb-0">
+          <li>
+            <strong>alert alert-success</strong>: 成功メッセージ（緑）
+          </li>
+          <li>
+            <strong>alert alert-info</strong>: 情報メッセージ（青）
+          </li>
+          <li>
+            <strong>alert alert-warning</strong>: 警告メッセージ（黄）
+          </li>
+          <li>
+            <strong>alert alert-danger</strong>: エラーメッセージ（赤）
+          </li>
+          <li>
+            <strong>alert-heading</strong>: アラート内の見出し
+          </li>
+          <li>
+            <strong>alert-link</strong>: アラート内のリンク（自動で色が調整される）
+          </li>
+          <li>
+            <strong>alert-dismissible fade show</strong>: 閉じるボタン機能を有効化
+          </li>
+          <li>
+            <strong>btn-close</strong>: 閉じるボタン
+          </li>
+          <li>
+            <strong>data-bs-dismiss="alert"</strong>:
+            クリック時にアラートを閉じる
+          </li>
+          <li>
+            <strong>Bootstrap JavaScript が必要</strong>:
+            閉じるボタンを動かすために必須
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bootstrap JavaScript Bundle（閉じるボタンに必要） -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

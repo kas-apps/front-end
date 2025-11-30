@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アニメーションボタン</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-100 to-blue-100 min-h-screen flex items-center justify-center p-8">
+  <!-- メインコンテナ -->
+  <div class="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4 text-center">
+      アニメーションボタンコレクション
+    </h1>
+
+    <p class="text-gray-600 mb-8 text-center">
+      Tailwind CSSのユーティリティクラスを使った<br>
+      インタラクティブなボタンアニメーション
+    </p>
+
+    <!-- ボタングリッド -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- 1. スケールボタン -->
+      <div class="p-6 bg-gray-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Scale Button</h3>
+        <p class="text-sm text-gray-600 mb-4">
+          ホバー時に拡大するシンプルなエフェクト
+        </p>
+        <button class="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold
+                       hover:scale-110 transition duration-300 shadow-md">
+          拡大アニメーション
+        </button>
+        <code class="block mt-3 text-xs bg-gray-200 p-2 rounded">
+          hover:scale-110
+        </code>
+      </div>
+
+      <!-- 2. フロートボタン -->
+      <div class="p-6 bg-gray-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Float Button</h3>
+        <p class="text-sm text-gray-600 mb-4">
+          上に浮き上がるような動き
+        </p>
+        <button class="w-full bg-green-500 text-white px-6 py-3 rounded-lg font-semibold
+                       hover:-translate-y-2 transition duration-300
+                       shadow-md hover:shadow-xl">
+          浮き上がるアニメーション
+        </button>
+        <code class="block mt-3 text-xs bg-gray-200 p-2 rounded">
+          hover:-translate-y-2 hover:shadow-xl
+        </code>
+      </div>
+
+      <!-- 3. ローテートボタン -->
+      <div class="p-6 bg-gray-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Rotate Button</h3>
+        <p class="text-sm text-gray-600 mb-4">
+          軽く回転する遊び心のあるエフェクト
+        </p>
+        <button class="w-full bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold
+                       hover:rotate-3 transition duration-300 shadow-md">
+          回転アニメーション
+        </button>
+        <code class="block mt-3 text-xs bg-gray-200 p-2 rounded">
+          hover:rotate-3
+        </code>
+      </div>
+
+      <!-- 4. コンビネーションボタン -->
+      <div class="p-6 bg-gray-50 rounded-lg">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Combined Button</h3>
+        <p class="text-sm text-gray-600 mb-4">
+          複数のエフェクトを組み合わせた豪華な動き
+        </p>
+        <button class="w-full bg-gradient-to-r from-pink-500 to-orange-500 text-white
+                       px-6 py-3 rounded-lg font-semibold
+                       hover:scale-105 hover:-translate-y-1 transition duration-300
+                       shadow-md hover:shadow-2xl">
+          複合アニメーション
+        </button>
+        <code class="block mt-3 text-xs bg-gray-200 p-2 rounded">
+          hover:scale-105 hover:-translate-y-1 hover:shadow-2xl
+        </code>
+      </div>
+    </div>
+
+    <!-- ボーナス: さらに高度なボタン -->
+    <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+      <h3 class="text-lg font-semibold text-gray-800 mb-3 text-center">
+        ボーナス: パルスエフェクト
+      </h3>
+      <p class="text-sm text-gray-600 mb-4 text-center">
+        注目を集める継続的なアニメーション
+      </p>
+      <div class="flex justify-center">
+        <button class="relative bg-red-500 text-white px-8 py-4 rounded-full font-bold
+                       hover:bg-red-600 transition duration-300 shadow-lg hover:shadow-xl
+                       hover:scale-105">
+          重要なアクション
+          <span class="absolute top-0 right-0 -mt-1 -mr-1 flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full
+                         bg-red-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+          </span>
+        </button>
+      </div>
+      <code class="block mt-4 text-xs bg-white p-2 rounded text-center">
+        animate-ping + scale + shadow
+      </code>
+    </div>
+
+    <!-- 説明 -->
+    <div class="mt-8 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
+      <p class="text-sm text-gray-700">
+        <strong>ポイント:</strong> すべてのアニメーションに <code class="bg-blue-100 px-1 rounded">transition</code> と
+        <code class="bg-blue-100 px-1 rounded">duration-300</code> を適用することで、
+        スムーズなアニメーションを実現しています。
+      </p>
+    </div>
+  </div>
+</body>
+</html>

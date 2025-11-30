@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>レスポンシブグリッドレイアウト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-12">
+    <div class="max-w-6xl mx-auto px-4">
+        <!-- ページタイトル -->
+        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">
+            おすすめ商品
+        </h1>
+
+        <!-- レスポンシブグリッド -->
+        <!-- モバイル: 1列、タブレット(md): 2列、PC(lg): 3列 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- 商品カード 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+                <img
+                    src="https://via.placeholder.com/400x300/EF4444/FFFFFF?text=Product+1"
+                    alt="商品1"
+                    class="w-full h-48 object-cover"
+                >
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">商品名 1</h2>
+                    <p class="text-sm text-gray-600 mb-3">素敵な商品の説明文です。</p>
+                    <p class="text-xl font-bold text-blue-600 mb-3">¥2,980</p>
+                    <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+                        詳細
+                    </button>
+                </div>
+            </div>
+
+            <!-- 商品カード 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+                <img
+                    src="https://via.placeholder.com/400x300/F59E0B/FFFFFF?text=Product+2"
+                    alt="商品2"
+                    class="w-full h-48 object-cover"
+                >
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">商品名 2</h2>
+                    <p class="text-sm text-gray-600 mb-3">素敵な商品の説明文です。</p>
+                    <p class="text-xl font-bold text-blue-600 mb-3">¥3,480</p>
+                    <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+                        詳細
+                    </button>
+                </div>
+            </div>
+
+            <!-- 商品カード 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+                <img
+                    src="https://via.placeholder.com/400x300/10B981/FFFFFF?text=Product+3"
+                    alt="商品3"
+                    class="w-full h-48 object-cover"
+                >
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">商品名 3</h2>
+                    <p class="text-sm text-gray-600 mb-3">素敵な商品の説明文です。</p>
+                    <p class="text-xl font-bold text-blue-600 mb-3">¥4,280</p>
+                    <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+                        詳細
+                    </button>
+                </div>
+            </div>
+
+            <!-- 商品カード 4 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+                <img
+                    src="https://via.placeholder.com/400x300/3B82F6/FFFFFF?text=Product+4"
+                    alt="商品4"
+                    class="w-full h-48 object-cover"
+                >
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">商品名 4</h2>
+                    <p class="text-sm text-gray-600 mb-3">素敵な商品の説明文です。</p>
+                    <p class="text-xl font-bold text-blue-600 mb-3">¥3,780</p>
+                    <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+                        詳細
+                    </button>
+                </div>
+            </div>
+
+            <!-- 商品カード 5 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+                <img
+                    src="https://via.placeholder.com/400x300/8B5CF6/FFFFFF?text=Product+5"
+                    alt="商品5"
+                    class="w-full h-48 object-cover"
+                >
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">商品名 5</h2>
+                    <p class="text-sm text-gray-600 mb-3">素敵な商品の説明文です。</p>
+                    <p class="text-xl font-bold text-blue-600 mb-3">¥5,180</p>
+                    <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+                        詳細
+                    </button>
+                </div>
+            </div>
+
+            <!-- 商品カード 6 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+                <img
+                    src="https://via.placeholder.com/400x300/EC4899/FFFFFF?text=Product+6"
+                    alt="商品6"
+                    class="w-full h-48 object-cover"
+                >
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">商品名 6</h2>
+                    <p class="text-sm text-gray-600 mb-3">素敵な商品の説明文です。</p>
+                    <p class="text-xl font-bold text-blue-600 mb-3">¥4,680</p>
+                    <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+                        詳細
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 説明 -->
+        <div class="mt-8 bg-green-50 border-l-4 border-green-500 p-4 rounded">
+            <p class="text-sm text-green-800">
+                <strong>📱 レスポンシブのポイント：</strong>
+                grid-cols-1（モバイル: 1列）→ md:grid-cols-2（タブレット: 2列）→ lg:grid-cols-3（PC: 3列）
+                ブラウザの幅を変えて、レイアウトの変化を確認してみてください！
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>group-hover を使ったギャラリー</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+  <!-- ページヘッダー -->
+  <div class="max-w-6xl mx-auto mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-3">
+      インタラクティブギャラリー
+    </h1>
+    <p class="text-gray-600">
+      group-hoverを使って、カード全体のホバーで子要素をアニメーション
+    </p>
+  </div>
+
+  <!-- ギャラリーグリッド -->
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- カード1: 山の風景 -->
+    <div class="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-2xl
+                transition-all duration-300 cursor-pointer">
+      <!-- 画像 - group-hoverで拡大 -->
+      <div class="overflow-hidden">
+        <img src="https://via.placeholder.com/400x300/4299e1/ffffff?text=Mountain+View"
+             alt="Mountain View"
+             class="w-full h-48 object-cover group-hover:scale-110 transition duration-300">
+      </div>
+
+      <!-- カードコンテンツ -->
+      <div class="p-6">
+        <!-- タイトル - group-hoverで色変更 -->
+        <h3 class="text-xl font-bold text-gray-800 mb-2
+                   group-hover:text-blue-600 transition duration-300">
+          美しい山の風景
+        </h3>
+
+        <!-- 説明文 -->
+        <p class="text-gray-600 mb-4">
+          雄大な山々が連なる絶景スポット。朝日に照らされた山頂は圧巻の美しさです。
+        </p>
+
+        <!-- ボタン - group-hoverで背景色変更 -->
+        <button class="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold
+                       group-hover:bg-blue-500 group-hover:text-white
+                       transition duration-300">
+          詳しく見る
+        </button>
+      </div>
+    </div>
+
+    <!-- カード2: 海の風景 -->
+    <div class="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-2xl
+                transition-all duration-300 cursor-pointer">
+      <!-- 画像 - group-hoverで拡大 -->
+      <div class="overflow-hidden">
+        <img src="https://via.placeholder.com/400x300/06b6d4/ffffff?text=Ocean+View"
+             alt="Ocean View"
+             class="w-full h-48 object-cover group-hover:scale-110 transition duration-300">
+      </div>
+
+      <!-- カードコンテンツ -->
+      <div class="p-6">
+        <!-- タイトル - group-hoverで色変更 -->
+        <h3 class="text-xl font-bold text-gray-800 mb-2
+                   group-hover:text-cyan-600 transition duration-300">
+          透き通る青い海
+        </h3>
+
+        <!-- 説明文 -->
+        <p class="text-gray-600 mb-4">
+          エメラルドグリーンの海が広がるビーチ。穏やかな波の音が心を癒してくれます。
+        </p>
+
+        <!-- ボタン - group-hoverで背景色変更 -->
+        <button class="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold
+                       group-hover:bg-cyan-500 group-hover:text-white
+                       transition duration-300">
+          詳しく見る
+        </button>
+      </div>
+    </div>
+
+    <!-- カード3: 森の風景 -->
+    <div class="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-2xl
+                transition-all duration-300 cursor-pointer">
+      <!-- 画像 - group-hoverで拡大 -->
+      <div class="overflow-hidden">
+        <img src="https://via.placeholder.com/400x300/10b981/ffffff?text=Forest+View"
+             alt="Forest View"
+             class="w-full h-48 object-cover group-hover:scale-110 transition duration-300">
+      </div>
+
+      <!-- カードコンテンツ -->
+      <div class="p-6">
+        <!-- タイトル - group-hoverで色変更 -->
+        <h3 class="text-xl font-bold text-gray-800 mb-2
+                   group-hover:text-green-600 transition duration-300">
+          静寂の森
+        </h3>
+
+        <!-- 説明文 -->
+        <p class="text-gray-600 mb-4">
+          深い緑に包まれた神秘的な森。木漏れ日が作る光の芸術を楽しめます。
+        </p>
+
+        <!-- ボタン - group-hoverで背景色変更 -->
+        <button class="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold
+                       group-hover:bg-green-500 group-hover:text-white
+                       transition duration-300">
+          詳しく見る
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 説明セクション -->
+  <div class="max-w-6xl mx-auto mt-12 bg-white rounded-lg shadow-lg p-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">
+      group-hover の仕組み
+    </h2>
+
+    <div class="space-y-4 text-gray-700">
+      <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+        <p class="font-semibold mb-2">1. 親要素に group クラスを追加</p>
+        <code class="text-sm bg-white px-2 py-1 rounded">
+          &lt;div class="group"&gt;
+        </code>
+      </div>
+
+      <div class="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+        <p class="font-semibold mb-2">2. 子要素に group-hover:* クラスを追加</p>
+        <code class="text-sm bg-white px-2 py-1 rounded">
+          &lt;img class="group-hover:scale-110"&gt;
+        </code>
+      </div>
+
+      <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+        <p class="font-semibold mb-2">3. 親要素のホバーで子要素がすべて反応</p>
+        <p class="text-sm mt-2">
+          カードのどこにマウスを乗せても、画像・タイトル・ボタンすべてがアニメーションします。
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-6 p-4 bg-yellow-50 rounded-lg">
+      <p class="text-sm text-gray-700">
+        <strong>💡 Tip:</strong> group-hoverを使うことで、複雑なJavaScriptを書かずに
+        リッチなインタラクションを実現できます！
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ダークモード対応のカード</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind CSS のダークモード設定
+    tailwind.config = {
+      darkMode: 'class' // クラスベースのダークモード
+    }
+  </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center p-8 transition-colors duration-300">
+  <!-- メインコンテナ -->
+  <div class="max-w-md w-full">
+    <!-- ダークモード切り替えボタン -->
+    <div class="flex justify-end mb-4">
+      <button id="themeToggle"
+              class="bg-white dark:bg-gray-800 text-gray-800 dark:text-white
+                     px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition
+                     duration-300 font-semibold border border-gray-300 dark:border-gray-700">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">ダークモード</span>
+      </button>
+    </div>
+
+    <!-- ダークモード対応カード -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8
+                transition-colors duration-300 border border-gray-200 dark:border-gray-700">
+
+      <!-- カードヘッダー -->
+      <div class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          ダークモード対応カード
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400">
+          ライトモードとダークモードで見やすいデザイン
+        </p>
+      </div>
+
+      <!-- カードコンテンツ -->
+      <div class="space-y-4">
+        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">
+            自動テーマ保存
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">
+            選択したテーマはブラウザに保存され、次回訪問時も適用されます。
+          </p>
+        </div>
+
+        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">
+            スムーズな遷移
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">
+            テーマ切り替え時にtransitionアニメーションが適用されます。
+          </p>
+        </div>
+
+        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">
+            アクセシビリティ
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">
+            どちらのモードでも読みやすいコントラスト比を維持しています。
+          </p>
+        </div>
+      </div>
+
+      <!-- アクションボタン -->
+      <div class="mt-6 flex gap-3">
+        <button class="flex-1 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600
+                       dark:hover:bg-blue-700 text-white px-6 py-3 rounded-lg
+                       font-semibold transition duration-300 shadow-md hover:shadow-lg">
+          アクション
+        </button>
+        <button class="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700
+                       dark:hover:bg-gray-600 text-gray-800 dark:text-white
+                       px-6 py-3 rounded-lg font-semibold transition duration-300
+                       shadow-md hover:shadow-lg">
+          キャンセル
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ダークモード切り替えの JavaScript
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const html = document.documentElement;
+
+    // ローカルストレージからテーマを読み込み
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        html.classList.add('dark');
+        updateThemeButton(true);
+      } else {
+        html.classList.remove('dark');
+        updateThemeButton(false);
+      }
+    }
+
+    // テーマボタンの表示を更新
+    function updateThemeButton(isDark) {
+      if (isDark) {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'ライトモード';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'ダークモード';
+      }
+    }
+
+    // テーマを切り替え
+    function toggleTheme() {
+      const isDark = html.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateThemeButton(isDark);
+    }
+
+    // イベントリスナーを設定
+    themeToggle.addEventListener('click', toggleTheme);
+
+    // ページ読み込み時にテーマを復元
+    loadTheme();
+  </script>
+</body>
+</html>

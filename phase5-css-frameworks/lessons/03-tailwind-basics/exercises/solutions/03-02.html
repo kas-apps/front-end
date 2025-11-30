@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品カード</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-8">
+    <!-- 商品カード -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden max-w-sm hover:shadow-2xl transition duration-300">
+        <!-- 商品画像 -->
+        <img
+            src="https://via.placeholder.com/400x300/4F46E5/FFFFFF?text=Product+Image"
+            alt="商品画像"
+            class="w-full h-48 object-cover"
+        >
+
+        <!-- カードコンテンツ -->
+        <div class="p-6">
+            <!-- 商品名 -->
+            <h2 class="text-xl font-bold text-gray-800 mb-2">
+                素敵なプロダクト
+            </h2>
+
+            <!-- 商品説明 -->
+            <p class="text-gray-600 text-sm mb-4">
+                これは素晴らしい商品の説明文です。Tailwind CSSを使って、シンプルで美しいカードデザインを簡単に作ることができます！
+            </p>
+
+            <!-- 価格 -->
+            <div class="mb-4">
+                <span class="text-2xl font-bold text-blue-600">¥3,980</span>
+                <span class="text-sm text-gray-500 line-through ml-2">¥5,980</span>
+            </div>
+
+            <!-- カートに追加ボタン -->
+            <button class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-300 font-semibold">
+                カートに追加
+            </button>
+        </div>
+    </div>
+
+    <!-- 説明セクション -->
+    <div class="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg max-w-xs">
+        <p class="text-sm text-gray-700">
+            <strong>✨ ポイント：</strong>shadow-lgとhover:shadow-2xlで、マウスホバー時に影が大きくなる効果を実現！overflow-hiddenで角丸の外側に画像がはみ出ないようにしています。
+        </p>
+    </div>
+</body>
+</html>

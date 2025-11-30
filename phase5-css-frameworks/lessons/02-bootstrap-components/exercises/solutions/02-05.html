@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演習 2-5: Navbar + Modal + Form の統合</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!--
+        Navbar（ヘッダー）
+        - navbar-dark bg-primary: プライマリカラーの背景にダークテーマ
+        - navbar-expand-lg: 992px以上で横並び
+    -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <!-- ブランド名 -->
+            <a class="navbar-brand fw-bold" href="#">MyCompany</a>
+
+            <!-- ハンバーガーメニューボタン（モバイル表示用） -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- ナビゲーションメニュー -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <!-- 左側のメニュー -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                </ul>
+
+                <!-- 右側のボタン -->
+                <!--
+                    お問い合わせボタン（白背景）
+                    data-bs-toggle="modal": Modalを開く
+                    data-bs-target="#contactModal": 開くModalのIDを指定
+                -->
+                <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#contactModal">
+                    お問い合わせ
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="display-4 mb-4">Welcome to MyCompany</h1>
+                <p class="lead">私たちは革新的なソリューションを提供し、お客様のビジネスを成功に導きます。</p>
+
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">📊 Features</h5>
+                                <p class="card-text">充実した機能で、あなたのニーズに応えます。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">💰 Pricing</h5>
+                                <p class="card-text">手頃な価格で、高品質なサービスを提供します。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">📞 Support</h5>
+                                <p class="card-text">24時間365日、お客様をサポートします。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info mt-4" role="alert">
+                    <strong>お問い合わせはこちら！</strong> 右上の「お問い合わせ」ボタンをクリックしてください。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal（お問い合わせフォーム） -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modalヘッダー -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">お問い合わせ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Modalボディ（お問い合わせフォーム） -->
+                <div class="modal-body">
+                    <form id="contactForm">
+                        <!-- 名前入力 -->
+                        <div class="mb-3">
+                            <label for="contactName" class="form-label">お名前 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="contactName" placeholder="山田太郎" required>
+                        </div>
+
+                        <!-- メールアドレス入力 -->
+                        <div class="mb-3">
+                            <label for="contactEmail" class="form-label">メールアドレス <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="contactEmail" placeholder="example@email.com" required>
+                        </div>
+
+                        <!-- メッセージ入力 -->
+                        <div class="mb-3">
+                            <label for="contactMessage" class="form-label">メッセージ <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="contactMessage" rows="4" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modalフッター -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                    <button type="submit" form="contactForm" class="btn btn-primary">送信</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- フォーム送信時のアラート（デモ用） -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('お問い合わせを送信しました！（デモ）');
+            // Modalを閉じる
+            const modal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
+            modal.hide();
+            // フォームをリセット
+            this.reset();
+        });
+    </script>
+</body>
+</html>

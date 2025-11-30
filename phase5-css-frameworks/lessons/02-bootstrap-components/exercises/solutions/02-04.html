@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>演習 2-4: 画像ギャラリー with Carousel</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Carouselの画像を見やすくするためのスタイル */
+        .carousel-item img {
+            height: 500px;
+            object-fit: cover;
+        }
+        /* キャプションを見やすくする */
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">画像ギャラリー</h1>
+        <p class="lead text-center mb-4">美しい風景の写真をご覧ください</p>
+
+        <!--
+            Carousel（画像スライドショー）
+            - carousel slide: Carouselの基本クラス
+            - data-bs-ride="carousel": ページ読み込み時に自動再生開始
+            - id="imageGalleryCarousel": 一意のID（インジケーターやコントロールから参照）
+        -->
+        <div id="imageGalleryCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- インジケーター（ドット） -->
+            <!--
+                carousel-indicators: ドット表示のコンテナ
+                各ボタンがスライドに対応し、data-bs-slide-toで何番目かを指定
+                activeクラスで最初のドットをアクティブに
+            -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#imageGalleryCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="スライド 1"></button>
+                <button type="button" data-bs-target="#imageGalleryCarousel" data-bs-slide-to="1" aria-label="スライド 2"></button>
+                <button type="button" data-bs-target="#imageGalleryCarousel" data-bs-slide-to="2" aria-label="スライド 3"></button>
+                <button type="button" data-bs-target="#imageGalleryCarousel" data-bs-slide-to="3" aria-label="スライド 4"></button>
+            </div>
+
+            <!-- スライド本体 -->
+            <div class="carousel-inner">
+                <!-- スライド 1 -->
+                <!--
+                    carousel-item: 各スライドのクラス
+                    active: 最初に表示するスライドにactiveクラス
+                    data-bs-interval="3000": 3秒間隔で次のスライドへ
+                -->
+                <div class="carousel-item active" data-bs-interval="3000">
+                    <img src="https://via.placeholder.com/1200x500/FF6B6B/FFFFFF?text=Mountain+Landscape" class="d-block w-100" alt="山の風景">
+                    <!-- キャプション（スライド上のテキスト） -->
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>美しい山々</h5>
+                        <p>雄大な自然の景色をお楽しみください。</p>
+                    </div>
+                </div>
+
+                <!-- スライド 2 -->
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="https://via.placeholder.com/1200x500/4ECDC4/FFFFFF?text=Ocean+View" class="d-block w-100" alt="海の風景">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>青い海</h5>
+                        <p>透き通るような美しい海の景色です。</p>
+                    </div>
+                </div>
+
+                <!-- スライド 3 -->
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="https://via.placeholder.com/1200x500/95E1D3/FFFFFF?text=Forest+Path" class="d-block w-100" alt="森の小道">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>静かな森</h5>
+                        <p>木漏れ日が差し込む森の小道を歩きます。</p>
+                    </div>
+                </div>
+
+                <!-- スライド 4 -->
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="https://via.placeholder.com/1200x500/F38181/FFFFFF?text=Sunset+Sky" class="d-block w-100" alt="夕焼け空">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>夕焼け空</h5>
+                        <p>オレンジ色に染まる美しい夕暮れ時です。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 前へ・次へボタン（コントロール） -->
+            <!--
+                carousel-control-prev: 前へボタン
+                carousel-control-next: 次へボタン
+                data-bs-slide: "prev" または "next" でスライド方向を指定
+            -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#imageGalleryCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">前へ</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#imageGalleryCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">次へ</span>
+            </button>
+        </div>
+
+        <!-- 説明文 -->
+        <div class="mt-4">
+            <h3>ギャラリーの使い方</h3>
+            <ul>
+                <li>自動で3秒ごとに次の画像に切り替わります</li>
+                <li>左右の矢印ボタンで手動でスライドを切り替えられます</li>
+                <li>下部のドット（インジケーター）をクリックして直接スライドを選べます</li>
+                <li>キーボードの左右矢印キーでも操作できます</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS CDN（Carouselの動作に必要） -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
