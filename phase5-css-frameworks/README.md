@@ -42,18 +42,21 @@ Phase 5 では、**世界中で使われている 2 大フレームワーク**�
 ### 💡 使い分けのヒント
 
 **Bootstrap がおすすめの場合**：
+
 - 📊 管理画面やダッシュボードを作る
 - ⏰ とにかく速くプロトタイプを作りたい
 - 🎨 デザインにこだわりがない（Bootstrap のデザインで OK）
 - 🚀 JavaScript コンポーネント（Modal、Dropdown など）も欲しい
 
 **Tailwind CSS がおすすめの場合**：
+
 - 🎨 独自のデザインを作りたい
 - ⚡ 軽量で高速なサイトを作りたい
 - 🔧 カスタマイズ性を重視する
 - 📱 完全にレスポンシブ対応したい
 
 **両方学ぶメリット**：
+
 - プロジェクトに応じて最適なツールを選べる
 - チームで使われているフレームワークに柔軟に対応できる
 - フレームワークの考え方を理解できる
@@ -170,7 +173,7 @@ Phase 5 では、フレームワークを使った UI 開発を AI と一緒に�
 
 #### 1. フレームワークを指定して依頼する
 
-```
+```text
 良い指示の例：
 「Bootstrap 5を使って、3カラムのカードレイアウトを作ってください。
 各カードには画像、タイトル、説明文、ボタンを含めてください。
@@ -182,7 +185,7 @@ Phase 5 では、フレームワークを使った UI 開発を AI と一緒に�
 
 #### 2. コンポーネント名を具体的に指定
 
-```
+```text
 良い指示の例：
 「Bootstrap のNavbarコンポーネントを使って、
 レスポンシブなヘッダーを作ってください。
@@ -195,7 +198,7 @@ Phase 5 では、フレームワークを使った UI 開発を AI と一緒に�
 
 #### 3. Tailwind CSS のクラス名を学ぶ
 
-```
+```text
 良い質問の例：
 「Tailwind CSSで、flexboxを使って3つの要素を横並び中央配置するには
 どのクラスを使えばいいですか？レスポンシブ対応も教えてください。」
@@ -205,8 +208,8 @@ AI からクラス名の使い方を学べる！
 
 #### 4. フレームワーク間の変換を依頼
 
-```
-良い質問の例：
+```text
+良い指示の例：
 「このBootstrapのコードをTailwind CSSで書き直してください。
 デザインは同じままで、クラス名だけ変換してください。」
 
@@ -251,11 +254,13 @@ AI が生成した Phase 5 レベルのコードを見る時、こんなポイ�
 フレームワークの**公式ドキュメント**は、最強の学習リソース！
 
 **Bootstrap ドキュメントの使い方**：
+
 - 左サイドバーでコンポーネントを探す
 - コード例をコピペして試す
 - Options、Methods、Events をチェックして、カスタマイズ方法を学ぶ
 
 **Tailwind CSS ドキュメントの使い方**：
+
 - 検索機能を使ってクラス名を探す
 - Responsive、Hover、Dark mode のタブをチェック
 - クラス名をクリックすると、実際の CSS が見られる
@@ -274,6 +279,7 @@ AI が生成した Phase 5 レベルのコードを見る時、こんなポイ�
 ```
 
 **開発者ツールで確認すると...**
+
 ```css
 .btn {
   padding: 0.375rem 0.75rem;
@@ -297,7 +303,7 @@ AI が生成した Phase 5 レベルのコードを見る時、こんなポイ�
 
 最初は公式の例をコピペして試すのが一番！
 
-```
+```text
 ステップ1: 公式の例をそのままコピペ
 　↓
 ステップ2: 動くことを確認
@@ -344,6 +350,7 @@ AI が生成した Phase 5 レベルのコードを見る時、こんなポイ�
 実際の開発では、同じパターンを何度も使うことが多い！
 
 **ストックしておくと便利なパターン**：
+
 - ✅ ヘッダー（Navbar）
 - ✅ カードグリッド
 - ✅ フォーム
@@ -446,11 +453,13 @@ Phase 5 お疲れ様！CSS フレームワークを使った効率的な UI 開�
 ### 公式ドキュメント
 
 **Bootstrap**：
+
 - [Bootstrap 公式サイト](https://getbootstrap.com/) - 最も信頼できるリファレンス
 - [Bootstrap Examples](https://getbootstrap.com/docs/5.3/examples/) - 実例集
 - [Bootstrap Icons](https://icons.getbootstrap.com/) - 公式アイコンライブラリ
 
 **Tailwind CSS**：
+
 - [Tailwind CSS 公式サイト](https://tailwindcss.com/) - ドキュメント・検索が超便利
 - [Tailwind UI](https://tailwindui.com/) - 公式コンポーネント集（有料・無料あり）
 - [Heroicons](https://heroicons.com/) - Tailwind 推奨のアイコンライブラリ
@@ -458,6 +467,7 @@ Phase 5 お疲れ様！CSS フレームワークを使った効率的な UI 開�
 ### CDN リンク
 
 **Bootstrap 5.3（最新安定版）**：
+
 ```html
 <!-- CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -467,6 +477,7 @@ Phase 5 お疲れ様！CSS フレームワークを使った効率的な UI 開�
 ```
 
 **Tailwind CSS（Play CDN）**：
+
 ```html
 <!-- Play CDN（開発用） -->
 <script src="https://cdn.tailwindcss.com"></script>

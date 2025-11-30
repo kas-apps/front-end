@@ -11,6 +11,7 @@ Lesson 1-2 で Bootstrap を学んで、「コンポーネントベース」の�
 でも、こんな経験はない？
 
 ❌ **Bootstrap の悩み**：
+
 - Bootstrap らしいデザインになってしまう
 - 独自のデザインを作りたいけど、カスタマイズが難しい
 - 使わないコンポーネントも読み込まれて、ファイルサイズが大きい
@@ -19,6 +20,7 @@ Lesson 1-2 で Bootstrap を学んで、「コンポーネントベース」の�
 そこで登場するのが **Tailwind CSS**！
 
 ✅ **Tailwind CSS の特徴**：
+
 - **ユーティリティファースト**：小さな部品（クラス）を組み合わせて作る
 - **完全カスタマイズ可能**：独自のデザインが簡単に作れる
 - **超軽量**：使った分だけ CSS が生成される
@@ -50,17 +52,21 @@ Bootstrap は「すぐ使える完成品」、Tailwind CSS は「自由に組み
 ### ユーティリティファーストとは？
 
 **従来の CSS（コンポーネントベース）**：
+
 ```html
 <button class="btn btn-primary">ボタン</button>
 ```
+
 → `btn` や `btn-primary` という**完成されたコンポーネント**を使う
 
 **Tailwind CSS（ユーティリティファースト）**：
+
 ```html
 <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
   ボタン
 </button>
 ```
+
 → `bg-blue-500`（背景色）、`text-white`（文字色）、`px-4`（左右パディング）など、**小さなユーティリティクラス**を組み合わせて作る
 
 ### Bootstrap vs Tailwind CSS：どっちを使う？
@@ -115,6 +121,7 @@ Tailwind CSS を使うには、**たった 1 行追加するだけ**！
 ```
 
 **重要なポイント**：
+
 - `<script>` タグで読み込む（CSS ではなく JavaScript）
 - `<head>` 内に配置
 - `viewport` メタタグは必須（レスポンシブに必要）
@@ -157,6 +164,7 @@ Tailwind CSS を使うには、**たった 1 行追加するだけ**！
 ```
 
 **クラス名の読み方**：
+
 - `bg-blue-500`：背景色を青（500 の濃さ）
 - `text-white`：文字色を白
 - `px-6`：左右のパディング（1.5rem = 24px）
@@ -177,11 +185,12 @@ Tailwind CSS の**最も重要な概念**を理解しよう！
 
 Tailwind のクラス名は、以下のパターンで構成されているよ。
 
-```
+```text
 {property}-{value}
 ```
 
 **例**：
+
 - `text-center`：text-align: center
 - `font-bold`：font-weight: bold
 - `bg-red-500`：background-color: #ef4444
@@ -207,7 +216,8 @@ Tailwind のクラス名は、以下のパターンで構成されているよ�
 ```
 
 **数値の対応表**：
-```
+
+```text
 0 = 0px
 1 = 0.25rem (4px)
 2 = 0.5rem (8px)
@@ -247,6 +257,7 @@ Tailwind CSS には、**豊富なカラーパレット**が用意されている
 ```
 
 **色の濃さ**：
+
 - `50`：最も薄い
 - `100`、`200`、`300`：薄い
 - `400`、`500`、`600`：中間（`500` が標準）
@@ -373,6 +384,7 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
 ```
 
 **モバイルファースト**：
+
 - デフォルト = スマホ
 - `md:`、`lg:` で大きい画面用のスタイルを追加
 
@@ -391,16 +403,14 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
     <h1 class="text-3xl font-bold text-center mb-8">
       レスポンシブカードレイアウト
     </h1>
-    <p class="text-center text-gray-600 mb-8">
-      画面幅を変えてみて！
-    </p>
+    <p class="text-center text-gray-600 mb-8">画面幅を変えてみて！</p>
 
     <!-- グリッドレイアウト -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- カード1 -->
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <img
-          src="https://via.placeholder.com/400x200/3b82f6/ffffff?text=Card+1"
+          src="https://placehold.jp/400x200.png/3b82f6/ffffff?text=Card+1"
           alt="Card 1"
           class="w-full"
         />
@@ -415,14 +425,15 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
       <!-- カード2 -->
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <img
-          src="https://via.placeholder.com/400x200/10b981/ffffff?text=Card+2"
+          src="https://placehold.jp/400x200.png/10b981/ffffff?text=Card+2"
           alt="Card 2"
           class="w-full"
         />
         <div class="p-6">
           <h2 class="text-xl font-bold mb-2">カード 2</h2>
           <p class="text-gray-600">
-            grid-cols-1（スマホ）→ md:grid-cols-2（タブレット）→ lg:grid-cols-3（PC）
+            grid-cols-1（スマホ）→ md:grid-cols-2（タブレット）→
+            lg:grid-cols-3（PC）
           </p>
         </div>
       </div>
@@ -430,15 +441,13 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
       <!-- カード3 -->
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <img
-          src="https://via.placeholder.com/400x200/ef4444/ffffff?text=Card+3"
+          src="https://placehold.jp/400x200.png/ef4444/ffffff?text=Card+3"
           alt="Card 3"
           class="w-full"
         />
         <div class="p-6">
           <h2 class="text-xl font-bold mb-2">カード 3</h2>
-          <p class="text-gray-600">
-            gap-6でカード間の余白を設定しています。
-          </p>
+          <p class="text-gray-600">gap-6でカード間の余白を設定しています。</p>
         </div>
       </div>
     </div>
@@ -447,6 +456,7 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
 ```
 
 **クラスの読み方**：
+
 - `grid`：Grid レイアウトを有効化
 - `grid-cols-1`：1 列（デフォルト = スマホ）
 - `md:grid-cols-2`：768px 以上で 2 列
@@ -737,7 +747,7 @@ Tailwind CSS では、**ホバー時やフォーカス時**のスタイルも簡
     <!-- フッター -->
     <footer class="bg-gray-900 text-white py-8">
       <div class="container mx-auto px-6 text-center">
-        <p>&copy; 2024 Tailwind CSS 入門. All rights reserved.</p>
+        <p>&copy; 2025 Tailwind CSS 入門. All rights reserved.</p>
       </div>
     </footer>
   </body>
@@ -745,6 +755,7 @@ Tailwind CSS では、**ホバー時やフォーカス時**のスタイルも簡
 ```
 
 **使用しているクラス**：
+
 - `container mx-auto`：中央寄せコンテナ
 - `bg-gradient-to-r from-blue-500 to-purple-600`：グラデーション背景
 - `grid grid-cols-1 md:grid-cols-3`：レスポンシブグリッド
@@ -762,7 +773,8 @@ Tailwind CSS では、**ホバー時やフォーカス時**のスタイルも簡
 #### 例 1: カードレイアウト
 
 ✅ **良い指示**：
-```
+
+```text
 Tailwind CSSを使って、3カラムのカードレイアウトを作ってください。
 
 【仕様】
@@ -774,7 +786,8 @@ Tailwind CSSを使って、3カラムのカードレイアウトを作ってく�
 ```
 
 ❌ **悪い指示**：
-```
+
+```text
 カードを3つ並べて
 ```
 
@@ -783,7 +796,8 @@ Tailwind CSSを使って、3カラムのカードレイアウトを作ってく�
 #### 例 2: ヘッダーメニュー
 
 ✅ **良い指示**：
-```
+
+```text
 Tailwind CSSを使って、レスポンシブなヘッダーを作ってください。
 
 【仕様】
@@ -914,15 +928,18 @@ Tailwind CSSを使って、レスポンシブなヘッダーを作ってくだ�
 ### 学んだこと
 
 ✅ **Tailwind CSS とは**
+
 - ユーティリティファーストのフレームワーク
 - Bootstrap との違い
 - どちらを使うべきか
 
 ✅ **導入方法**
+
 - Play CDN で簡単導入
 - `<script>` タグ 1 行だけ
 
 ✅ **ユーティリティクラス**
+
 - スペーシング（m-、p-）
 - カラー（bg-、text-、border-）
 - テキスト（text-、font-）
@@ -930,14 +947,17 @@ Tailwind CSSを使って、レスポンシブなヘッダーを作ってくだ�
 - ボーダーと角丸（border、rounded、shadow）
 
 ✅ **レスポンシブデザイン**
+
 - モバイルファースト
 - `sm:`、`md:`、`lg:` プレフィックス
 
 ✅ **Flexbox と Grid**
+
 - `flex` と `justify-`、`items-`
 - `grid` と `grid-cols-`
 
 ✅ **疑似クラス**
+
 - `hover:`、`focus:`、`active:`
 - `transition` で滑らかなアニメーション
 

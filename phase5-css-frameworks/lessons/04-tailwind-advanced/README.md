@@ -23,37 +23,172 @@
 
 ### tailwind.config.js とは？
 
-Tailwind CSS は、**設定ファイル**を使って自分好みにカスタマイズできるよ！
+Tailwind CSS は、カラー、フォント、スペーシング、ブレークポイントなどを**自分好みにカスタマイズ**できるよ！
 
-`tailwind.config.js` ファイルで、カラー、フォント、スペーシング、ブレークポイントなどを自由に変更できる。
+でも、カスタマイズ方法は**CDN 版**と**ビルド版**で全然違う。まずは、この2つの違いを理解しよう！
 
-### 基本的な tailwind.config.js
+---
+
+### 🎯 CDN版 vs ビルド版：どう違うの?
+
+| 項目 | CDN版 | ビルド版 |
+|------|-------|---------|
+| **読み込み方法** | `<script src="https://cdn.tailwindcss.com">` | npm install + ビルドツール |
+| **カスタマイズ方法** | HTMLに`<script>`で直接記述 | `tailwind.config.js`ファイル |
+| **ビルド必要?** | 不要 | 必要 |
+| **本番環境で使う?** | ❌ 推奨しない（プロトタイプのみ） | ✅ 推奨 |
+| **ファイルサイズ** | 大きい（全クラスを読み込む） | 小さい（使用したクラスのみ） |
+| **学習のしやすさ** | ⭐⭐⭐ 超簡単！すぐ試せる | ⭐⭐ セットアップが必要 |
+
+**初めて学ぶ時は CDN 版で OK！** 慣れてきたらビルド版に移行しよう。
+
+---
+
+## 1-A. CDN版でのカスタマイズ方法 🚀
+
+CDN 版では、`tailwind.config.js` ファイルは**使えない**んだ。代わりに、**HTML 内に `<script>` タグで設定を書く**よ！
+
+### ステップ1：CDN を読み込む
+
+まず、Tailwind CSS の CDN を読み込む：
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tailwind カスタマイズ</title>
+
+  <!-- 1. CDN を読み込む -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <!-- ここにコンテンツ -->
+</body>
+</html>
+```
+
+---
+
+### ステップ2：カスタム設定を追加
+
+CDN の**すぐ後に**、カスタム設定を `<script>` タグで書く：
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tailwind カスタマイズ</title>
+
+  <!-- 1. CDN を読み込む -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- 2. すぐ後にカスタム設定を追加 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          // ここにカスタマイズを追加
+          colors: {
+            // ブランドカラーを追加
+            brand: {
+              50: '#e6f7ff',
+              100: '#bae7ff',
+              200: '#91d5ff',
+              300: '#69c0ff',
+              400: '#40a9ff',
+              500: '#1890ff',  // メインカラー
+              600: '#096dd9',
+              700: '#0050b3',
+              800: '#003a8c',
+              900: '#002766',
+            },
+            // シンプルに1色だけ追加
+            primary: '#1890ff',
+            secondary: '#52c41a',
+            danger: '#ff4d4f',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="p-8">
+  <!-- カスタムカラーが使える！ -->
+  <button class="bg-brand-500 text-white px-6 py-3 rounded-lg hover:bg-brand-600 transition">
+    ブランドカラーのボタン
+  </button>
+
+  <div class="bg-primary text-white p-4 rounded mt-4">
+    プライマリカラー
+  </div>
+
+  <button class="bg-danger text-white px-6 py-3 rounded-lg mt-4">
+    危険ボタン
+  </button>
+</body>
+</html>
+```
+
+---
+
+### CDN版のポイント ⚡
+
+1. **CDN の直後に書く**：`<script src="https://cdn.tailwindcss.com"></script>` のすぐ後に設定を書く
+2. **`tailwind.config`という変数に代入**：`tailwind.config = { ... }` の形式
+3. **構文は同じ**：ビルド版の `tailwind.config.js` と同じ構文が使える
+
+---
+
+### CDN版のメリット・デメリット
+
+**✅ メリット**
+
+- セットアップ不要！HTML 1 つで完結
+- 初心者でもすぐ試せる
+- プロトタイプやデモに最適
+
+**❌ デメリット**
+
+- ファイルサイズが大きい（全クラスを読み込む）
+- 本番環境では推奨されない
+- ビルドプロセスがないので、一部の機能が使えない（`@apply` など）
+
+---
+
+## 1-B. ビルド版でのカスタマイズ方法 🛠️
+
+本格的なプロジェクトでは、**ビルド版**を使おう！ファイルサイズが小さく、高速で、プロフェッショナルな開発ができる。
+
+### ステップ1：Tailwind CSS をインストール
+
+まず、npm で Tailwind CSS をインストール：
+
+```bash
+npm install -D tailwindcss
+npx tailwindcss init
+```
+
+これで、`tailwind.config.js` ファイルが作成される！
+
+---
+
+### ステップ2：tailwind.config.js を編集
+
+作成された `tailwind.config.js` を編集して、カスタマイズを追加：
 
 ```javascript
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/**/*.{html,js}',  // スキャン対象のファイル
+    './src/**/*.{html,js}',  // スキャン対象のファイルを指定
   ],
   theme: {
     extend: {
       // ここにカスタマイズを追加
-    },
-  },
-  plugins: [],
-}
-```
-
----
-
-### カスタムカラーの追加
-
-プロジェクト専用のブランドカラーを追加しよう！
-
-```javascript
-module.exports = {
-  theme: {
-    extend: {
       colors: {
         // ブランドカラーを追加
         brand: {
@@ -75,20 +210,102 @@ module.exports = {
       },
     },
   },
+  plugins: [],
 }
 ```
 
-これで、`bg-brand-500` や `text-primary` のように使えるようになる！
+---
+
+### ステップ3：CSS ファイルを作成
+
+`src/input.css` ファイルを作成して、Tailwind のディレクティブを追加：
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
+
+### ステップ4：ビルドコマンドを実行
+
+Tailwind CSS をビルド：
+
+```bash
+npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+```
+
+これで、`dist/output.css` が生成される！
+
+---
+
+### ステップ5：HTML で読み込む
+
+生成された CSS を HTML で読み込む：
 
 ```html
-<button class="bg-brand-500 text-white px-6 py-3 rounded-lg hover:bg-brand-600">
-  ブランドカラーのボタン
-</button>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tailwind カスタマイズ</title>
 
-<div class="bg-primary text-white p-4 rounded">
-  プライマリカラー
-</div>
+  <!-- ビルドされた CSS を読み込む -->
+  <link href="./dist/output.css" rel="stylesheet">
+</head>
+<body class="p-8">
+  <!-- カスタムカラーが使える！ -->
+  <button class="bg-brand-500 text-white px-6 py-3 rounded-lg hover:bg-brand-600 transition">
+    ブランドカラーのボタン
+  </button>
+
+  <div class="bg-primary text-white p-4 rounded mt-4">
+    プライマリカラー
+  </div>
+</body>
+</html>
 ```
+
+---
+
+### ビルド版のポイント ⚡
+
+1. **`content` セクションが重要**：スキャン対象のファイルパスを正しく指定する
+2. **`theme.extend` を使う**：デフォルトカラーを残しながらカスタマイズする
+3. **ビルドが必要**：設定を変更したら、ビルドコマンドを実行する（`--watch` で自動化できる）
+
+---
+
+### ビルド版のメリット・デメリット
+
+**✅ メリット**
+
+- ファイルサイズが超小さい（使用したクラスのみ）
+- パフォーマンスが高い
+- `@apply` など、全機能が使える
+- 本番環境で推奨される
+
+**❌ デメリット**
+
+- セットアップが必要
+- ビルドプロセスが必要
+- 初心者には少しハードルが高い
+
+---
+
+### 📊 どちらを選ぶ？
+
+| 用途 | おすすめ |
+|------|---------|
+| **学習・練習** | CDN 版 |
+| **プロトタイプ・デモ** | CDN 版 |
+| **本番環境** | ビルド版 |
+| **チーム開発** | ビルド版 |
+| **高速なサイト** | ビルド版 |
+
+**まずは CDN 版で学んで、慣れたらビルド版に移行しよう！**
 
 ---
 
@@ -185,6 +402,12 @@ module.exports = {
 ```html
 <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 3xl:grid-cols-4">
   <!-- 480px以上で2列、768px以上で3列、1920px以上で4列 -->
+  <div class="bg-blue-100 h-32">1</div>
+  <div class="bg-blue-200 h-32">2</div>
+  <div class="bg-blue-300 h-32">3</div>
+  <div class="bg-blue-400 h-32">4</div>
+  <div class="bg-blue-500 h-32">5</div>
+  <div class="bg-blue-600 h-32">6</div>
 </div>
 ```
 
@@ -194,9 +417,11 @@ module.exports = {
 
 ### @apply ディレクティブ
 
+> ⚠️ **重要**：`@apply` は**ビルド版のみ**で使える機能だよ！CDN 版では使えないので注意してね。CDN 版で再利用したい場合は、JavaScript でクラスをまとめるか、ビルド版に移行しよう。
+
 同じユーティリティクラスの組み合わせを何度も使う場合、`@apply` で再利用可能なクラスを作れるよ！
 
-**CSS ファイル**（例：`styles.css`）
+**CSS ファイル**（例：`styles.css`）**※ ビルド版のみ**
 
 ```css
 @tailwind base;
@@ -246,11 +471,13 @@ module.exports = {
 ### ユーティリティクラス vs コンポーネントクラス
 
 **いつユーティリティクラスを使う？**
+
 - 1 回だけ使うスタイル
 - 微調整が必要な場所
 - レイアウトやスペーシング
 
 **いつコンポーネントクラス（@apply）を使う？**
+
 - プロジェクト全体で何度も使うスタイル
 - ボタン、カード、入力フィールドなど
 - チーム全体で統一したいデザイン
@@ -264,6 +491,83 @@ module.exports = {
   <button class="btn-secondary">キャンセル</button>
 </div>
 ```
+
+---
+
+### CDN版での再利用テクニック（@apply の代替案）
+
+CDN版では `@apply` が使えないけど、**JavaScript で再利用可能なクラスセット**を作ることができるよ！
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CDN版での再利用</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-8">
+  <!-- ボタンを配置 -->
+  <div id="button-container"></div>
+
+  <script>
+    // 再利用可能なクラスセットを定義
+    const buttonStyles = {
+      primary: 'bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition',
+      secondary: 'bg-gray-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-600 transition',
+      danger: 'bg-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-600 transition',
+    };
+
+    // ボタンを作成する関数
+    function createButton(text, type = 'primary') {
+      const button = document.createElement('button');
+      button.textContent = text;
+      button.className = buttonStyles[type];
+      return button;
+    }
+
+    // ボタンを追加
+    const container = document.getElementById('button-container');
+    container.appendChild(createButton('保存', 'primary'));
+    container.appendChild(createButton('キャンセル', 'secondary'));
+    container.appendChild(createButton('削除', 'danger'));
+  </script>
+</body>
+</html>
+```
+
+**または、もっとシンプルに HTML テンプレートとして再利用**：
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-8">
+  <!-- 何度も使うクラスの組み合わせを、そのまま書く -->
+  <button class="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition">
+    保存
+  </button>
+
+  <button class="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition">
+    送信
+  </button>
+
+  <button class="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition">
+    確認
+  </button>
+</body>
+</html>
+```
+
+**CDN版での再利用のポイント**：
+
+- ✅ JavaScript で共通クラスセットを定義
+- ✅ コンポーネントフレームワーク（React、Vue など）を使う場合は、コンポーネントとして定義
+- ✅ 小規模なプロジェクトなら、同じクラスを繰り返し書いても OK
+- ❌ 大規模プロジェクトや本格的な開発では、ビルド版への移行を検討しよう
 
 ---
 
@@ -403,12 +707,12 @@ JavaScript でダークモードを切り替える例：
 
 ```html
 <!-- 全てのプロパティに transition -->
-<button class="bg-blue-500 hover:bg-blue-600 transition">
+<button class="bg-blue-300 hover:bg-blue-600 transition">
   Hover してみて
 </button>
 
 <!-- 特定のプロパティだけ transition -->
-<button class="bg-blue-500 hover:bg-blue-600 transition-colors">
+<button class="bg-blue-300 hover:bg-blue-600 transition-colors">
   色だけ変化
 </button>
 
@@ -417,7 +721,7 @@ JavaScript でダークモードを切り替える例：
 </button>
 
 <!-- duration と ease のカスタマイズ -->
-<button class="bg-blue-500 hover:bg-blue-600 transition duration-500 ease-in-out">
+<button class="bg-blue-300 hover:bg-blue-600 transition duration-500 ease-in-out">
   ゆっくり変化
 </button>
 ```
@@ -543,7 +847,7 @@ module.exports = {
 ```html
 <div class="group bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition cursor-pointer">
   <img
-    src="https://via.placeholder.com/400x300"
+    src="https://placehold.jp/400x300.png"
     alt="画像"
     class="w-full h-48 object-cover rounded mb-4 group-hover:scale-105 transition"
   />
@@ -776,6 +1080,7 @@ module.exports = {
 Tailwind CSS v3 以降は、デフォルトで **JIT モード**が有効になっているよ。
 
 **JIT モードのメリット**：
+
 - ⚡ 開発時のビルドが超高速
 - 🎨 任意の値（`w-[137px]` など）が使える
 - 📦 ファイルサイズが小さい
@@ -788,30 +1093,71 @@ JIT モードは自動的に有効なので、特に設定は不要！
 
 ここまで学んだ実践テクニックを、**AI と一緒に使う**方法を見ていこう！
 
-### AI への指示例：カスタマイズ設定
+### AI への指示例：カスタマイズ設定（CDN版）
 
-**良い指示の例**
+まずは、**CDN 版**でのカスタマイズ指示例から！
 
+**✅ 良い指示の例（CDN版）**
+
+```text
+Tailwind CSS の CDN 版を使った HTML ファイルを作成してください。
+
+要件：
+- CDN 版の Tailwind CSS を読み込む
+- カスタム設定で以下を追加：
+  - ブランドカラー「brand」（メインカラー: #1890ff、50-900の階調）
+  - プライマリカラー「primary」（#1890ff）
+  - セカンダリカラー「secondary」（#52c41a）
+- ダークモードを「class」方式で有効化
+- カスタムカラーを使ったボタンを3つ表示
 ```
+
+**❌ 曖昧な指示の例**
+
+```text
+Tailwind の CDN 版を使って、カスタムカラーを追加して。
+```
+
+**AI が生成したコードのチェックポイント（CDN版）**：
+
+- ✅ `<script src="https://cdn.tailwindcss.com"></script>` が含まれているか
+- ✅ CDN の直後に `<script>tailwind.config = {...}</script>` があるか
+- ✅ `theme.extend` でカスタマイズしているか（デフォルトを上書きしていないか）
+- ✅ カスタムカラーが実際に HTML で使われているか
+- ✅ ブラウザで開いてカスタムカラーが正しく表示されるか
+
+---
+
+### AI への指示例：カスタマイズ設定（ビルド版）
+
+次に、**ビルド版**でのカスタマイズ指示例！
+
+**✅ 良い指示の例（ビルド版）**
+
+```text
 Tailwind CSS の設定ファイル（tailwind.config.js）を作成してください。
 
 要件：
-- ブランドカラー「brand」を追加（メインカラー: #1890ff）
+- ブランドカラー「brand」を追加（メインカラー: #1890ff、50-900の階調）
 - カスタムフォント「Noto Sans JP」を追加（font-ja）
 - カスタムスペーシング：72（18rem）、128（32rem）
 - ダークモードを「class」方式で有効化
+- content セクションで ./src/**/*.{html,js} をスキャン対象に
 ```
 
-**曖昧な指示の例**
+**❌ 曖昧な指示の例**
 
-```
+```text
 Tailwind の設定ファイルを作って。色とかフォントとか追加して。
 ```
 
-**AI が生成したコードのチェックポイント**：
+**AI が生成したコードのチェックポイント（ビルド版）**：
+
 - ✅ `module.exports` の形式になっているか
 - ✅ `theme.extend` でカスタマイズしているか（デフォルトを上書きしていないか）
 - ✅ `content` セクションで適切なファイルパスが指定されているか
+- ✅ `darkMode: 'class'` が設定されているか
+- ✅ カスタムカラーの階調（50-900）が全て含まれているか
 
 ---
 
@@ -819,7 +1165,7 @@ Tailwind の設定ファイルを作って。色とかフォントとか追加�
 
 **良い指示の例**
 
-```
+```text
 この HTML をダークモード対応にしてください。
 
 - 背景：白 → 濃いグレー（gray-900）
@@ -833,11 +1179,12 @@ dark: プレフィックスを使って、全ての要素に対応してくだ�
 
 **曖昧な指示の例**
 
-```
+```text
 これをダークモードにして。
 ```
 
 **AI が生成したコードのチェックポイント**：
+
 - ✅ すべての背景色に `dark:bg-*` が付いているか
 - ✅ テキスト色に `dark:text-*` が付いているか
 - ✅ コントラストが十分確保されているか（読みやすいか）
@@ -849,7 +1196,7 @@ dark: プレフィックスを使って、全ての要素に対応してくだ�
 
 **良い指示の例**
 
-```
+```text
 カードコンポーネントに、以下のアニメーションを追加してください：
 
 1. hover 時にカード全体が少し浮く（shadow を強く、上に2px移動）
@@ -862,11 +1209,12 @@ group と group-hover を使って実装してください。
 
 **曖昧な指示の例**
 
-```
+```text
 カードをかっこよくして。
 ```
 
 **AI が生成したコードのチェックポイント**：
+
 - ✅ 親要素に `group` が付いているか
 - ✅ 子要素に `group-hover:` が付いているか
 - ✅ `transition` が付いているか
@@ -878,7 +1226,7 @@ group と group-hover を使って実装してください。
 
 **良い指示の例**
 
-```
+```text
 以下のボタンスタイルを、@apply を使って再利用可能なクラスにしてください：
 
 - .btn-primary: 青背景、白文字、パディング px-6 py-3、角丸 lg、hover で濃い青
@@ -889,6 +1237,7 @@ group と group-hover を使って実装してください。
 ```
 
 **AI が生成したコードのチェックポイント**：
+
 - ✅ `@layer components` で囲まれているか
 - ✅ `@apply` が正しく使われているか
 - ✅ hover 効果が含まれているか
@@ -898,38 +1247,114 @@ group と group-hover を使って実装してください。
 
 ### よくある問題と修正方法
 
-#### 問題 1：tailwind.config.js が反映されない
+#### 問題 1：CDN版でカスタム設定が反映されない 🆘
 
 **原因**：
+
+- カスタム設定のスクリプトが CDN の前に書かれている
+- `tailwind.config` ではなく別の変数名を使っている
+- 構文エラーがある
+
+**修正方法**：
+
+1. **CDN を先に読み込む**：必ず `<script src="https://cdn.tailwindcss.com"></script>` を先に書く
+2. **直後に設定を書く**：CDN の直後に `<script>tailwind.config = {...}</script>` を書く
+3. **ブラウザのコンソールをチェック**：エラーが出ていないか確認する
+
+```html
+<!-- ❌ 悪い例：設定が先 -->
+<script>
+  tailwind.config = { ... }
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- ✅ 良い例：CDN が先 -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { ... }
+</script>
+```
+
+---
+
+#### 問題 2：ビルド版で tailwind.config.js が反映されない 🆘
+
+**原因**：
+
 - ファイルパスが間違っている
 - ビルドツールを再起動していない
 
 **修正方法**：
+
 1. `content` セクションのファイルパスを確認
-2. 開発サーバーを再起動
+2. 開発サーバーを再起動（`--watch` モードで実行し直す）
 3. ブラウザのキャッシュをクリア
 
 ---
 
-#### 問題 2：ダークモードが動かない
+#### 問題 3：ダークモードが動かない 🆘
 
 **原因**：
+
 - `darkMode: 'class'` が設定されていない
 - `<html class="dark">` が追加されていない
 
 **修正方法**：
-1. `tailwind.config.js` で `darkMode: 'class'` を確認
-2. JavaScript で `document.documentElement.classList.add('dark')` を実行
-3. ブラウザの開発者ツールで `<html>` に `dark` クラスがあるか確認
+
+**CDN版の場合**：
+
+```html
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',  // ← これを追加
+  }
+</script>
+```
+
+**ビルド版の場合**：
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  darkMode: 'class',  // ← これを追加
+  // ...
+}
+```
+
+**共通**：
+
+- JavaScript で `document.documentElement.classList.add('dark')` を実行
+- ブラウザの開発者ツールで `<html>` に `dark` クラスがあるか確認
 
 ---
 
-#### 問題 3：カスタムカラーが効かない
+#### 問題 4：CDN版で @apply が使えない 🆘
 
 **原因**：
+
+- CDN版には**ビルドプロセスがない**ため、`@apply` ディレクティブは使えない
+
+**修正方法**：
+
+CDN版で `@apply` を使いたい場合は、**ビルド版に移行**する必要があるよ！
+
+**代替案（CDN版のまま使う）**：
+
+- ユーティリティクラスを直接 HTML に書く
+- JavaScript で動的にクラスを追加する
+- インラインスタイルを使う（推奨しない）
+
+---
+
+#### 問題 5：カスタムカラーが効かない 🆘
+
+**原因**：
+
 - `theme.extend` ではなく `theme.colors` で上書きしている（デフォルトカラーが消える）
 
 **修正方法**：
+
 ```javascript
 // ❌ 悪い例：デフォルトカラーが消える
 module.exports = {
@@ -1078,33 +1503,41 @@ module.exports = {
 このレッスンで学んだこと：
 
 ✅ **カスタマイズ設定**
+
 - tailwind.config.js でカラー、フォント、スペーシングをカスタマイズ
 - プロジェクトに合わせた独自のデザインシステムを作成
 
 ✅ **コンポーネントの再利用**
+
 - @apply でよく使うスタイルを再利用可能に
 - ユーティリティクラスとコンポーネントクラスのバランス
 
 ✅ **ダークモード**
+
 - dark: プレフィックスで簡単に対応
 - 手動切り替えと自動切り替えの実装
 
 ✅ **アニメーション**
+
 - transition、transform、animate- クラスでリッチな UI
 - カスタムアニメーションの追加方法
 
 ✅ **実践テクニック**
+
 - group/group-hover、peer/peer-checked
 - arbitrary values、important modifier
 
 ✅ **プラグイン**
+
 - @tailwindcss/forms、@tailwindcss/typography などの便利なプラグイン
 
 ✅ **パフォーマンス最適化**
+
 - 未使用クラスの自動削除
 - JIT モードで高速開発
 
 ✅ **バイブコーディング**
+
 - AI への効果的な指示の出し方
 - 生成コードのチェックポイント
 

@@ -19,18 +19,21 @@ Lesson 1 で学んだグリッドシステムとユーティリティクラス�
 これらを**手書き CSS と JavaScript で実装すると...**
 
 ❌ **大変なこと**：
+
 - レスポンシブ対応に何百行もコードが必要
 - ブラウザ間の互換性を気にする必要がある
 - JavaScript のイベント処理が複雑
 - アクセシビリティ対応が難しい
 
 ✅ **Bootstrap コンポーネントを使うと**：
+
 - **コピペだけ**で高度な UI が完成
 - **レスポンシブ対応**が自動
 - **JavaScript も自動**で動く
 - **アクセシビリティ対応済み**
 
 **たとえるなら...**
+
 - **手書き実装** = ゼロから家を建てる
 - **Bootstrap コンポーネント** = 組み立て式の高品質な家を使う
 
@@ -54,14 +57,17 @@ Lesson 1 で学んだグリッドシステムとユーティリティクラス�
 ### Navbar の特徴
 
 ✨ **レスポンシブ対応**
+
 - PC：横並びメニュー
 - スマホ：ハンバーガーメニュー（自動で折りたたみ）
 
 🎨 **カスタマイズ可能**
+
 - 色、配置、サイズを簡単に変更
 - ロゴ、検索ボックス、ボタンを追加できる
 
 📱 **モバイルファースト**
+
 - タッチデバイスでも快適に動作
 
 ### 基本的な Navbar
@@ -193,6 +199,7 @@ Lesson 1 で学んだグリッドシステムとユーティリティクラス�
 ```
 
 **ポイント**：
+
 - `me-auto`：メニューを左寄せにして、検索ボックスを右に配置
 - `d-flex`：検索ボックスとボタンを横並び
 
@@ -242,6 +249,7 @@ Lesson 1 で学んだグリッドシステムとユーティリティクラス�
 ```
 
 **ポイント**：
+
 - `dropdown`：ドロップダウンを有効化
 - `dropdown-toggle`：矢印アイコンを表示
 - `data-bs-toggle="dropdown"`：クリックで開閉
@@ -257,14 +265,17 @@ Lesson 1 で学んだグリッドシステムとユーティリティクラス�
 ### Modal の特徴
 
 ✨ **JavaScript 不要**
+
 - Bootstrap の JavaScript が全部やってくれる
 - `data-bs-*` 属性だけで動く
 
 🎨 **柔軟なレイアウト**
+
 - ヘッダー、本文、フッターを自由に構成
 - サイズも変更可能（小、中、大、超大）
 
 📱 **レスポンシブ**
+
 - スマホでも見やすく表示
 
 ### 基本的な Modal
@@ -414,6 +425,7 @@ Lesson 1 で学んだグリッドシステムとユーティリティクラス�
 ```
 
 **よくある用途**：
+
 - ログインフォーム
 - 確認ダイアログ
 - 画像の拡大表示
@@ -536,6 +548,7 @@ Bootstrap には、フォームの検証状態を視覚的に表示する機能�
 ```
 
 **ポイント**：
+
 - `is-valid`：正しい入力（緑の枠線）
 - `is-invalid`：エラーのある入力（赤の枠線）
 - `valid-feedback`：成功メッセージ（緑）
@@ -566,6 +579,7 @@ Bootstrap には、フォームの検証状態を視覚的に表示する機能�
 ```
 
 **ポイント**：
+
 - `row`：グリッドシステムを使用
 - `col-sm-2`：ラベルの幅（2 カラム）
 - `col-sm-10`：入力フィールドの幅（10 カラム）
@@ -614,7 +628,7 @@ Bootstrap には、フォームの検証状態を視覚的に表示する機能�
           <!-- スライド1 -->
           <div class="carousel-item active">
             <img
-              src="https://via.placeholder.com/800x400/0d6efd/ffffff?text=Slide+1"
+              src="https://placehold.jp/800x400.png/0d6efd/ffffff?text=Slide+1"
               class="d-block w-100"
               alt="スライド1"
             />
@@ -627,7 +641,7 @@ Bootstrap には、フォームの検証状態を視覚的に表示する機能�
           <!-- スライド2 -->
           <div class="carousel-item">
             <img
-              src="https://via.placeholder.com/800x400/198754/ffffff?text=Slide+2"
+              src="https://placehold.jp/800x400.png/198754/ffffff?text=Slide+2"
               class="d-block w-100"
               alt="スライド2"
             />
@@ -640,7 +654,7 @@ Bootstrap には、フォームの検証状態を視覚的に表示する機能�
           <!-- スライド3 -->
           <div class="carousel-item">
             <img
-              src="https://via.placeholder.com/800x400/dc3545/ffffff?text=Slide+3"
+              src="https://placehold.jp/800x400.png/dc3545/ffffff?text=Slide+3"
               class="d-block w-100"
               alt="スライド3"
             />
@@ -869,16 +883,28 @@ Bootstrap には、他にもたくさんの便利なコンポーネントがあ�
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container">
         <a class="navbar-brand" href="#">My Portfolio</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
             <li class="nav-item"><a class="nav-link" href="#">About</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Works</a></li>
             <li class="nav-item">
-              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">
+              <a
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#contactModal"
+              >
                 Contact
               </a>
             </li>
@@ -891,23 +917,41 @@ Bootstrap には、他にもたくさんの便利なコンポーネントがあ�
     <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="https://via.placeholder.com/1200x400/0d6efd/ffffff?text=Welcome" class="d-block w-100" alt="Welcome" />
+          <img
+            src="https://placehold.jp/1200x400.png/0d6efd/ffffff?text=Welcome"
+            class="d-block w-100"
+            alt="Welcome"
+          />
           <div class="carousel-caption">
             <h1>Welcome to My Portfolio</h1>
             <p>最高の作品をお届けします</p>
           </div>
         </div>
         <div class="carousel-item">
-          <img src="https://via.placeholder.com/1200x400/198754/ffffff?text=Projects" class="d-block w-100" alt="Projects" />
+          <img
+            src="https://placehold.jp/1200x400.png/198754/ffffff?text=Projects"
+            class="d-block w-100"
+            alt="Projects"
+          />
           <div class="carousel-caption">
             <h1>Our Projects</h1>
           </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#mainCarousel"
+        data-bs-slide="prev"
+      >
         <span class="carousel-control-prev-icon"></span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#mainCarousel"
+        data-bs-slide="next"
+      >
         <span class="carousel-control-next-icon"></span>
       </button>
     </div>
@@ -927,7 +971,11 @@ Bootstrap には、他にもたくさんの便利なコンポーネントがあ�
       <div class="row g-4">
         <div class="col-md-4">
           <div class="card">
-            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Work 1" />
+            <img
+              src="https://placehold.jp/400x200.png"
+              class="card-img-top"
+              alt="Work 1"
+            />
             <div class="card-body">
               <h5 class="card-title">
                 Project 1 <span class="badge bg-primary">New</span>
@@ -947,22 +995,46 @@ Bootstrap には、他にもたくさんの便利なコンポーネントがあ�
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">お問い合わせ</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
           </div>
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="contactEmail" class="form-label">メールアドレス</label>
-                <input type="email" class="form-control" id="contactEmail" required />
+                <label for="contactEmail" class="form-label"
+                  >メールアドレス</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="contactEmail"
+                  required
+                />
               </div>
               <div class="mb-3">
-                <label for="contactMessage" class="form-label">メッセージ</label>
-                <textarea class="form-control" id="contactMessage" rows="3" required></textarea>
+                <label for="contactMessage" class="form-label"
+                  >メッセージ</label
+                >
+                <textarea
+                  class="form-control"
+                  id="contactMessage"
+                  rows="3"
+                  required
+                ></textarea>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              閉じる
+            </button>
             <button type="button" class="btn btn-primary">送信</button>
           </div>
         </div>
@@ -975,6 +1047,7 @@ Bootstrap には、他にもたくさんの便利なコンポーネントがあ�
 ```
 
 **この例には以下が含まれています**：
+
 - ✅ Navbar（レスポンシブメニュー）
 - ✅ Carousel（画像スライダー）
 - ✅ Breadcrumb（パンくずリスト）
@@ -991,7 +1064,8 @@ Bootstrap には、他にもたくさんの便利なコンポーネントがあ�
 #### 例 1: Navbar
 
 ✅ **良い指示**：
-```
+
+```text
 Bootstrap 5のNavbarを作ってください。
 
 【仕様】
@@ -1004,7 +1078,8 @@ Bootstrap 5のNavbarを作ってください。
 ```
 
 ❌ **悪い指示**：
-```
+
+```text
 ナビゲーションメニューを作って
 ```
 
@@ -1013,7 +1088,8 @@ Bootstrap 5のNavbarを作ってください。
 #### 例 2: Modal
 
 ✅ **良い指示**：
-```
+
+```text
 Bootstrap 5のModalを使って、画像ギャラリーを作ってください。
 
 【仕様】
@@ -1028,7 +1104,8 @@ Bootstrap 5のModalを使って、画像ギャラリーを作ってください�
 #### 例 3: Carousel + Card
 
 ✅ **良い指示**：
-```
+
+```text
 Bootstrap 5を使って、以下の構成のページを作ってください：
 
 【Carouselセクション】
@@ -1208,26 +1285,31 @@ Bootstrap 5を使って、以下の構成のページを作ってください：
 ### 学んだこと
 
 ✅ **Navbar**
+
 - レスポンシブナビゲーション
 - ハンバーガーメニュー
 - ドロップダウン、検索ボックス
 
 ✅ **Modal**
+
 - モーダルダイアログの作成
 - サイズ変更
 - フォームの組み込み
 
 ✅ **Form**
+
 - フォーム要素のスタイリング
 - バリデーションスタイル
 - 水平フォーム
 
 ✅ **Carousel**
+
 - 画像スライダー
 - 自動再生
 - インジケーターとコントロール
 
 ✅ **その他のコンポーネント**
+
 - Badge、Breadcrumb、Pagination
 - Progress、Spinner
 
