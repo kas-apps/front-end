@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Todo - Phase 6 Lesson 4</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- ヘッダー -->
+  <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8 shadow-lg">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold text-center">📝 Card Todo</h1>
+      <p class="text-center mt-2 text-blue-100">Phase 6 - Lesson 4: 基本機能の実装</p>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="container mx-auto px-4 py-8">
+
+    <!-- 統計表示 -->
+    <div class="max-w-4xl mx-auto mb-8">
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+          <div class="text-3xl font-bold text-blue-600" id="total-count">0</div>
+          <div class="text-gray-600 mt-2">全タスク</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+          <div class="text-3xl font-bold text-yellow-600" id="incomplete-count">0</div>
+          <div class="text-gray-600 mt-2">未完了</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+          <div class="text-3xl font-bold text-green-600" id="completed-count">0</div>
+          <div class="text-gray-600 mt-2">完了</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タスク追加フォーム -->
+    <div class="max-w-4xl mx-auto mb-8">
+      <div class="bg-white rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">➕ 新しいタスクを追加</h2>
+
+        <form id="task-form">
+          <!-- タイトル -->
+          <div class="mb-6">
+            <label for="task-title" class="block text-gray-700 font-semibold mb-2">
+              タスクタイトル <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="task-title"
+              placeholder="例：Phase 6の教材を完成させる"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            >
+          </div>
+
+          <!-- 説明 -->
+          <div class="mb-6">
+            <label for="task-description" class="block text-gray-700 font-semibold mb-2">
+              説明（任意）
+            </label>
+            <textarea
+              id="task-description"
+              rows="3"
+              placeholder="タスクの詳細を入力してください..."
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+
+          <!-- 優先度とカテゴリ（横並び） -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- 優先度 -->
+            <div>
+              <label for="task-priority" class="block text-gray-700 font-semibold mb-2">
+                優先度 <span class="text-red-500">*</span>
+              </label>
+              <select
+                id="task-priority"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="high">🔴 高</option>
+                <option value="medium" selected>🟡 中</option>
+                <option value="low">🟢 低</option>
+              </select>
+            </div>
+
+            <!-- カテゴリ -->
+            <div>
+              <label for="task-category" class="block text-gray-700 font-semibold mb-2">
+                カテゴリ <span class="text-red-500">*</span>
+              </label>
+              <select
+                id="task-category"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="work">💼 仕事</option>
+                <option value="personal" selected>🏠 プライベート</option>
+                <option value="shopping">🛒 買い物</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 締切日 -->
+          <div class="mb-6">
+            <label for="task-due-date" class="block text-gray-700 font-semibold mb-2">
+              締切日（任意）
+            </label>
+            <input
+              type="date"
+              id="task-due-date"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+          </div>
+
+          <!-- 送信ボタン -->
+          <button
+            type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 transform hover:scale-105"
+          >
+            タスクを追加
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- タスク一覧 -->
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">📋 タスク一覧</h2>
+
+      <!-- タスクカード表示エリア -->
+      <div id="task-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- ここにタスクカードが動的に追加される -->
+      </div>
+
+      <!-- タスクがない場合のメッセージ -->
+      <div id="no-tasks-message" class="text-center py-12 text-gray-500">
+        <p class="text-xl">まだタスクがありません</p>
+        <p class="mt-2">上のフォームから新しいタスクを追加してください！</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- フッター -->
+  <footer class="bg-gray-800 text-white py-6 mt-12">
+    <div class="container mx-auto px-4 text-center">
+      <p>💪 Let's vibe and code! - Phase 6: 統合プロジェクト</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
