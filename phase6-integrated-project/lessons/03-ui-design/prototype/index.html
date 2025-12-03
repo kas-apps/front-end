@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Todo - 静的プロトタイプ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* カスタムアニメーション */
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+      transition: all 0.3s ease;
+    }
+
+    .completed {
+      opacity: 0.6;
+    }
+
+    .completed .task-title {
+      text-decoration: line-through;
+      color: #9CA3AF;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- ヘッダー -->
+  <header class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-8 shadow-lg">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl font-bold mb-2">📝 Card Todo</h1>
+      <p class="text-blue-100">シンプルなタスク管理アプリ</p>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8 max-w-7xl">
+
+    <!-- 統計表示 -->
+    <section class="mb-8">
+      <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+        <!-- 全タスク -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+          <div class="text-3xl font-bold text-blue-600">12</div>
+          <div class="text-sm text-gray-600 mt-2">全タスク</div>
+        </div>
+        <!-- 未完了 -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+          <div class="text-3xl font-bold text-orange-600">7</div>
+          <div class="text-sm text-gray-600 mt-2">未完了</div>
+        </div>
+        <!-- 完了 -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+          <div class="text-3xl font-bold text-green-600">5</div>
+          <div class="text-sm text-gray-600 mt-2">完了</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- タスク追加フォーム -->
+    <section class="mb-8">
+      <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">新しいタスクを追加</h2>
+        <form>
+          <!-- タイトル -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              タイトル <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="タスクのタイトルを入力"
+            >
+          </div>
+
+          <!-- 説明 -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              説明
+            </label>
+            <textarea
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              rows="3"
+              placeholder="タスクの詳細を入力（任意）"
+            ></textarea>
+          </div>
+
+          <!-- 優先度・カテゴリ・締切日 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <!-- 優先度 -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                優先度 <span class="text-red-500">*</span>
+              </label>
+              <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option>高</option>
+                <option selected>中</option>
+                <option>低</option>
+              </select>
+            </div>
+
+            <!-- カテゴリ -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                カテゴリ <span class="text-red-500">*</span>
+              </label>
+              <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option selected>仕事</option>
+                <option>プライベート</option>
+                <option>買い物</option>
+              </select>
+            </div>
+
+            <!-- 締切日 -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                締切日
+              </label>
+              <input
+                type="date"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+            </div>
+          </div>
+
+          <!-- 追加ボタン -->
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            ➕ タスクを追加
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- フィルター・ソート -->
+    <section class="mb-6">
+      <div class="bg-white rounded-lg shadow-md p-4 max-w-2xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <!-- ステータスフィルター -->
+          <div class="flex gap-2">
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">すべて</button>
+            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">未完了</button>
+            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">完了</button>
+          </div>
+
+          <!-- カテゴリフィルター -->
+          <div class="flex gap-2">
+            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">💼 仕事</button>
+            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">🏠 プライベート</button>
+            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">🛒 買い物</button>
+          </div>
+
+          <!-- ソート -->
+          <div>
+            <select class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+              <option>作成日順（新しい順）</option>
+              <option>作成日順（古い順）</option>
+              <option>優先度順（高→低）</option>
+              <option>優先度順（低→高）</option>
+              <option>締切日順（近い順）</option>
+              <option>締切日順（遠い順）</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- タスク一覧 -->
+    <section>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- カード1：未完了タスク（高優先度） -->
+        <div class="card bg-white rounded-lg shadow-md p-6">
+          <!-- ヘッダー -->
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex items-start gap-3 flex-1">
+              <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+              <h3 class="task-title text-lg font-bold text-gray-800 flex-1">Phase 6の教材を完成させる</h3>
+            </div>
+            <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">高</span>
+          </div>
+
+          <!-- 説明 -->
+          <p class="text-gray-600 text-sm mb-4 ml-8">
+            Lesson 1-8とfinal-projectを作成する。学習者がAIと協働しながらプロジェクトを進められる...
+          </p>
+
+          <!-- メタ情報 -->
+          <div class="flex items-center gap-4 text-sm text-gray-500 mb-4 ml-8">
+            <span>💼 仕事</span>
+            <span>📅 2025-12-15</span>
+          </div>
+
+          <!-- アクション -->
+          <div class="flex gap-2 ml-8">
+            <button class="flex-1 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+              ✏️ 編集
+            </button>
+            <button class="flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">
+              🗑️ 削除
+            </button>
+          </div>
+        </div>
+
+        <!-- カード2：完了タスク（高優先度） -->
+        <div class="card bg-white rounded-lg shadow-md p-6 completed">
+          <!-- ヘッダー -->
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex items-start gap-3 flex-1">
+              <input type="checkbox" checked class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+              <h3 class="task-title text-lg font-bold text-gray-800 flex-1">Lesson 1の要件定義を作成</h3>
+            </div>
+            <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">高</span>
+          </div>
+
+          <!-- 説明 -->
+          <p class="text-gray-600 text-sm mb-4 ml-8">
+            要件定義書のテンプレートと事例を作成した。
+          </p>
+
+          <!-- メタ情報 -->
+          <div class="flex items-center gap-4 text-sm text-gray-500 mb-4 ml-8">
+            <span>💼 仕事</span>
+            <span>📅 2025-12-01</span>
+          </div>
+
+          <!-- アクション -->
+          <div class="flex gap-2 ml-8">
+            <button class="flex-1 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+              ✏️ 編集
+            </button>
+            <button class="flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">
+              🗑️ 削除
+            </button>
+          </div>
+        </div>
+
+        <!-- カード3：未完了タスク（中優先度） -->
+        <div class="card bg-white rounded-lg shadow-md p-6">
+          <!-- ヘッダー -->
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex items-start gap-3 flex-1">
+              <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+              <h3 class="task-title text-lg font-bold text-gray-800 flex-1">技術ブログを更新する</h3>
+            </div>
+            <span class="bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded">中</span>
+          </div>
+
+          <!-- 説明 -->
+          <p class="text-gray-600 text-sm mb-4 ml-8">
+            Phase 6の進捗状況をブログ記事として公開する。
+          </p>
+
+          <!-- メタ情報 -->
+          <div class="flex items-center gap-4 text-sm text-gray-500 mb-4 ml-8">
+            <span>🏠 プライベート</span>
+            <span>📅 2025-12-20</span>
+          </div>
+
+          <!-- アクション -->
+          <div class="flex gap-2 ml-8">
+            <button class="flex-1 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+              ✏️ 編集
+            </button>
+            <button class="flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">
+              🗑️ 削除
+            </button>
+          </div>
+        </div>
+
+        <!-- カード4：未完了タスク（低優先度） -->
+        <div class="card bg-white rounded-lg shadow-md p-6">
+          <!-- ヘッダー -->
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex items-start gap-3 flex-1">
+              <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+              <h3 class="task-title text-lg font-bold text-gray-800 flex-1">牛乳を買う</h3>
+            </div>
+            <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">低</span>
+          </div>
+
+          <!-- 説明 -->
+          <p class="text-gray-600 text-sm mb-4 ml-8">
+            スーパーで低脂肪牛乳を1リットル購入する。
+          </p>
+
+          <!-- メタ情報 -->
+          <div class="flex items-center gap-4 text-sm text-gray-500 mb-4 ml-8">
+            <span>🛒 買い物</span>
+            <span>📅 なし</span>
+          </div>
+
+          <!-- アクション -->
+          <div class="flex gap-2 ml-8">
+            <button class="flex-1 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+              ✏️ 編集
+            </button>
+            <button class="flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">
+              🗑️ 削除
+            </button>
+          </div>
+        </div>
+
+        <!-- カード5：未完了タスク（中優先度） -->
+        <div class="card bg-white rounded-lg shadow-md p-6">
+          <!-- ヘッダー -->
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex items-start gap-3 flex-1">
+              <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+              <h3 class="task-title text-lg font-bold text-gray-800 flex-1">ジムに行く</h3>
+            </div>
+            <span class="bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded">中</span>
+          </div>
+
+          <!-- 説明 -->
+          <p class="text-gray-600 text-sm mb-4 ml-8">
+            週3回の運動習慣を継続する。今週は月・水・金に行く予定。
+          </p>
+
+          <!-- メタ情報 -->
+          <div class="flex items-center gap-4 text-sm text-gray-500 mb-4 ml-8">
+            <span>🏠 プライベート</span>
+            <span>📅 2025-12-10</span>
+          </div>
+
+          <!-- アクション -->
+          <div class="flex gap-2 ml-8">
+            <button class="flex-1 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+              ✏️ 編集
+            </button>
+            <button class="flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">
+              🗑️ 削除
+            </button>
+          </div>
+        </div>
+
+        <!-- カード6：完了タスク（中優先度） -->
+        <div class="card bg-white rounded-lg shadow-md p-6 completed">
+          <!-- ヘッダー -->
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex items-start gap-3 flex-1">
+              <input type="checkbox" checked class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500">
+              <h3 class="task-title text-lg font-bold text-gray-800 flex-1">Lesson 2の仕様書を作成</h3>
+            </div>
+            <span class="bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded">中</span>
+          </div>
+
+          <!-- 説明 -->
+          <p class="text-gray-600 text-sm mb-4 ml-8">
+            技術仕様書のテンプレートと事例を作成。データ構造やHTML構造を定義した。
+          </p>
+
+          <!-- メタ情報 -->
+          <div class="flex items-center gap-4 text-sm text-gray-500 mb-4 ml-8">
+            <span>💼 仕事</span>
+            <span>📅 2025-12-02</span>
+          </div>
+
+          <!-- アクション -->
+          <div class="flex gap-2 ml-8">
+            <button class="flex-1 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+              ✏️ 編集
+            </button>
+            <button class="flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">
+              🗑️ 削除
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- フッター -->
+  <footer class="bg-gray-800 text-white text-center py-6 mt-12">
+    <p class="text-sm">📝 Card Todo - 静的プロトタイプ（Lesson 3）</p>
+    <p class="text-xs text-gray-400 mt-2">このページはHTML/CSSのみで作成されています（JavaScriptなし）</p>
+  </footer>
+
+</body>
+</html>

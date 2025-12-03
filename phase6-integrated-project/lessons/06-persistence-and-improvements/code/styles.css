@@ -1,0 +1,240 @@
+/* ========================================
+   カスタムスタイル（Tailwind CSSの補完）
+   ======================================== */
+
+/* カードのアニメーション */
+.card {
+  animation: fadeInUp 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* カードのホバーエフェクト */
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 完了タスクのスタイル */
+.completed-task {
+  opacity: 0.6;
+}
+
+.completed-task .task-title {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+/* 行数制限（2行まで表示） */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* フィルターボタンのアクティブ状態 */
+.filter-btn.active,
+.category-btn.active {
+  background-color: #2563eb;
+  color: white;
+}
+
+/* 編集フォームのスタイル */
+.edit-form {
+  background-color: #f3f4f6;
+  border: 2px solid #3b82f6;
+}
+
+/* トランジション */
+button {
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* スクロールバーのカスタマイズ（オプション） */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* ========================================
+   トースト通知のスタイル
+   ======================================== */
+
+.toast {
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 300px;
+  max-width: 400px;
+  /* アニメーションは.showingクラスで制御 */
+}
+
+/* トーストの種類別スタイル */
+.toast.success {
+  background-color: #10b981;
+  color: white;
+}
+
+.toast.error {
+  background-color: #ef4444;
+  color: white;
+}
+
+.toast.info {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.toast.warning {
+  background-color: #f59e0b;
+  color: white;
+}
+
+/* トーストのアニメーション */
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+}
+
+/* トーストの出現時（.showing クラス） */
+.toast.showing {
+  animation: slideInRight 0.3s ease forwards;
+}
+
+/* トーストの消滅時 */
+.toast.hiding {
+  animation: slideOutRight 0.3s ease forwards;
+}
+
+/* トースト内のボタン */
+.toast button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.toast button:hover {
+  opacity: 1;
+  transform: none;
+}
+
+/* ========================================
+   ローディングのスタイル
+   ======================================== */
+
+#loading {
+  -webkit-backdrop-filter: blur(4px); /* Safari対応 */
+  backdrop-filter: blur(4px);
+}
+
+/* スピナーの追加スタイル */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   チェックボックスのアニメーション
+   ======================================== */
+
+input[type='checkbox'] {
+  transition: all 0.2s ease;
+}
+
+input[type='checkbox']:checked {
+  transform: scale(1.1);
+}
+
+input[type='checkbox']:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* ========================================
+   フォームのフォーカススタイル
+   ======================================== */
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ========================================
+   レスポンシブ調整
+   ======================================== */
+
+@media (max-width: 768px) {
+  .toast {
+    min-width: 280px;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+  }
+}
