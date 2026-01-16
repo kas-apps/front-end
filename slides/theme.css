@@ -1,0 +1,239 @@
+/*
+ * @theme udemy
+ * @auto-scaling true
+ */
+
+/* 
+ * Blue
+ * 50:  #eff6ff
+ * 100: #dbeafe
+ * 200: #bedbff
+ * 300: #8ec5ff
+ * 400: #51a2ff
+ * 500: #2b7fff
+ * 600: #155dfb
+ * 700: #1447e6
+ * 800: #193cb8
+ * 900: #1c398e
+ * 950: #162556
+ */
+
+@import "default";
+
+section {
+  padding: 32px 72px 64px 72px;
+  font-size: 26px;
+  /* background-color: #f8fafc; */
+  /* background-image: url(assets/background.png); */
+  /* background-position: center; */
+  /* background-size: cover; */
+  color: #737373;
+  font-family: "M PLUS 1", "ヒラギノ角ゴシック", sans-serif;
+}
+
+section.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  color: #cad5e2;
+}
+
+footer {
+  color: #cad5e2;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #525252;
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding: 0;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.2rem 0;
+}
+
+h5 {
+  font-size: 0.9rem;
+  font-weight: normal;
+  text-align: center;
+  margin: 0;
+}
+
+h6 {
+  font-size: 1.2rem;
+  line-height: 2rem;
+  text-align: center;
+  color: #193cb8;
+  font-weight: bold;
+}
+
+p {
+  padding: 0;
+}
+
+strong {
+  font-weight: bold;
+  color: #193cb8;
+}
+
+ul,
+ol {
+  padding-left: 2.5rem;
+}
+
+ul li {
+  list-style-type: "✅ ";
+}
+ul li li {
+  list-style-type: "➡️ ";
+}
+.demerit li {
+  list-style-type: "❌ ";
+}
+.caution li {
+  list-style-type: "⚠️ ";
+}
+
+ol li:nth-of-type(1) {
+  list-style-type: "1️⃣ ";
+}
+ol li:nth-of-type(2) {
+  list-style-type: "2️⃣ ";
+}
+ol li:nth-of-type(3) {
+  list-style-type: "3️⃣ ";
+}
+ol li:nth-of-type(4) {
+  list-style-type: "4️⃣ ";
+}
+ol li:nth-of-type(5) {
+  list-style-type: "5️⃣ ";
+}
+ol li:nth-of-type(6) {
+  list-style-type: "6️⃣ ";
+}
+ol li:nth-of-type(7) {
+  list-style-type: "7️⃣ ";
+}
+ol li:nth-of-type(8) {
+  list-style-type: "8️⃣ ";
+}
+ol li:nth-of-type(9) {
+  list-style-type: "9️⃣ ";
+}
+ol li:nth-of-type(10) {
+  list-style-type: "🔟 ";
+}
+
+table {
+  margin-inline: auto;
+}
+
+th {
+  background: #162556;
+  color: #f8fafc;
+}
+
+pre {
+  font-size: 21px;
+  line-height: 1.1;
+  border: solid 1px #d4d4d4;
+  border-radius: 16px;
+  background-color: #fafafa;
+  padding: 0.4rem 0.6rem;
+}
+pre code {
+  font-family: Menlo, "M PLUS 1 Code", monospace;
+  color: #171717;
+}
+code {
+  background: #eff6ff;
+}
+
+.columns-2 pre code {
+  display: inline-block;
+  columns: 2 500px;
+}
+
+.language-html::before,
+.language-html .language-javascript::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: "html";
+  color: #a1a1a1;
+}
+
+.language-css::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: "css";
+  color: #a1a1a1;
+}
+
+.language-javascript::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: "javascript";
+  color: #a1a1a1;
+}
+.language-json::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: "json";
+  color: #a1a1a1;
+}
+
+
+img {
+  border-radius: 16px;
+}
+
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
+.flex-2 {
+  flex: 2;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-x-1 {
+  column-gap: 1rem;
+}
+.gap-x-2 {
+  column-gap: 2rem;
+}
+.gap-x-4 {
+  column-gap: 4rem;
+}

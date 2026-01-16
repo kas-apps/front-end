@@ -55,3 +55,6 @@ temp/
 # カバレッジレポート
 coverage/
 .nyc_output/
+
+# スライドのエクスポートファイル
+slides/export/
