@@ -124,7 +124,7 @@ Phase 6：
 
 **学習時間の目安：4-5時間**
 
-👉 [Lesson 5 へ進む](lessons/05-advanced-features/README.md)
+👉 [Lesson 5 へ進む](lessons/05-feature-expansion/README.md)
 
 ---
 
@@ -139,7 +139,7 @@ Phase 6：
 
 **学習時間の目安：3-4時間**
 
-👉 [Lesson 6 へ進む](lessons/06-persistence/README.md)
+👉 [Lesson 6 へ進む](lessons/06-persistence-and-improvements/README.md)
 
 ---
 
@@ -153,7 +153,7 @@ Phase 6：
 
 **学習時間の目安：2-3時間**
 
-👉 [Lesson 7 へ進む](lessons/07-refactoring/README.md)
+👉 [Lesson 7 へ進む](lessons/07-final-touches/README.md)
 
 ---
 
@@ -510,12 +510,12 @@ Phase 0-6 を通じて、フロントエンド開発の基礎から実践まで�
 ### 開発プロセス
 
 - [Figma](https://www.figma.com/) - UIデザインツール（ワイヤーフレーム作成に便利）
-- [Notion](https://www.notion.so/) - 要件定義書、仕様書の管理
+- [Notion](https://www.notion.com/) - 要件定義書、仕様書の管理
 
 ### Tailwind CSS
 
 - [Tailwind CSS 公式ドキュメント](https://tailwindcss.com/docs) - クラス名のリファレンス
-- [Tailwind UI](https://tailwindui.com/) - UIコンポーネント集（有料・無料あり）
+- [Tailwind Plus](https://tailwindcss.com/plus) - UIコンポーネント集（有料・無料あり）
 
 ### JavaScriptリファレンス
 

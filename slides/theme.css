@@ -1,0 +1,262 @@
+/*
+ * @theme udemy
+ * @auto-scaling true
+ */
+
+/* 
+ * Blue
+ * 50:  #eff6ff
+ * 100: #dbeafe
+ * 200: #bedbff
+ * 300: #8ec5ff
+ * 400: #51a2ff
+ * 500: #2b7fff
+ * 600: #155dfb
+ * 700: #1447e6
+ * 800: #193cb8
+ * 900: #1c398e
+ * 950: #162556
+ */
+
+@import "default";
+
+section {
+  padding: 32px 64px 64px 64px;
+  font-size: 26px;
+  /* background-color: #f8fafc; */
+  /* background-image: url(assets/background.png); */
+  /* background-position: center; */
+  /* background-size: cover; */
+  color: #737373;
+  font-family: "M PLUS 1", "ヒラギノ角ゴシック", sans-serif;
+}
+
+section.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+header {
+  color: #cad5e2;
+}
+
+footer {
+  color: #cad5e2;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #525252;
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding: 0;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.2rem 0;
+}
+
+h5 {
+  font-size: 0.9rem;
+  font-weight: normal;
+  text-align: center;
+  margin: 0;
+}
+
+h6 {
+  font-size: 1.2rem;
+  line-height: 2rem;
+  text-align: center;
+  color: #193cb8;
+  font-weight: bold;
+}
+
+p {
+  padding: 0;
+  line-height: 1.4rem;
+}
+
+strong {
+  font-weight: bold;
+  color: #193cb8;
+}
+
+ul,
+ol {
+  padding-left: 2.4rem;
+}
+
+ul li li,
+ol li li {
+  line-height: 1.2rem;
+}
+ul li {
+  list-style-type: "✅ ";
+}
+ul li li {
+  list-style-type: "➡️ ";
+}
+ol li li {
+  list-style-type: "✅ " !important;
+}
+.demerit li {
+  list-style-type: "❌ ";
+}
+.caution li {
+  list-style-type: "⚠️ ";
+}
+
+ol li:nth-of-type(1) {
+  list-style-type: "1️⃣ ";
+}
+ol li:nth-of-type(2) {
+  list-style-type: "2️⃣ ";
+}
+ol li:nth-of-type(3) {
+  list-style-type: "3️⃣ ";
+}
+ol li:nth-of-type(4) {
+  list-style-type: "4️⃣ ";
+}
+ol li:nth-of-type(5) {
+  list-style-type: "5️⃣ ";
+}
+ol li:nth-of-type(6) {
+  list-style-type: "6️⃣ ";
+}
+ol li:nth-of-type(7) {
+  list-style-type: "7️⃣ ";
+}
+ol li:nth-of-type(8) {
+  list-style-type: "8️⃣ ";
+}
+ol li:nth-of-type(9) {
+  list-style-type: "9️⃣ ";
+}
+ol li:nth-of-type(10) {
+  list-style-type: "🔟 ";
+}
+
+table {
+  margin-inline: auto;
+}
+
+th {
+  background: #162556;
+  color: #f8fafc;
+}
+
+pre {
+  position: relative;
+  font-size: 21px;
+  line-height: 1.1;
+  border: solid 1px #d4d4d4;
+  border-radius: 16px;
+  background-color: #fafafa;
+  padding: 0.4rem 0.6rem;
+}
+pre code {
+  font-family: Menlo, "M PLUS 1 Code", monospace;
+  color: #171717;
+}
+code {
+  background: #eff6ff;
+}
+
+.columns-2 pre code {
+  display: inline-block;
+  columns: 2 auto;
+  column-gap: 2rem;
+}
+
+pre::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #a1a1a1;
+  padding: 0.4rem 0.6rem;
+  /* border-top: 1px solid #d4d4d4;
+  border-left: 1px solid #d4d4d4; */
+}
+
+pre:has(.language-css)::before {
+  content: "css";
+}
+pre:has(.language-javascript)::before {
+  content: "javascript";
+}
+pre:has(.language-json)::before {
+  content: "json";
+}
+pre:has(.language-html)::before {
+  content: "html";
+}
+
+/* .language-html::before,
+.language-html .language-javascript::before,
+.language-html .language-css::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: "html";
+  color: #a1a1a1;
+} */
+
+img {
+  border-radius: 16px;
+}
+
+.py-0 {
+  padding-block: 0 !important;
+}
+
+.leading-none {
+  line-height: 1;
+}
+
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
+.flex-2 {
+  flex: 2;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-x-1 {
+  column-gap: 1rem;
+}
+.gap-x-2 {
+  column-gap: 2rem;
+}
+.gap-x-4 {
+  column-gap: 4rem;
+}
