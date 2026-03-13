@@ -2,9 +2,8 @@
 marp: true
 theme: udemy
 lang: ja
-paginate: true
-# header: "バイブコーダーに贈るフロントエンド開発入門(Phase 3)"
-# footer: "© 2026 Kazuhiko Sugimoto"
+paginate: false
+# header: "バイブコーダーに贈るフロントエンド開発入門（Phase 3）"
 ---
 
 <!-- _class: center -->
@@ -13,7 +12,7 @@ paginate: true
 
 # バイブコーダーに贈るフロントエンド開発入門
 
-## Phase 3： JavaScript 基礎編
+## Phase 3： JavaScript 基礎編 ⚡️
 
 ---
 
@@ -32,6 +31,42 @@ Phase 1・2 では、HTML/CSS で **見た目** を作る方法を学んだね�
 - DOM 操作で動きのある Web ページを作れる
 
 ###### AI が書いた JavaScript を「怖がらずに読める」状態になる
+
+---
+
+## Phase 3（JavaScript 基礎編）のレッスン一覧 📚
+
+<div class="leading-none">
+
+### Lesson 1: JavaScript 基礎文法 🔤
+
+- JavaScript の基本的な文法を理解する
+
+### Lesson 2: 条件分岐とループ 🔀 🔁
+
+- 条件分岐で処理を分け、ループで同じ処理を繰り返す
+
+### Lesson 3: 関数の基本 🔧
+
+- 関数を使ってコードをまとめて再利用できる
+
+### Lesson 4: 配列とオブジェクト 📦
+
+- 複数の値とオブジェクトをリスト形式で管理
+
+### Lesson 5: 基本的な DOM 操作 🎯
+
+- JavaScript で HTML を操作できる！
+
+</div>
+
+---
+
+<!-- _class: center -->
+
+# Lesson 1
+
+# JavaScript 基礎文法 🔤
 
 ---
 
@@ -57,7 +92,7 @@ JavaScript は、Web ブラウザで動く唯一のプログラミング言語�
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>JavaScript テスト</title>
   </head>
   <body>
@@ -88,7 +123,7 @@ JavaScript は、Web ブラウザで動く唯一のプログラミング言語�
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>JavaScript テスト</title>
   </head>
   <body>
@@ -107,6 +142,7 @@ JavaScript は、Web ブラウザで動く唯一のプログラミング言語�
 ```javascript
 // ここに JavaScript を書く
 console.log("Hello, JavaScript!");
+
 ```
 
 </div>
@@ -475,32 +511,6 @@ console.log(!hasLicense); // → false
 
 ---
 
-## 論理演算子の使用例
-
-```javascript
-let age = 20;
-let isStudent = true;
-
-// 18歳以上 かつ 学生の場合
-if (age >= 18 && isStudent) {
-  console.log("学割が適用されます");
-}
-
-// 18歳未満 または 学生の場合
-if (age < 18 || isStudent) {
-  console.log("特別料金が適用されます");
-}
-
-// 学生でない場合
-if (!isStudent) {
-  console.log("通常料金です");
-}
-```
-
-**条件分岐で超重要になるよ！（Lesson 2 で詳しく学ぶ）**
-
----
-
 ## テンプレートリテラル：文字列を便利に扱う
 
 **バッククォート `` ` `` を使うと、文字列の中に変数を埋め込めるよ！**
@@ -628,6 +638,14 @@ console.log(`合計金額: ${total}円`);
 
 ---
 
+<!-- _class: center -->
+
+# Lesson 2
+
+# 条件分岐とループ 🔀 🔁
+
+---
+
 ## Lesson 2: 条件分岐とループ 🔀 🔁
 
 **学習目標**：条件分岐で「もし〇〇なら××する」という処理を書けるようになり、ループで同じ処理を繰り返せるようになる
@@ -651,6 +669,14 @@ console.log(`合計金額: ${total}円`);
 ## 条件分岐：if 文
 
 **「もし〇〇なら××する」という処理を書けるよ！**
+
+### if 文の構造
+
+```javascript
+if (条件式) {
+  // 条件式がtrueの時に実行される処理
+}
+```
 
 <div class="flex gap-x-1">
 <div class="flex-1">
@@ -676,14 +702,6 @@ if (age >= 18) {
 
 </div>
 </div>
-
-### if 文の構造
-
-```javascript
-if (条件式) {
-  // 条件式がtrueの時に実行される処理
-}
-```
 
 **例え話**：まるで「もし雨が降っていたら、傘を持っていく」みたいな感じ！
 
@@ -765,6 +783,14 @@ console.log(`あなたの成績は ${grade} です`);
 
 **シンプルな if-else は、三項演算子で 1 行で書けるよ！**
 
+### 三項演算子の構造
+
+```javascript
+条件式 ? 真の時の値 : 偽の時の値;
+```
+
+**読み方**：「もし条件式が true なら『真の時の値』、そうでなければ『偽の時の値』」
+
 ### 三項演算子を使った書き方
 
 ```javascript
@@ -774,34 +800,6 @@ const status = age >= 18 ? "成人" : "未成年";
 console.log(status); // → 成人
 ```
 
-**たった 1 行！スッキリ！**
-
-### 三項演算子の構造
-
-```javascript
-条件式 ? 真の時の値 : 偽の時の値;
-```
-
-**読み方**：「もし条件式が true なら『真の時の値』、そうでなければ『偽の時の値』」
-
----
-
-## 三項演算子の使用例
-
-```javascript
-const score = 85;
-const result = score >= 60 ? "合格" : "不合格";
-console.log(result); // → 合格
-
-const isLoggedIn = true;
-const message = isLoggedIn ? "ようこそ" : "ログインしてください";
-console.log(message); // → ようこそ
-
-const price = 1000;
-const discount = price >= 5000 ? price * 0.1 : 0;
-console.log(`割引額: ${discount}円`); // → 割引額: 0円
-```
-
 **シンプルな条件分岐には三項演算子が便利！**
 
 ---
@@ -809,6 +807,29 @@ console.log(`割引額: ${discount}円`); // → 割引額: 0円
 ## switch 文：複数の値で分岐
 
 **ある変数の値によって処理を分ける時に使うよ！**
+
+### switch 文の構造
+
+```javascript
+switch (式) {
+  case 値1:
+    // 式が値1と一致した時の処理
+    break;
+  case 値2:
+    // 式が値2と一致した時の処理
+    break;
+  default:
+    // どの値にも一致しなかった時の処理
+}
+```
+
+**重要**：各 `case` の最後に `break` を書かないと、次の `case` の処理も実行されちゃうよ！
+
+---
+
+## switch 文：複数の値で分岐（続き）
+
+### switch 文を使った書き方
 
 <div class="columns-2">
 
@@ -844,30 +865,29 @@ switch (day) {
 
 ---
 
-## switch 文：複数の値で分岐（続き）
-
-### switch 文の構造
-
-```javascript
-switch (式) {
-  case 値1:
-    // 式が値1と一致した時の処理
-    break;
-  case 値2:
-    // 式が値2と一致した時の処理
-    break;
-  default:
-    // どの値にも一致しなかった時の処理
-}
-```
-
-**重要**：各 `case` の最後に `break` を書かないと、次の `case` の処理も実行されちゃうよ！
-
----
-
 ## for ループ：回数を指定して繰り返す
 
 **決まった回数だけ処理を繰り返すよ！**
+
+### for ループの構造
+
+```javascript
+for (初期化; 条件式; 増減式) {
+  // 条件式がtrueの間、繰り返される処理
+}
+```
+
+**各部分の役割**：
+
+1. **初期化**：`let i = 0` - ループ開始前に 1 回だけ実行
+2. **条件式**：`i < 5` - 毎回チェックして、true なら処理を実行
+3. **増減式**：`i++` - 処理が終わるたびに実行
+
+**まるで「カウントダウンタイマー」みたいな仕組み！**
+
+---
+
+## for ループ：回数を指定して繰り返す（続き）
 
 ### 基本の for ループ
 
@@ -889,78 +909,9 @@ for (let i = 0; i < 5; i++) {
 
 ---
 
-## for ループ：回数を指定して繰り返す（続き）
-
-### for ループの構造
-
-```javascript
-for (初期化; 条件式; 増減式) {
-  // 条件式がtrueの間、繰り返される処理
-}
-```
-
-**各部分の役割**：
-
-1. **初期化**：`let i = 0` - ループ開始前に 1 回だけ実行
-2. **条件式**：`i < 5` - 毎回チェックして、true なら処理を実行
-3. **増減式**：`i++` - 処理が終わるたびに実行
-
-**まるで「カウントダウンタイマー」みたいな仕組み！**
-
----
-
-## 実践例：1 から 10 までの合計
-
-```javascript
-let sum = 0;
-
-for (let i = 1; i <= 10; i++) {
-  sum += i; // sum = sum + i と同じ
-  console.log(`i=${i}, 現在の合計=${sum}`);
-}
-
-console.log(`最終的な合計: ${sum}`);
-```
-
-**出力**：
-
-```text
-i=1, 現在の合計=1
-i=2, 現在の合計=3
-i=3, 現在の合計=6
-...
-i=10, 現在の合計=55
-最終的な合計: 55
-```
-
----
-
 ## while ループ：条件が true の間繰り返す
 
 **条件式が true の間、ずっと繰り返すよ！**
-
-```javascript
-let count = 0;
-
-while (count < 5) {
-  console.log(`現在のcountは ${count} です`);
-  count++;
-}
-```
-
-**出力**：
-
-```text
-現在のcountは 0 です
-現在のcountは 1 です
-現在のcountは 2 です
-現在のcountは 3 です
-現在のcountは 4 です
-```
-
----
-
-## while ループ：条件が true の間繰り返す（続き）
 
 ### while ループの構造
 
@@ -979,6 +930,31 @@ while (i < 5) {
   console.log(i);
   // i++を忘れている！iがずっと0のまま
 }
+```
+
+---
+
+## while ループ：条件が true の間繰り返す（続き）
+
+### 基本の while ループ
+
+```javascript
+let count = 0;
+
+while (count < 5) {
+  console.log(`現在のcountは ${count} です`);
+  count++;
+}
+```
+
+**出力**：
+
+```text
+現在のcountは 0 です
+現在のcountは 1 です
+現在のcountは 2 です
+現在のcountは 3 です
+現在のcountは 4 です
 ```
 
 ---
@@ -1080,6 +1056,14 @@ for (let i = 1; i <= 30; i++) {
 
 ---
 
+<!-- _class: center -->
+
+# Lesson 3
+
+# 関数の基本 🔧
+
+---
+
 ## Lesson 3: 関数の基本 🔧
 
 **学習目標**：関数を使ってコードをまとめて再利用できるようになり、引数と戻り値を理解してより実践的なプログラムが書けるようになる
@@ -1101,6 +1085,25 @@ for (let i = 1; i <= 30; i++) {
 
 ## 関数宣言：基本の書き方
 
+### 関数宣言の構造
+
+```javascript
+function 関数名() {
+  // 実行したい処理
+}
+```
+
+**重要なポイント**：
+
+- `function` キーワードで関数を宣言
+- 関数名は「何をするか」が分かる名前にする
+- `()` の後に `{}` で処理を囲む
+- 呼び出す時は `関数名()` と書く
+
+---
+
+## 関数宣言：基本の書き方（続き）
+
 ### 最もシンプルな関数
 
 ```javascript
@@ -1116,23 +1119,6 @@ sayHello(); // → こんにちは！
 ```
 
 **関数を一度定義すれば、何度でも呼び出せる！**
-
----
-
-## 関数宣言の構造
-
-```javascript
-function 関数名() {
-  // 実行したい処理
-}
-```
-
-**重要なポイント**：
-
-- `function` キーワードで関数を宣言
-- 関数名は「何をするか」が分かる名前にする
-- `()` の後に `{}` で処理を囲む
-- 呼び出す時は `関数名()` と書く
 
 ---
 
@@ -1236,6 +1222,25 @@ console.log(checkAge(20)); // → 成人です
 
 ---
 
+## 関数式：関数を変数に代入する
+
+**関数を変数に代入することもできるよ！**
+
+```javascript
+const greet = function (name) {
+  console.log(`こんにちは、${name}さん！`);
+};
+
+greet("太郎"); // → こんにちは、太郎さん！
+```
+
+**関数宣言と関数式の違い**：
+
+- **関数宣言**：宣言前でも呼び出せる
+- **関数式**：変数に代入されるので、宣言後にしか呼び出せない
+
+---
+
 ## アロー関数：短く書ける関数
 
 **ES6 で追加された、関数をもっと短く書ける方法！**
@@ -1296,35 +1301,6 @@ console.log(square2(4)); // → 16
 
 ---
 
-## アロー関数の使用例
-
-```javascript
-// 引数なし
-const sayHello = () => console.log("こんにちは");
-
-// 引数1つ
-const double = n => n * 2;
-
-// 引数複数
-const add = (a, b) => a + b;
-
-// 複数行の処理
-const greet = (name) => {
-  const message = `こんにちは、${name}さん`;
-  console.log(message);
-  return message;
-};
-
-sayHello(); // → こんにちは
-console.log(double(5)); // → 10
-console.log(add(3, 7)); // → 10
-greet("太郎"); // → こんにちは、太郎さん
-```
-
-**アロー関数は、短くて読みやすい！モダンな JavaScript では超よく使うよ！**
-
----
-
 ## 実践例：複数の関数を組み合わせる
 
 ```javascript
@@ -1363,13 +1339,20 @@ console.log(calculateFinalPrice(10000, 0.1, 0.2)); // → 8800
 - **戻り値**：`return` で結果を返す
 - **関数式**：関数を変数に代入
 - **アロー関数**：`=>` で短く書ける
-- **スコープ**：変数の有効範囲を理解する
 
 ### 重要なポイント
 
 1. **関数名は「何をするか」が分かる名前にする**
 2. **return で値を返すのを忘れずに**
 3. **モダンな JavaScript ではアロー関数をよく使う**
+
+---
+
+<!-- _class: center -->
+
+# Lesson 4
+
+# 配列とオブジェクト 📦
 
 ---
 
@@ -1693,6 +1676,14 @@ console.log(adults);
 
 ---
 
+<!-- _class: center -->
+
+# Lesson 5
+
+# 基本的な DOM 操作 🎯
+
+---
+
 ## Lesson 5: 基本的な DOM 操作 🎯
 
 **学習目標**：JavaScript を使って HTML 要素を操作でき、ユーザーのクリックなどのイベントに反応できるようになる
@@ -1720,13 +1711,13 @@ console.log(adults);
 
 ```text
 HTML（静的な文書）
-    ↓
-    ↓ ブラウザが DOM を構築
-    ↓
+    ⬇️
+  ブラウザが DOM を構築
+    ⬇️
 DOM（JavaScriptで操作できるオブジェクト）
-    ↓
-    ↓ JavaScript で変更
-    ↓
+    ⬇️
+  JavaScript で変更
+    ⬇️
 ブラウザに反映
 ```
 
@@ -1742,7 +1733,7 @@ DOM（JavaScriptで操作できるオブジェクト）
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>DOM操作</title>
     <script src="script.js"></script>
   </head>
@@ -1971,7 +1962,7 @@ container.appendChild(newParagraph);
 ## 実践例：TODO リスト
 
 ```html
-<input type="text" id="todo-input" placeholder="やることを入力" />
+<input type="text" id="todo-input" placeholder="やることを入力">
 <button id="add-btn">追加</button>
 <div id="todo-list"></div>
 ```

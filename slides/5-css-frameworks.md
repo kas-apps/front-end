@@ -2,8 +2,8 @@
 marp: true
 theme: udemy
 lang: ja
-paginate: true
-# header: "バイブコーダーに贈るフロントエンド開発入門(Phase 5)"
+paginate: false
+# header: "バイブコーダーに贈るフロントエンド開発入門（Phase 5）"
 ---
 
 <!-- _class: center -->
@@ -140,8 +140,8 @@ paginate: true
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap入門</title>
 
     <!-- Bootstrap CSS（これを追加するだけ！） -->
@@ -190,7 +190,7 @@ Bootstrap のグリッドは、**画面を12分割**して要素を配置する�
 画面全体
 ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
 │   │   │   │   │   │   │   │   │   │   │   │   │
-│ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 10│ 11│ 12│  ← 12カラム
+│ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 10│ 11│ 12│  ⬅️ 12カラム
 │   │   │   │   │   │   │   │   │   │   │   │   │
 └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘
 ```
@@ -480,7 +480,7 @@ Bootstrap の**既製コンポーネント**を使ってみよう！
 
 ```html
 <div class="card m-4 w-25">
-  <img src="https://placehold.jp/400x200.png" class="card-img-top" alt="カード画像" />
+  <img src="https://placehold.jp/400x200.png" class="card-img-top" alt="カード画像">
   <div class="card-body">
     <h5 class="card-title">カードのタイトル</h5>
     <p class="card-text">
@@ -629,7 +629,7 @@ Bootstrap コンポーネントを使うと
 
 ```html
 <form class="d-flex" role="search">
-  <input class="form-control me-2" type="search" placeholder="検索" />
+  <input class="form-control me-2" type="search" placeholder="検索">
   <button class="btn btn-outline-success" type="submit">検索</button>
 </form>
 ```
@@ -647,7 +647,7 @@ Bootstrap コンポーネントを使うと
   <ul class="dropdown-menu">
     <li><a class="dropdown-item" href="#">Web Design</a></li>
     <li><a class="dropdown-item" href="#">App Development</a></li>
-    <li><hr class="dropdown-divider" /></li>
+    <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="#">Consulting</a></li>
   </ul>
 </li>
@@ -750,11 +750,11 @@ Bootstrap コンポーネントを使うと
         <form>
           <div class="mb-3">
             <label for="email" class="form-label">メールアドレス</label>
-            <input type="email" class="form-control" id="email" required />
+            <input type="email" class="form-control" id="email" required>
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">パスワード</label>
-            <input type="password" class="form-control" id="password" required />
+            <input type="password" class="form-control" id="password" required>
           </div>
         </form>
       </div>
@@ -817,7 +817,7 @@ Bootstrap の **Form コンポーネント**を使えば、HTML5 のフォーム
 
 <!-- チェックボックス -->
 <div class="mb-3 form-check">
-  <input type="checkbox" class="form-check-input" id="agree" required />
+  <input type="checkbox" class="form-check-input" id="agree" required>
   <label class="form-check-label" for="agree">
     利用規約に同意します
   </label>
@@ -987,6 +987,8 @@ Bootstrap の **Form コンポーネント**を使えば、HTML5 のフォーム
 </nav>
 ```
 
+「Home / カテゴリー / 現在のページ」のような階層表示ができる！
+
 ---
 
 ### Pagination（ページネーション）
@@ -1148,8 +1150,8 @@ Tailwind CSS を使うには、**たった 1 行追加するだけ**！**Play CD
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tailwind CSS 入門</title>
 
     <!-- Tailwind CSS Play CDN（これを追加するだけ！） -->
@@ -1383,7 +1385,7 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
 ```html
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-    <img src="https://placehold.jp/400x200.png" alt="Card 1" class="w-full" />
+    <img src="https://placehold.jp/400x200.png" alt="Card 1" class="w-full">
     <div class="p-6">
       <h2 class="text-xl font-bold mb-2">カード 1</h2>
       <p class="text-gray-600">
@@ -1534,8 +1536,8 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tailwind CSS ランディングページ</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
@@ -1740,7 +1742,7 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
 
 <body>
   <!-- カスタムカラーが使える！ -->
-  <button class="bg-secondary text-white
+  <button class="bg-primary text-brand-50
                  px-6 py-3 rounded-lg m-4">
     ブランドカラーのボタン
   </button>
@@ -1797,9 +1799,9 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width, initial-scale=1.0" />
+        content="width=device-width, initial-scale=1.0">
   <title>ダークモード切り替え</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -1968,30 +1970,6 @@ Tailwind CSS の**レスポンシブデザイン**は超シンプル！
 
 ## 実践的なテクニック
 
-### group と group-hover
-
-親要素に `group` を付けると、子要素で `group-hover:` が使える!
-
-```html
-<div class="group w-1/2 bg-white p-6 rounded-lg shadow-lg
-            hover:shadow-2xl transition cursor-pointer m-4">
-  <img src="https://placehold.jp/400x200.png" alt="画像"
-       class="w-full h-48 object-cover rounded mb-4 group-hover:scale-105 transition">
-  <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition">
-    カードタイトル
-  </h3>
-  <p class="text-gray-600">
-    カードをホバーすると、カード全体に影が付き、画像が拡大、タイトルとボタンの色が変化します。
-  </p>
-  <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded
-                 group-hover:bg-blue-600 transition">
-    詳しく見る
-  </button>
-</div>
-```
-
----
-
 ### peer と peer-checked
 
 input に `peer`、兄弟要素に `peer-checked:` を付けると、input の状態に応じて兄弟要素のスタイルが変わる
@@ -2061,20 +2039,20 @@ Tailwind にない値を使いたい時は、`[]` で任意の値を指定でき
     </div>
     <nav class="px-4">
       <a href="#" class="flex items-center px-4 py-3
-                         bg-blue-500 text-white rounded-lg mb-2">
+                          bg-blue-500 text-white rounded-lg mb-2">
         <span class="mr-3">📊</span> ダッシュボード
       </a>
       <a href="#" class="flex items-center px-4 py-3
-                         text-gray-600 dark:text-gray-400
-                         hover:bg-gray-100 dark:hover:bg-gray-700
-                         rounded-lg mb-2 transition">
+                          text-gray-600 dark:text-gray-400
+                          hover:bg-gray-100 dark:hover:bg-gray-700
+                          rounded-lg mb-2 transition">
         <span class="mr-3">👥</span> ユーザー
       </a>
     </nav>
   </aside>
   <!-- メインコンテンツ -->
-  <main class="flex-1 p-8">
-    <h2 class="text-3xl font-bold mb-2">ダッシュボード</h2>
+  <main class="flex-1 p-8 bg-gray-100 dark:bg-gray-700">
+    <h2 class="text-3xl font-bold mb-2 dark:text-white">ダッシュボード</h2>
     <p class="text-gray-600 dark:text-gray-400">ようこそ、管理画面へ</p>
   </main>
 </div>
@@ -2101,7 +2079,7 @@ Tailwind にない値を使いたい時は、`[]` で任意の値を指定でき
       <h3 class="text-gray-600 dark:text-gray-400">売上</h3>
       <span class="text-3xl">💰</span>
     </div>
-    <p class="text-4xl font-bold text-green-600">¥567,890</p>
+    <p class="text-4xl font-bold text-green-600">¥56,789</p>
     <p class="text-green-500 text-sm mt-2">↑ 8% 先月比</p>
   </div>
   <!-- カード3 -->
@@ -2125,7 +2103,7 @@ Tailwind にない値を使いたい時は、`[]` で任意の値を指定でき
 - **カスタマイズ設定**: CDN版とビルド版の違い、カスタムカラーの追加
 - **ダークモード**: `dark:` プレフィックスで簡単に対応
 - **アニメーション**: transition、transform、animate- クラス
-- **実践テクニック**: group/group-hover、peer/peer-checked、arbitrary values
+- **実践テクニック**: peer/peer-checked、arbitrary values
 - **実践プロジェクト**: ダッシュボード UI の構築
 
 **Tailwind CSS を使えば、どんな UI でも自由自在!** 💪✨

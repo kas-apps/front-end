@@ -58,3 +58,5 @@ coverage/
 
 # スライドのエクスポートファイル
 slides/export/
+# スライドの講座用スクリプトファイル
+slides/scripts/

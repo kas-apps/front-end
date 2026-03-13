@@ -2,9 +2,8 @@
 marp: true
 theme: udemy
 lang: ja
-paginate: true
+paginate: false
 # header: "バイブコーダーに贈るフロントエンド開発入門（Phase 1）"
-# footer: "© 2026 Kazuhiko Sugimoto"
 ---
 
 <!-- _class: center -->
@@ -13,7 +12,7 @@ paginate: true
 
 # バイブコーダーに贈るフロントエンド開発入門
 
-## Phase 1： HTML/CSS 基礎編
+## Phase 1： HTML/CSS 基礎編 🏛️
 
 ---
 
@@ -33,7 +32,100 @@ paginate: true
 
 ---
 
+## HTML/CSS はプログラミング言語？
+
+一般的にはプログラミング言語とは異なるけど、**HTML/CSS こそが Web の土台**だよ。
+
+| 特徴   | HTML/CSS             | JavaScript                 |
+| ------ | -------------------- | -------------------------- |
+| 目的   | 構造とスタイルを記述 | ロジックや処理を記述       |
+| 実行   | 宣言的に表示を指定   | 順次実行、条件分岐、ループ |
+
+**プログラミング言語ほど複雑じゃない**：
+
+- 複雑なロジックを考えなくていい
+- 「書いたものがそのまま表示される」シンプルさ
+
+**でも、プログラミングに通じる基礎が身につく**：
+
+- **構造化思考**：情報を階層的に整理する力
+- **命名センス**：クラス名や ID の付け方
+
+###### 気軽に始められて、でもしっかり力がつく。それが HTML/CSS！
+
+---
+
+## HTML と CSS の役割
+
+<div class="flex gap-x-1">
+<div class="flex-1">
+
+### HTML： ドキュメントの**構造**を定義
+
+「何が」「どんな意味で」あるかを定義する
+
+- 見出し、段落、ボタン...
+
+`html`
+
+```html
+<!-- 記事 -->
+<article>
+  <!-- 見出し -->
+  <h1>バイブコーディング入門</h1>
+  <!-- 本文 -->
+  <p>AI と一緒にコードを書くスタイル</p>
+  <!-- ボタン -->
+  <button>詳しく見る</button>
+</article>
+```
+
+`<!-- -->`：HTML内のコメント
+
+</div>
+<div class="flex-1">
+
+### CSS： ドキュメントを**装飾**
+
+「どう見えるか」を定義する
+
+- 色、サイズ、配置、余白...
+
+`css`
+
+```css
+/* 見出しのスタイル */
+h1 {
+  color: blue;       /* 文字の色を青色 */
+  font-size: 32px;   /* フォントサイズを32px */
+  font-weight: bold; /* 文字の太さをボールド */
+}
+```
+
+`/* */`：CSS内のコメント
+
+</div>
+</div>
+
+---
+
+## あなたはもうドキュメント作成を知っている
+
+Word や Pages で文書を作ることと、HTML/CSS は**本質的に同じ**
+
+| Word, Pages          | HTML/CSS                  |
+| -------------------- | ------------------------- |
+| タイトルを設定       | `<h1>タイトル</h1>`       |
+| 見出しを設定         | `<h2>サブタイトル</h2>`   |
+| 本文を書く           | `<p>本文</p>`             |
+| 太字にする           | CSS: `font-weight: bold;` |
+| フォントや色を変える | CSS: `color: blue;`       |
+
+---
+
 ## Phase 1（HTML/CSS 基礎編）のレッスン一覧 📚
+
+<div class="leading-none">
 
 ### Lesson 1: HTML の基本構造 🏛️
 
@@ -55,9 +147,19 @@ paginate: true
 
 - フォント関連のプロパティ
 
+</div>
+
 ---
 
-## Lesson 1: HTML の基本構造
+<!-- _class: center -->
+
+# Lesson 1
+
+# HTML の基本構造 🏛️
+
+---
+
+## Lesson 1: HTML の基本構造 🏛️
 
 **学習目標**：HTML ドキュメントの基本構造を理解し、最初の HTML ファイルを作成できるようになる
 
@@ -84,7 +186,7 @@ HTML も同じで、**決まった基本構造**があるんだ。
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>私の最初のページ</title>
   </head>
   <body>
@@ -126,7 +228,7 @@ HTML も同じで、**決まった基本構造**があるんだ。
 
 ```html
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>私の最初のページ</title>
 </head>
 ```
@@ -138,7 +240,7 @@ HTML も同じで、**決まった基本構造**があるんだ。
 ### `<meta charset="UTF-8">`
 
 ```html
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 ```
 
 - **役割**：文字コードの指定（日本語が正しく表示されるために必要）
@@ -182,6 +284,14 @@ HTML も同じで、**決まった基本構造**があるんだ。
 - `<meta>`: ページの設定
 - `<title>`: ページのタイトル
 - `<body>`: 実際にブラウザに表示される内容
+
+---
+
+<!-- _class: center -->
+
+# Lesson 2
+
+# HTML 基本要素 📝
 
 ---
 
@@ -230,9 +340,7 @@ HTML も同じで、**決まった基本構造**があるんだ。
 ```html
 <p>これが1つの段落です。</p>
 <p>これは別の段落です。段落と段落の間には、自動的に余白が入ります。</p>
-```
 
-```html
 <p>
   段落の中で改行したい時は、普通に改行しても表示には反映されません。
   ブラウザは自動的に1行にまとめます。
@@ -292,18 +400,64 @@ HTML も同じで、**決まった基本構造**があるんだ。
 
 ---
 
+## テーブル：`<table>`
+
+表を作る時に使う
+
+<div class="flex gap-x-1">
+<div class="flex-1">
+
+```html
+<table border="1">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>年齢</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>田中 太郎</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>鈴木 花子</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+</div>
+<div class="flex-1">
+
+**要素の説明**：
+
+- `<table>`：表全体を囲む
+- `<thead>`：表のヘッダー部分
+- `<tbody>`：表のボディ部分
+- `<tr>`：1 行（table row）
+- `<th>`：見出しセル（table header）
+- `<td>`：データセル（table data）
+
+</div>
+
+</div>
+
+---
+
 ## リンク：`<a>`
 
 同じサイト内の他のページや、他サイトへのリンクを作る
 
 ```html
 <!-- 同じサイト内へのリンク -->
-<a href="about.html">このサイトのaboutページへ</a>
+<a href="about.html">このサイトのaboutページへ</a><br>
 <!-- ページ内リンク -->
-<a href="#section1">このページの特定の場所へ</a>
+<a href="#section1">このページの特定の場所へ</a><br>
 
 <!-- 他サイトへのリンク -->
-<a href="https://example.com">他サイトへのリンク</a>
+<a href="https://example.com">他サイトへのリンク</a><br>
 <!-- 新しいタブで開く -->
 <a href="https://example.com" target="_blank">新しいタブで開く</a>
 ```
@@ -319,7 +473,7 @@ HTML も同じで、**決まった基本構造**があるんだ。
 ページ内に画像を表示する
 
 ```html
-<img src="cat.jpg" alt="庭で遊ぶ茶色い猫" />
+<img src="cat.jpg" alt="庭で遊ぶ茶色い猫">
 ```
 
 - **src 属性**：画像ファイルのパス
@@ -347,52 +501,6 @@ HTML も同じで、**決まった基本構造**があるんだ。
 ### 絶対パス
 
 絶対的な位置（例：`https://example.com/photo.jpg`）
-
----
-
-## テーブル：`<table>`
-
-表を作る時に使う
-
-<div class="flex gap-x-1">
-<div class="flex-1">
-
-```html
-<table>
-  <thead>
-    <tr>
-      <th>名前</th>
-      <th>年齢</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>田中太郎</td>
-      <td>25</td>
-    </tr>
-    <tr>
-      <td>鈴木花子</td>
-      <td>30</td>
-    </tr>
-  </tbody>
-</table>
-```
-
-</div>
-<div class="flex-1">
-
-**要素の説明**：
-
-- `<table>`：表全体を囲む
-- `<thead>`：表のヘッダー部分
-- `<tbody>`：表のボディ部分
-- `<tr>`：1 行（table row）
-- `<th>`：見出しセル（table header）
-- `<td>`：データセル（table data）
-
-</div>
-
-</div>
 
 ---
 
@@ -466,14 +574,22 @@ HTML も同じで、**決まった基本構造**があるんだ。
 - **見出し（h1 〜 h6）** で文書を構造化
 - **段落（p）**と**改行（br）** で文章を書く
 - **リスト（ul, ol, li）** で情報を整理
+- **テーブル（table）** で表を追加
 - **リンク（a）** で他のページに繋ぐ
 - **画像（img）** でビジュアルを追加
-- **テーブル（table）** で表を追加
 - **コンテナ要素（div, span）** を理解した
 
 ---
 
-## Lesson 3: セマンティック HTML
+<!-- _class: center -->
+
+# Lesson 3
+
+# セマンティック HTML 🏠
+
+---
+
+## Lesson 3: セマンティック HTML 🏠
 
 **学習目標**：HTML の「意味」を理解し、適切なセマンティック要素を使ってドキュメント構造を作れるようになる
 
@@ -492,7 +608,6 @@ HTML も同じで、**決まった基本構造**があるんだ。
 ## セマンティック要素の基礎知識
 
 セマンティック（Semantic） = **意味のある**
-
 意味のない箱ではなく、**何の箱か**が分かるタグのこと
 
 ```html
@@ -548,7 +663,7 @@ HTML も同じで、**決まった基本構造**があるんだ。
 
 ```html
 <main>
-  <h1>ページのメインタイトル</h1>
+  <h2>ページのメインタイトル</h2>
   <p>ここがページの主要な内容です。</p>
 </main>
 ```
@@ -658,13 +773,21 @@ HTML も同じで、**決まった基本構造**があるんだ。
 
 ---
 
+<!-- _class: center -->
+
+# Lesson 4
+
+# CSS の基礎 🎨
+
+---
+
 ## Lesson 4: CSS の基礎 🎨
 
 **学習目標**：CSS の基本的な書き方を理解し、HTML に装飾を加えられるようになる
 
 ### なぜ CSS を学ぶの？
 
-Phase 0 で学んだように、**HTML は構造**、**CSS は装飾**だったよね！
+HTML と CSS の役割で学んだように、**HTML は構造**、**CSS は装飾**だったよね！
 
 文書作成アプリで文書を作る時、こんなことをしたことがあると思う：
 
@@ -706,7 +829,6 @@ h1 {
   color: blue;
   font-size: 36px;
 }
-
 p {
   color: gray;
   font-size: 18px;
@@ -756,7 +878,7 @@ HTML タグに直接 `style` 属性で書く方法。
 
 ```html
 <h1 style="color: blue; font-size: 36px;">ようこそ！</h1>
-<p style="color: gray; font-size: 18px;">私のウェブサイトです。</p>
+<p style="color: gray; font-size: 18px;">これは私のウェブサイトです。</p>
 ```
 
 #### メリット
@@ -780,12 +902,12 @@ HTML タグに直接 `style` 属性で書く方法。
 
 HTML ファイルの `<head>` 内に `<style>` タグで書く方法
 
-<div class="flex items-start gap-x-1">
+<div class="flex gap-x-1">
 <div class="flex-1">
 
 ```html
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>私のページ</title>
   <style>
     h1 {
@@ -835,10 +957,10 @@ CSS を別ファイル（`.css`）に分けて、HTML から読み込む方法
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>私のページ</title>
     <!-- 外部 CSS ファイルを読み込む -->
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <h1>ようこそ！</h1>
@@ -969,16 +1091,15 @@ h1 {
 <div class="flex gap-x-1">
 <div class="flex-1">
 
-**`css`**
+`css`
 
 ```css
-/* すべての <h1> タグ */
+/* すべてのh1タグ */
 h1 {
   color: blue;
   font-size: 32px;
 }
-
-/* すべての <p> タグ */
+/* すべてのpタグ */
 p {
   color: gray;
   font-size: 16px;
@@ -988,7 +1109,7 @@ p {
 </div>
 <div class="flex-1">
 
-**`html`**
+`html`
 
 ```html
 <h1>これは青色で32px</h1>
@@ -1007,10 +1128,10 @@ p {
 <div class="flex gap-x-1">
 <div class="flex-1">
 
-**`css`**
+`css`
 
 ```css
-/* クラス名は . で始める */
+/* クラス名は.で始める */
 .highlight {
   background: yellow;
   font-weight: bold;
@@ -1024,7 +1145,7 @@ p {
 </div>
 <div class="flex-1">
 
-**`html`**
+`html`
 
 ```html
 <p>これは普通の段落</p>
@@ -1055,10 +1176,10 @@ p {
 <div class="flex gap-x-1">
 <div class="flex-1">
 
-**`css`**
+`css`
 
 ```css
-/* ID名は # で始める */
+/* ID名は#で始める */
 #header {
   background: navy;
   padding: 20px;
@@ -1072,7 +1193,7 @@ p {
 </div>
 <div class="flex-1">
 
-**`html`**
+`html`
 
 ```html
 <header id="header">
@@ -1138,7 +1259,7 @@ Web ページのすべての要素は、**箱（ボックス）** として扱�
 
 ---
 
-## ボックスモデルの**例え話**
+### ボックスモデルの**例え話**
 
 壁に複数の絵画が飾ってある様子：
 
@@ -1284,7 +1405,7 @@ margin: 0 auto; /* 上下0、左右auto（中央寄せ） */
 
 ---
 
-### ボックスモデルの実践例
+## ボックスモデルの実践例
 
 <div class="flex gap-x-1">
 <div class="flex-1">
@@ -1330,8 +1451,7 @@ margin: 0 auto; /* 上下0、左右auto（中央寄せ） */
 
 ## display プロパティ - 要素の表示方法
 
-Lesson 2 で学んだ「ブロックレベル」と「インラインレベル」は、  
-CSS の`display`プロパティで変更できる
+Lesson 2 で学んだ「ブロックレベル」と「インラインレベル」は、CSS の`display`プロパティで変更できる
 
 ### ブロックレベルとインラインレベル
 
@@ -1356,6 +1476,10 @@ CSS の`display`プロパティで変更できる
 .block {
   display: block;
   background: lightblue;
+  width: 300px;
+  height: 100px;
+  margin: 20px;
+  padding: 20px;
 }
 ```
 
@@ -1395,6 +1519,8 @@ CSS の`display`プロパティで変更できる
 .inline {
   display: inline;
   background: lightcoral;
+  margin: 20px;
+  padding: 20px;
 }
 ```
 
@@ -1418,7 +1544,7 @@ CSS の`display`プロパティで変更できる
 - 内容分の幅だけ
 - 改行されない（横に並ぶ）
 - width, height を指定できない
-- margin, padding の上下が効かない
+- margin の上下が効かない
 
 ---
 
@@ -1433,7 +1559,8 @@ CSS の`display`プロパティで変更できる
   background: lightgreen;
   width: 100px;
   height: 100px;
-  margin: 10px;
+  margin: 20px;
+  padding: 20px;
 }
 ```
 
@@ -1469,7 +1596,15 @@ CSS の`display`プロパティで変更できる
 
 ---
 
-## Lesson 5: テキストスタイリング
+<!-- _class: center -->
+
+# Lesson 5
+
+# テキストスタイリング ✍️
+
+---
+
+## Lesson 5: テキストスタイリング ✍️
 
 **学習目標**：テキストの見た目を自由に変更できるようになる
 
@@ -1502,7 +1637,7 @@ CSS の`display`プロパティで変更できる
 
 ---
 
-## 色名（Color Name）
+### 色名（Color Name）
 
 英語の色名を使う方法。シンプルで分かりやすい！
 
@@ -1520,22 +1655,22 @@ CSS の`display`プロパティで変更できる
 
 ---
 
-## 16 進数カラーコード（Hex Code）
+### 16 進数カラーコード（Hex Code）
 
 `#` で始まる 6 桁（または 3 桁）の英数字で色を指定する方法。
 
 <div class="flex">
 <div class="flex-1">
 
-#### 仕組み
+#### 形式
 
-**形式**：`#RRGGBB`
+`#RRGGBB`
 
 - **RR**：赤（Red）の明るさ（00〜FF）
 - **GG**：緑（Green）の明るさ（00〜FF）
 - **BB**：青（Blue）の明るさ（00〜FF）
 
-**値の範囲**：
+#### 値の範囲
 
 - `00`：暗い（0）
 - `FF`：明るい（255）
@@ -1566,16 +1701,15 @@ CSS の`display`プロパティで変更できる
 
 ---
 
-## 3. RGB / RGBA - 透明度も指定できる！
+### RGB / RGBA - 透明度も指定できる！
 
 赤・緑・青の光の三原色を 0〜255 の数値で指定する方法。
 
 <div class="flex">
 <div>
 
-### RGB / RGBA
+#### 形式
 
-**形式**：
 `rgb(赤, 緑, 青)`
 `rgba(赤, 緑, 青, 透明度)`
 
@@ -1617,7 +1751,7 @@ rgba(59, 130, 246, 0.2)  /* 薄い青（ハイライト背景） */
 
 ##### 表：色の指定方法
 
-**おすすめの使い分け**：
+### おすすめの使い分け
 
 - **学習中**：色名（`blue`, `red`）
 - **実務（不透明）**：16 進数（`#3b82f6`）
@@ -1636,7 +1770,7 @@ rgba(59, 130, 246, 0.2)  /* 薄い青（ハイライト背景） */
 
 ---
 
-## px（ピクセル）⭐
+### px（ピクセル）⭐
 
 画面のドット数で指定する絶対単位。
 
@@ -1658,7 +1792,7 @@ p {
 
 ---
 
-## em - 親要素基準の相対単位
+### em - 親要素基準の相対単位
 
 **親要素の font-size を基準**にした相対単位。
 
@@ -1700,7 +1834,7 @@ p {
 
 ---
 
-## %（パーセント）- 親要素基準
+### %（パーセント）- 親要素基準
 
 親要素のサイズに対する割合で指定
 
@@ -1721,7 +1855,7 @@ p {
 
 ---
 
-### サイズ単位まとめ
+## サイズ単位まとめ
 
 | 単位  | 基準                   | 入れ子   | 実務での使用頻度 |
 | ----- | ---------------------- | -------- | ---------------- |
@@ -1732,7 +1866,7 @@ p {
 
 ##### 表：サイズ単位
 
-**おすすめの使い分け**：
+### おすすめの使い分け
 
 - **フォントサイズ**：`rem`（最もおすすめ！）
 - **幅・高さ**：`%` または `px`
@@ -1752,7 +1886,7 @@ p {
 
 ---
 
-## font-family - フォントの種類 ⭐
+### font-family - フォントの種類 ⭐
 
 使用するフォント（書体）を指定する。
 
@@ -1770,7 +1904,7 @@ p {
 
 ### フォントファミリーの種類
 
-**欧文フォント**：
+#### 欧文フォント
 
 ```css
 /* ゴシック体（sans-serif） */
@@ -1783,14 +1917,14 @@ font-family: "Times New Roman", Times, serif;
 font-family: "Courier New", Courier, monospace;
 ```
 
-**和文フォント**：
+#### 和文フォント
 
 ```css
 /* ゴシック体 */
-font-family: "游ゴシック", "Yu Gothic", "ヒラギノ角ゴシック", "Hiragino Kaku Gothic", sans-serif;
+font-family: "Yu Gothic", "Hiragino Kaku Gothic", sans-serif;
 
 /* 明朝体 */
-font-family: "游明朝", "Yu Mincho", "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", serif;
+font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 ```
 
 ---
@@ -1811,7 +1945,7 @@ font-family: "游ゴシック", "ヒラギノ角ゴシック", sans-serif;
 
 ---
 
-## font-size - 文字サイズ ⭐
+### font-size - 文字サイズ ⭐
 
 文字のサイズを指定する。
 
@@ -1831,7 +1965,7 @@ p {
 
 ---
 
-## font-weight - 文字の太さ ⭐
+### font-weight - 文字の太さ ⭐
 
 文字の太さをキーワードか数値で指定する。
 
@@ -1854,7 +1988,7 @@ font-weight: 900; /* 最も太い */
 
 ---
 
-## font-style - 斜体
+### font-style - 斜体
 
 文字を斜体にする。
 
@@ -1866,7 +2000,7 @@ font-style: oblique; /* 斜体（italicと似ている） */
 
 ---
 
-## 5. font - 一括指定
+### font - 一括指定
 
 フォント関連のプロパティを一括で指定できる。
 

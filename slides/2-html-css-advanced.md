@@ -2,9 +2,8 @@
 marp: true
 theme: udemy
 lang: ja
-paginate: true
+paginate: false
 # header: "バイブコーダーに贈るフロントエンド開発入門（Phase 2）"
-# footer: "© 2026 Kazuhiko Sugimoto"
 ---
 
 <!-- _class: center -->
@@ -13,7 +12,9 @@ paginate: true
 
 # バイブコーダーに贈るフロントエンド開発入門
 
-## Phase 2： HTML/CSS 発展編
+## Phase 2： HTML/CSS 発展編 🏠
+
+<!-- ここから Phase2「HTML/CSS 発展編」を始めていきます。 -->
 
 ---
 
@@ -28,6 +29,46 @@ Phase 1 で学んだ HTML/CSS の基礎を土台に、**実践的でインタラ
 - Grid で複雑な 2 次元レイアウトが作れる
 - レスポンシブデザインで全デバイスに対応できる
 - CSS アニメーションで魅力的な動きを追加できる
+
+<!-- Phase1ではHTMLとCSSの基礎を学んで、静的なページを作れるようになりました。 -->
+<!-- Webページは情報を見るだけではなく、ユーザーが入力したり、様々なデバイスで見たり、動きがあったり… -->
+<!-- Phase2では、そういった「実践的でインタラクティブなレイアウト」のページを作る方法を学んでいきます！ -->
+
+---
+
+## Phase 2（HTML/CSS 発展編）のレッスン一覧 📚
+
+<div class="leading-none">
+
+### Lesson 1: HTML フォーム 📝
+
+- HTML フォームの基本構造
+
+### Lesson 2: Flexbox - 柔軟な 1 次元レイアウト 📦
+
+- Flexbox を使った要素の柔軟な配置
+
+### Lesson 3: Grid - 強力な 2 次元レイアウト 🎁
+
+- Grid を使った複雑な 2 次元レイアウト
+
+### Lesson 4: レスポンシブデザイン 📱
+
+- 様々なデバイスで美しく表示するレスポンシブ対応
+
+### Lesson 5: CSS アニメーション ✨
+
+- ウェブサイトをインタラクティブで魅力的に！
+
+</div>
+
+---
+
+<!-- _class: center -->
+
+# Lesson 1
+
+# HTML フォーム 📝
 
 ---
 
@@ -54,12 +95,12 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 
 ```html
 <form>
-  <label for="name">お名前:</label>
-  <input type="text" id="name" name="name" />
-
-  <label for="email">メールアドレス:</label>
-  <input type="email" id="email" name="email" />
-
+  <label for="name">お名前: </label>
+  <input type="text" id="name" name="name">
+  <br>
+  <label for="email">メールアドレス: </label>
+  <input type="email" id="email" name="email">
+  <br>
   <button type="submit">送信</button>
 </form>
 ```
@@ -87,7 +128,7 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 ## `<input>` タグ
 
 ```html
-<input type="text" id="name" name="name" />
+<input type="text" id="name" name="name">
 ```
 
 - **役割**：ユーザーが情報を入力する欄
@@ -103,7 +144,7 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 
 ```html
 <label for="email">メールアドレス:</label>
-<input type="email" id="email" name="email" />
+<input type="email" id="email" name="email">
 ```
 
 - **役割**：入力欄の説明文
@@ -152,17 +193,16 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 ## checkbox と radio の違い
 
 ```html
-<!-- checkbox（複数選択可能） -->
+<!-- チェックボックス（複数選択可能） -->
+<p>興味のある分野を選んでください。</p>
 <label>
   <input type="checkbox" name="interests" value="coding">プログラミング
 </label>
 <label>
   <input type="checkbox" name="interests" value="design">デザイン
 </label>
-```
-
-```html
-<!-- radio（1 つだけ選択可能） -->
+<!-- ラジオボタン（1 つだけ選択可能） -->
+<p>性別を選んでください。</p>
 <label>
   <input type="radio" name="gender" value="female">女性
 </label>
@@ -279,7 +319,7 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>お問い合わせフォーム</title>
   </head>
   <body>
@@ -289,7 +329,7 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
       <!-- 名前 -->
       <div>
         <label for="name">お名前（必須）:</label>
-        <input type="text" id="name" name="name" required />
+        <input type="text" id="name" name="name" required>
       </div>
 
       <!-- メールアドレス -->
@@ -300,14 +340,13 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
           id="email"
           name="email"
           required
-          placeholder="example@email.com"
-        />
+          placeholder="example@email.com">
       </div>
 
       <!-- 電話番号 -->
       <div>
         <label for="phone">電話番号:</label>
-        <input type="tel" id="phone" name="phone" placeholder="090-1234-5678" />
+        <input type="tel" id="phone" name="phone" placeholder="090-1234-5678">
       </div>
 
       <!-- お問い合わせ種類 -->
@@ -330,7 +369,7 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
       <!-- 利用規約同意 -->
       <div>
         <label>
-          <input type="checkbox" name="agree" value="yes" required />
+          <input type="checkbox" name="agree" value="yes" required>
           利用規約に同意します
         </label>
       </div>
@@ -355,6 +394,14 @@ Web ページは情報を**見る**だけじゃない！ユーザーが情報を
 - **label と input の正しい関連付け**（アクセシビリティ）
 - **その他の入力要素**（`<textarea>`, `<select>`）
 - **HTML5 バリデーション**（required, minlength, pattern など）
+
+---
+
+<!-- _class: center -->
+
+# Lesson ２
+
+# Flexbox - 柔軟な 1 次元レイアウト 📦
 
 ---
 
@@ -408,9 +455,7 @@ Phase 1 で学んだ CSS では、要素を横に並べたり、中央に配置�
 ```html
 <!-- これがflex container -->
 <div class="container">
-  <div class="item">アイテム1</div>
-  <div class="item">アイテム2</div>
-  <div class="item">アイテム3</div>
+  <!-- この中にflex itemを入れる -->
 </div>
 ```
 
@@ -451,6 +496,7 @@ Phase 1 で学んだ CSS では、要素を横に並べたり、中央に配置�
 ```css
 .container {
   display: flex;
+  gap: 20px;
   background-color: #f0f0f0;
   padding: 20px;
 }
@@ -458,8 +504,6 @@ Phase 1 で学んだ CSS では、要素を横に並べたり、中央に配置�
 .item {
   background-color: #3b82f6;
   color: white;
-  padding: 20px;
-  margin: 5px;
 }
 ```
 
@@ -478,6 +522,19 @@ Phase 1 で学んだ CSS では、要素を横に並べたり、中央に配置�
 </div>
 
 **結果**：3 つのアイテムが**横並び**になる！🎉
+
+---
+
+## gap - 要素間の余白
+
+`gap` プロパティを使うと、flex item 間の余白を簡単に設定できる
+
+```css
+.container {
+  display: flex;
+  gap: 20px; /* 要素間の余白を20pxに */
+}
+```
 
 ---
 
@@ -716,115 +773,6 @@ justify-content: space-evenly;  /* 全ての余白が均等 */
 
 ---
 
-### 1. `align-items: stretch`（デフォルト）
-
-```css
-.container {
-  display: flex;
-  align-items: stretch; /* 高さを揃える */
-  height: 200px;
-}
-```
-
-**結果**：
-
-```text
-┌───────┬───────┬───────┐
-│       │       │       │
-│Item 1 │Item 2 │Item 3 │
-│       │       │       │
-└───────┴───────┴───────┘
-```
-
-**特徴**：全ての flex item が container の高さいっぱいに伸びる
-
----
-
-### 2. `align-items: flex-start`
-
-```css
-.container {
-  display: flex;
-  align-items: flex-start; /* 上揃え */
-  height: 200px;
-}
-```
-
-**結果**：
-
-```text
-┌───────┬───────┬───────┐
-│Item 1 │Item 2 │Item 3 │
-├───────┴───────┴───────┤
-│                       │
-│                       │
-└───────────────────────┘
-```
-
----
-
-### 3. `align-items: flex-end`
-
-```css
-.container {
-  display: flex;
-  align-items: flex-end; /* 下揃え */
-  height: 200px;
-}
-```
-
-**結果**：
-
-```text
-┌───────────────────────┐
-│                       │
-│                       │
-├───────┬───────┬───────┤
-│Item 1 │Item 2 │Item 3 │
-└───────┴───────┴───────┘
-```
-
----
-
-### 4. `align-items: center`
-
-```css
-.container {
-  display: flex;
-  align-items: center; /* 縦方向の中央揃え */
-  height: 200px;
-}
-```
-
-**結果**：
-
-```text
-┌───────────────────────┐
-│                       │
-├───────┬───────┬───────┤
-│Item 1 │Item 2 │Item 3 │
-├───────┴───────┴───────┤
-│                       │
-└───────────────────────┘
-```
-
-**超便利！** 縦方向の中央揃えも簡単！🎯
-
----
-
-### 5. `align-items: baseline`
-
-```css
-.container {
-  display: flex;
-  align-items: baseline; /* テキストのベースラインで揃える */
-}
-```
-
-**特徴**：各要素のテキストのベースライン（文字の下端）で揃える
-
----
-
 ## align-items - 交差軸方向の配置
 
 `align-items` で、**交差軸方向**の配置を制御できる
@@ -834,9 +782,8 @@ justify-content: space-evenly;  /* 全ての余白が均等 */
 ```css
 align-items: stretch;    /* 高さを揃える（デフォルト） */
 align-items: flex-start; /* 上揃え */
-align-items: center;     /* 縦方向の中央揃え */
 align-items: flex-end;   /* 下揃え */
-align-items: baseline;   /* テキストのベースラインで揃える */
+align-items: center;     /* 縦方向の中央揃え */
 ```
 
 ---
@@ -847,7 +794,7 @@ align-items: baseline;   /* テキストのベースラインで揃える */
 .container {
   display: flex;
   align-items: stretch; /* 高さを揃える */
-  height: 200px;
+  height: 300px;
 }
 ```
 
@@ -871,7 +818,7 @@ align-items: baseline;   /* テキストのベースラインで揃える */
 .container {
   display: flex;
   align-items: flex-start; /* 上揃え */
-  height: 200px;
+  height: 300px;
 }
 ```
 
@@ -894,7 +841,7 @@ align-items: baseline;   /* テキストのベースラインで揃える */
 .container {
   display: flex;
   align-items: flex-end; /* 下揃え */
-  height: 200px;
+  height: 300px;
 }
 ```
 
@@ -917,7 +864,7 @@ align-items: baseline;   /* テキストのベースラインで揃える */
 .container {
   display: flex;
   align-items: center; /* 縦方向の中央揃え */
-  height: 200px;
+  height: 300px;
 }
 ```
 
@@ -934,19 +881,6 @@ align-items: baseline;   /* テキストのベースラインで揃える */
 ```
 
 **超便利！** 縦方向の中央揃えも簡単！🎯
-
----
-
-### `align-items: baseline`
-
-```css
-.container {
-  display: flex;
-  align-items: baseline; /* テキストのベースラインで揃える */
-}
-```
-
-**特徴**：各要素のテキストのベースライン（文字の下端）で揃える
 
 ---
 
@@ -975,48 +909,6 @@ align-items: baseline;   /* テキストのベースラインで揃える */
 │                  │
 │                  │
 └──────────────────┘
-```
-
----
-
-## flex-wrap - 折り返しの制御
-
-### `flex-wrap: wrap`
-
-```css
-.container {
-  display: flex;
-  flex-wrap: wrap; /* 折り返す */
-}
-```
-
-**結果**：画面幅が狭いと、次の行に折り返す
-
-```text
-【広い画面】
-┌───────┬───────┬───────┬───────┬───────┐
-│Item 1 │Item 2 │Item 3 │Item 4 │Item 5 │
-└───────┴───────┴───────┴───────┴───────┘
-
-【狭い画面】
-┌───────┬───────┬───────┐
-│Item 1 │Item 2 │Item 3 │
-├───────┼───────┼───────┘
-│Item 4 │Item 5 │
-└───────┴───────┘
-```
-
----
-
-## gap - 要素間の余白
-
-`gap` プロパティを使うと、flex item 間の余白を簡単に設定できる
-
-```css
-.container {
-  display: flex;
-  gap: 20px; /* 要素間の余白を20pxに */
-}
 ```
 
 ---
@@ -1075,16 +967,23 @@ nav {
 
 - **Flexbox は 1 次元レイアウトシステム**
 - **`display: flex;` で flex container になる**
+- **`gap` で要素間の余白を設定**
 - **`flex-direction` で並べる方向を変更**
 - **主軸と交差軸の概念**
 - **`justify-content` で主軸方向の配置を制御**
 - **`align-items` で交差軸方向の配置を制御**
-- **`flex-wrap` で折り返しを制御**
-- **`gap` で要素間の余白を設定**
 
 ---
 
-## Lesson 3: Grid - 強力な 2 次元レイアウト 🎨
+<!-- _class: center -->
+
+# Lesson 3
+
+# Grid - 強力な 2 次元レイアウト 🎁
+
+---
+
+## Lesson 3: Grid - 強力な 2 次元レイアウト 🎁
 
 **学習目標**：CSS Grid を使って、複雑な 2 次元レイアウトを簡単に作れるようになる
 
@@ -1095,16 +994,13 @@ Lesson 2 で学んだ Flexbox は、**1 次元**のレイアウトシステム�
 でも、こんなレイアウトを作りたい時はどうする？
 
 ```text
-┌──────────────────────────┐
-│         Header           │
-├────────┬────────┬────────┤
-│ Side A │ Main   │ Side B │
-│        │        │        │
-│        │        │        │
-│        │        │        │
-├────────┴────────┴────────┤
-│         Footer           │
-└──────────────────────────┘
+┌───────────┬─────┬─────┐
+│           │  2  │  3  │
+│     1     ├─────┼─────┤
+│           │  4  │  5  │
+├─────┬─────┼─────┼─────┤
+│  6  │  7  │  8  │  9  │
+└─────┴─────┴─────┴─────┘
 ```
 
 **縦と横の両方を同時に制御したい！** そんな時に Grid が大活躍！🎯
@@ -1137,9 +1033,7 @@ Lesson 2 で学んだ Flexbox は、**1 次元**のレイアウトシステム�
 ```html
 <!-- これがgrid container -->
 <div class="grid-container">
-  <div class="grid-item">アイテム1</div>
-  <div class="grid-item">アイテム2</div>
-  <div class="grid-item">アイテム3</div>
+  <!-- この中にgrid itemを入れる -->
 </div>
 ```
 
@@ -1184,7 +1078,7 @@ Lesson 2 で学んだ Flexbox は、**1 次元**のレイアウトシステム�
 .grid-container {
   display: grid; /* Gridを有効化 */
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 4px
+  gap: 20px;
 }
 .grid-item {
   border: solid 1px #3b82f6;
@@ -1220,6 +1114,33 @@ Lesson 2 で学んだ Flexbox は、**1 次元**のレイアウトシステム�
 ```
 
 **たったこれだけ！** 方眼紙のようなレイアウトが簡単に作れる！
+
+---
+
+## gap - マス目の余白
+
+`gap` プロパティで、grid item 間の余白を設定できるよ！
+
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px; /* 行と列の両方に20pxの余白 */
+}
+```
+
+### 行と列で異なる余白
+
+```css
+.grid-container {
+  row-gap: 30px; /* 行の余白 */
+  column-gap: 10px; /* 列の余白 */
+  /* または */
+  gap: 30px 10px; /* 行 列 の順 */
+}
+```
+
+**超簡単！** Flexbox と同じように、`gap` で余白を設定できる！
 
 ---
 
@@ -1305,7 +1226,7 @@ grid-template-columns: 200px repeat(2, 1fr);
 
 ## grid-template-rows - 行の設定
 
-`grid-template-rows` で、行の数と高さを設定できるよ！
+`grid-template-rows` で、行の高さを設定できるよ！
 
 ### 固定の行の高さ
 
@@ -1328,33 +1249,6 @@ grid-template-columns: 200px repeat(2, 1fr);
 
 ---
 
-## gap - マス目の余白
-
-`gap` プロパティで、grid item 間の余白を設定できるよ！
-
-```css
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px; /* 行と列の両方に20pxの余白 */
-}
-```
-
-### 行と列で異なる余白
-
-```css
-.grid-container {
-  row-gap: 30px; /* 行の余白 */
-  column-gap: 10px; /* 列の余白 */
-  /* または */
-  gap: 30px 10px; /* 行 列 の順 */
-}
-```
-
-**超簡単！** Flexbox と同じように、`gap` で余白を設定できる！
-
----
-
 ## grid-column と grid-row - 要素の配置
 
 Grid の真骨頂！特定の grid item を**複数のセルにまたがって配置**できるよ！
@@ -1363,17 +1257,17 @@ Grid の真骨頂！特定の grid item を**複数のセルにまたがって�
 
 ```css
 .item1 {
-  grid-row: 1 / 3; /* 1行目から3行目の手前まで（2行分） */
+  grid-column: 1 / 3; /* 1列目から3列目の手前まで（2列分） */
 }
 ```
 
 **結果**：
 
 ```text
-┌─────┬─────┬─────┐
-│     │  2  │  3  │
-│  1  ├─────┼─────┤
-│     │  4  │  5  │
+┌───────────┬─────┐
+│     1     │  2  │
+├─────┬─────┼─────┤
+│  3  │  4  │  5  │
 └─────┴─────┴─────┘
 ```
 
@@ -1419,7 +1313,9 @@ Grid の真骨頂！特定の grid item を**複数のセルにまたがって�
 │           │  2  │
 │     1     ├─────┤
 │           │  3  │
-└───────────┴─────┘
+├─────┬─────┼─────┤
+│  4  │  5  │  6  │
+└─────┴─────┴─────┘
 ```
 
 **大きなアイテムを作るのも簡単！** ダッシュボードやギャラリーに最適！🎯
@@ -1447,124 +1343,17 @@ grid-column: span 2; /* 2列分 */
 
 ---
 
-## grid-template-areas - 名前付きエリア
-
-Grid の最も強力な機能の 1 つ！**視覚的にレイアウトを定義**できるよ！
-
-<div class="flex gap-x-1">
-<div class="flex-1">
-
-```css
-.grid-container {
-  display: grid;
-  grid-template-columns: 200px 1fr 200px;
-  grid-template-rows: 100px 1fr 100px;
-  gap: 4px;
-  grid-template-areas:
-    "header header header"
-    "sidebar main aside"
-    "footer footer footer";
-}
-.grid-item {
-  border: 1px solid black;
-}
-.header {grid-area: header;}
-.sidebar {grid-area: sidebar;}
-.main {grid-area: main;}
-.aside {grid-area: aside;}
-.footer {grid-area: footer;}
-```
-
-</div>
-<div class="flex-1">
-
-```html
-<div class="grid-container">
-  <header class="grid-item header">
-    ヘッダー
-  </header>
-  <div class="grid-item sidebar">
-    サイドバー A
-  </div>
-  <main class="grid-item main">
-    メインコンテンツ
-  </main>
-  <aside class="grid-item aside">
-    サイドバー B
-  </aside>
-  <footer class="grid-item footer">
-    フッター
-  </footer>
-</div>
-```
-
-</div>
-</div>
-
----
-
-## grid-template-areas - 名前付きエリア（続き）
-
-**結果**：
-
-```text
-┌─────────────────────────────────┐
-│header                           │
-│                                 │
-├─────────┬─────────────┬─────────┤
-│sidebar  │main         │aside    │
-│         │             │         │
-│         │             │         │
-├─────────┴─────────────┴─────────┤
-│footer                           │
-│                                 │
-└─────────────────────────────────┘
-```
-
----
-
-## grid-template-areas の利点
-
-### 1. 視覚的にわかりやすい
-
-- コードを見ただけでレイアウトが想像できる
-
-### 2. メディアクエリで簡単に変更
-
-- **レイアウトの変更が超簡単！** レスポンシブデザインに最適！📱
-
-```css
-/* PC版 */
-grid-template-areas:
-  "header header header"
-  "sidebar main aside"
-  "footer footer footer";
-
-/* スマホ版 */
-@media (max-width: 768px) {
-  grid-template-areas:
-    "header"
-    "main"
-    "sidebar"
-    "aside"
-    "footer";
-}
-```
-
----
-
 ## Lesson 3: Grid まとめ
 
 このレッスンで学んだこと：
 
 - **Grid は 2 次元レイアウトシステム**
 - **`display: grid;` で grid container になる**
+- **`gap` で要素間の余白を設定**
 - **`grid-template-columns` で列の数と幅を設定**
 - **`repeat()`, `auto-fit`, `minmax()` でレスポンシブなレイアウト**
-- **`grid-template-rows` で行の数と高さを設定**
-- **`gap` で要素間の余白を設定**
+- **`grid-template-rows` で行の高さを設定**
 - **`grid-column` / `grid-row` で要素を複数のセルにまたがせる**
-- **`grid-template-areas` で視覚的にレイアウトを定義**
 
 ---
 
@@ -1587,6 +1376,14 @@ grid-template-areas:
 - ダッシュボード
 
 **Grid と Flexbox は競合しない！** むしろ、組み合わせると最強！💪
+
+---
+
+<!-- _class: center -->
+
+# Lesson 4
+
+# レスポンシブデザイン 📱
 
 ---
 
@@ -1624,7 +1421,7 @@ grid-template-areas:
 #### viewport meta タグ
 
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
 **これがないと、スマホで見た時に PC 版が縮小表示される！**
@@ -1864,106 +1661,6 @@ nav {
 
 ---
 
-## 実践例：レスポンシブグリッドレイアウト
-
-<div class="columns-2">
-
-```css
-.page-layout {
-  display: grid;
-  gap: 20px;
-  padding: 20px;
-}
-
-/* スマホ：1列 */
-.page-layout {
-  grid-template-areas:
-    "header"
-    "main"
-    "sidebar"
-    "footer";
-}
-
-.header {
-  grid-area: header;
-  background-color: #3b82f6;
-  padding: 2rem;
-  color: white;
-}
-
-.main {
-  grid-area: main;
-  background-color: white;
-  padding: 2rem;
-  min-height: 300px;
-}
-
-.sidebar {
-  grid-area: sidebar;
-  background-color: #f3f4f6;
-  padding: 2rem;
-}
-
-.footer {
-  grid-area: footer;
-  background-color: #1f2937;
-  padding: 2rem;
-  color: white;
-}
-
-/* タブレット：2列 */
-@media (min-width: 768px) {
-  .page-layout {
-    grid-template-columns: 1fr 300px;
-    grid-template-areas:
-      "header header"
-      "main sidebar"
-      "footer footer";
-  }
-}
-
-/* PC：ヘッダーとフッターを全幅に */
-@media (min-width: 1024px) {
-  .page-layout {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-}
-```
-
-</div>
-
----
-
-## 実践例：レスポンシブグリッドレイアウト（続き）
-
-```html
-<div class="page-layout">
-  <header class="header">
-    <h1>ウェブサイトタイトル</h1>
-  </header>
-  <main class="main">
-    <h2>メインコンテンツ</h2>
-    <p>ここに記事の内容が入ります...</p>
-  </main>
-  <aside class="sidebar">
-    <h3>サイドバー</h3>
-    <ul>
-      <li>リンク1</li>
-      <li>リンク2</li>
-      <li>リンク3</li>
-    </ul>
-  </aside>
-  <footer class="footer">
-    <p>&copy; 2025 MyWebsite</p>
-  </footer>
-</div>
-```
-
-**ポイント**：`grid-template-areas` でレイアウトを視覚的に定義
-
----
-
 ## Lesson 4: レスポンシブデザインまとめ
 
 このレッスンで学んだこと：
@@ -1974,6 +1671,14 @@ nav {
 - **ブレークポイントの設定**
 - **モバイルファーストの考え方**
 - **可変単位**（%, vw, vh, rem, em, calc()）
+
+---
+
+<!-- _class: center -->
+
+# Lesson 5
+
+# CSS アニメーション ✨
 
 ---
 
@@ -2148,52 +1853,6 @@ CSS でアニメーションを作る方法は、主に 2 つあるよ：
 
 ---
 
-## 実践例：ホバー効果のボタン
-
-<div class="flex gap-x-1">
-<div class="flex-1">
-
-```css
-.button-hover {
-  background-color: #3b82f6;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.button-hover:hover {
-  background-color: #2563eb;
-  /* 上に2px移動 */
-  transform: translateY(-2px); 
-  /* 影を追加 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-}
-
-.button-hover:active {
-  /* クリック時は元に戻す */
-  transform: translateY(0); 
-}
-```
-
-</div>
-<div class="flex-1">
-
-```html
-<button class="button-hover">
-  クリックしてみて！
-</button>
-```
-
-</div>
-</div>
-
-**ポイント**：ホバーで少し浮き上がる（`translateY(-2px)`）
-
----
-
 ## transform - 要素を変形させる
 
 `transform` は、要素を移動、回転、拡大縮小できる超強力なプロパティ！
@@ -2240,6 +1899,52 @@ CSS でアニメーションを作る方法は、主に 2 つあるよ：
 ```
 
 **重要！** `transform` は複数のプロパティを 1 つにまとめる！
+
+---
+
+## 実践例：ホバー効果のボタン
+
+<div class="flex gap-x-1">
+<div class="flex-1">
+
+```css
+.button-hover {
+  background-color: #3b82f6;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-hover:hover {
+  background-color: #2563eb;
+  /* 上に2px移動 */
+  transform: translateY(-2px); 
+  /* 影を追加 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.button-hover:active {
+  /* クリック時は元に戻す */
+  transform: translateY(0); 
+}
+```
+
+</div>
+<div class="flex-1">
+
+```html
+<button class="button-hover">
+  クリックしてみて！
+</button>
+```
+
+</div>
+</div>
+
+**ポイント**：ホバーで少し浮き上がる（`translateY(-2px)`）
 
 ---
 

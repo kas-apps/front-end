@@ -2,9 +2,8 @@
 marp: true
 theme: udemy
 lang: ja
-paginate: true
+paginate: false
 # header: "バイブコーダーに贈るフロントエンド開発入門（Phase 4）"
-# footer: "© 2026 Kazuhiko Sugimoto"
 ---
 
 <!-- _class: center -->
@@ -14,6 +13,23 @@ paginate: true
 # バイブコーダーに贈るフロントエンド開発入門
 
 ## Phase 4： JavaScript 発展編
+
+---
+
+## Phase 4 を始める前に
+
+この Phase 4 は、これまでと比べて**コード量が増え、難易度も高くなる**よ。
+
+- プログラミングが初めての方や、ここまでの内容に不安がある方は、**無理に学習しなくて OK**
+- 難しいと感じたら、**Phase 5（CSS フレームワーク）に進んでも問題ない**よ
+
+ただし、**AI はこの Phase の内容を当たり前のように使ってコードを生成する**から、知っておくことは大事！
+
+### この Phase の目標
+
+- 「自分でゼロから書ける」ではなく、**AI が書いたコードを読んで理解できる**ようになること
+
+**AI が書いたコードを読むための"辞書"を手に入れる**つもりで、気軽に聞いてね！
 
 ---
 
@@ -37,15 +53,37 @@ Phase 4 では、**実践的で高度な JavaScript テクニック**を学ん�
 
 ## Phase 4（JavaScript 発展編）のレッスン一覧 📚
 
+<div class="leading-none">
+
 ### Lesson 1: 高度なイベント処理 🎯
+
+- イベント委譲やイベント伝播を使いこなす
 
 ### Lesson 2: フォーム操作とバリデーション 📝
 
+- リアルタイムバリデーションを実装する
+
 ### Lesson 3: 非同期処理の基礎 ⏱️
+
+- 非同期処理を使いこなす
 
 ### Lesson 4: API 連携と JSON 🌐
 
-### Lesson 5: モダン JavaScript 🎨
+- JSON データの扱い方を理解し、サーバーと通信する
+
+### Lesson 5: モダン JavaScript ✨
+
+- 最新の JavaScript 記法をマスターする
+
+</div>
+
+---
+
+<!-- _class: center -->
+
+# Lesson 1
+
+# 高度なイベント処理 🎯
 
 ---
 
@@ -360,6 +398,14 @@ addTaskButton.addEventListener("click", function () {
 
 ---
 
+<!-- _class: center -->
+
+# Lesson 2
+
+# フォーム操作とバリデーション 📝
+
+---
+
 ## Lesson 2: フォーム操作とバリデーション 📝
 
 **学習目標**：JavaScript でフォームデータを取得・検証し、リアルタイムバリデーションを実装できる
@@ -662,6 +708,14 @@ if (username.length < 3) {
 - **HTML5 バリデーション**：`required`、`minlength`、`pattern` などの属性
 - **リアルタイムバリデーション**：`input`、`blur` イベント
 - **エラーメッセージの表示**：分かりやすいエラーメッセージ
+
+---
+
+<!-- _class: center -->
+
+# Lesson 3
+
+# 非同期処理の基礎 ⏱️
 
 ---
 
@@ -1238,6 +1292,14 @@ fetchButton.addEventListener("click", getData);
 
 ---
 
+<!-- _class: center -->
+
+# Lesson 4
+
+# API 連携と JSON 🌐
+
+---
+
 ## Lesson 4: API 連携と JSON 🌐
 
 **学習目標**：JSON データの扱い方を理解し、fetch API を使ってサーバーと通信できる
@@ -1738,6 +1800,14 @@ async function fetchDataWithErrorHandling(url) {
 
 ---
 
+<!-- _class: center -->
+
+# Lesson 5
+
+# モダン JavaScript ✨
+
+---
+
 ## Lesson 5: モダン JavaScript ✨
 
 **学習目標**：最新の JavaScript 記法（ES6 以降）をマスターし、より読みやすく、書きやすいコードが書けるようになる
@@ -1763,7 +1833,7 @@ JavaScript は進化し続けている！**ES6（2015 年）以降、めちゃ�
 
 **実際の現場で使われている**
 
-- React、Vue、Next.js など、多くののフレームワークがモダン JS を使用
+- React、Vue、Next.js など、多くのフレームワークがモダン JS を使用
 
 **コードの品質が上がる**
 
@@ -1807,19 +1877,19 @@ console.log(copy === original); // false（別の配列になる）
 
 ```javascript
 // 🔴 昔のやり方：concat()メソッド
-const arr1 = [1, 2, 3];
-const arr2 = [4, 5, 6];
-const merged = arr1.concat(arr2);
+const array1 = [1, 2, 3];
+const array2 = [4, 5, 6];
+const merged = array1.concat(array2);
 
 // ✅ モダンなやり方：スプレッド構文
-const arr1 = [1, 2, 3];
-const arr2 = [4, 5, 6];
-const merged = [...arr1, ...arr2];
+const array1 = [1, 2, 3];
+const array2 = [4, 5, 6];
+const merged = [...array1, ...array2];
 
 console.log(merged); // [1, 2, 3, 4, 5, 6]
 
 // 途中に要素を追加することも簡単！
-const merged2 = [...arr1, 99, ...arr2];
+const merged2 = [...array1, 99, ...array2];
 console.log(merged2); // [1, 2, 3, 99, 4, 5, 6]
 ```
 
@@ -2094,95 +2164,6 @@ console.log(theme); // 'light'
 
 ---
 
-## 配列メソッド：ループをスマートに
-
-**モダン JavaScript では、for 文よりも配列メソッドを使う！** 読みやすくて、バグが少ない！
-
-### map：配列の各要素を変換
-
-```javascript
-// 🔴 昔のやり方：for文で新しい配列を作る
-const numbers = [1, 2, 3, 4, 5];
-const doubled = [];
-for (let i = 0; i < numbers.length; i++) {
-  doubled.push(numbers[i] * 2);
-}
-// ✅ モダンなやり方：map
-const numbers = [1, 2, 3, 4, 5];
-const doubled = numbers.map((num) => num * 2);
-
-console.log(doubled); // [2, 4, 6, 8, 10]
-```
-
-**map の特徴**：
-
-- 元の配列は変更しない
-- 新しい配列を返す
-- 配列の長さは変わらない
-
----
-
-## filter：条件に合う要素だけを取り出す
-
-```javascript
-// 🔴 昔のやり方：for文で条件判定
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const evens = [];
-for (let i = 0; i < numbers.length; i++) {
-  if (numbers[i] % 2 === 0) {
-    evens.push(numbers[i]);
-  }
-}
-
-// ✅ モダンなやり方：filter
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const evens = numbers.filter((num) => num % 2 === 0);
-
-console.log(evens); // [2, 4, 6, 8, 10]
-```
-
----
-
-## reduce：配列を 1 つの値にまとめる
-
-```javascript
-// 🔴 昔のやり方：for文で合計を計算
-const numbers = [1, 2, 3, 4, 5];
-let sum = 0;
-for (let i = 0; i < numbers.length; i++) {
-  sum += numbers[i];
-}
-
-// ✅ モダンなやり方：reduce
-const numbers = [1, 2, 3, 4, 5];
-const sum = numbers.reduce((acc, num) => acc + num, 0);
-
-console.log(sum); // 15
-```
-
----
-
-## メソッドチェイン：組み合わせて使う（超強力！）
-
-```javascript
-const users = [
-  { name: '太郎', age: 25, score: 85 },
-  { name: '花子', age: 30, score: 92 },
-  { name: '次郎', age: 28, score: 78 },
-  { name: '三郎', age: 35, score: 95 },
-];
-
-// 30歳未満のユーザーで、スコアが80点以上の人の名前を取得
-const result = users
-  .filter((user) => user.age < 30) // 30歳未満で絞り込み
-  .filter((user) => user.score >= 80) // 80点以上で絞り込み
-  .map((user) => user.name); // 名前だけ取り出す
-
-console.log(result); // ['太郎']
-```
-
----
-
 ## モジュール（import/export）：コードを整理整頓
 
 大きなプロジェクトでは、コードを複数のファイルに分割するよ！
@@ -2270,36 +2251,7 @@ import MyUser from './user.js'; // デフォルトエクスポートは名前を
 - **分割代入（Destructuring）**：配列・オブジェクトから値を取り出すのが超簡単
 - **オプショナルチェイニング（`?.`）**：undefined エラーから解放される
 - **Nullish 合体演算子（`??`）**：デフォルト値の設定が賢くなる
-- **配列メソッド（map/filter/reduce）**：ループをスマートに書ける
 - **モジュール（import/export）**：コードを整理整頓できる
-
----
-
-## モダン JavaScript のメリット
-
-- **コードが短くなる**：昔：20 行 → 今：5 行
-
-- **読みやすくなる**：意図が明確に伝わる
-
-- **バグが減る**
-
-  - イミュータブルな書き方でバグを防ぐ
-  - オプショナルチェイニングで undefined エラーを防ぐ
-
-- **AI との協働がしやすい**
-
-  - AI がモダンな記法でコードを生成してくれる
-  - モダンな記法を理解していれば、AI の生成コードが読める
-
----
-
-## これからの開発で意識すること
-
-- **for 文を避ける** → 配列メソッド（map/filter/reduce）を使う
-- **文字列結合（+）を避ける** → テンプレートリテラルを使う
-- **null チェックを簡潔に** → オプショナルチェイニング（?.）を使う
-- **デフォルト値は??を使う** → OR 演算子（||）の落とし穴を避ける
-- **イミュータブルに書く** → スプレッド構文で元のデータを変更しない
 
 ---
 

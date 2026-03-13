@@ -21,7 +21,7 @@
 @import "default";
 
 section {
-  padding: 32px 72px 64px 72px;
+  padding: 32px 64px 64px 64px;
   font-size: 26px;
   /* background-color: #f8fafc; */
   /* background-image: url(assets/background.png); */
@@ -36,6 +36,11 @@ section.center {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
 }
 
 header {
@@ -87,6 +92,7 @@ h6 {
 
 p {
   padding: 0;
+  line-height: 1.4rem;
 }
 
 strong {
@@ -96,14 +102,21 @@ strong {
 
 ul,
 ol {
-  padding-left: 2.5rem;
+  padding-left: 2.4rem;
 }
 
+ul li li,
+ol li li {
+  line-height: 1.2rem;
+}
 ul li {
   list-style-type: "✅ ";
 }
 ul li li {
   list-style-type: "➡️ ";
+}
+ol li li {
+  list-style-type: "✅ " !important;
 }
 .demerit li {
   list-style-type: "❌ ";
@@ -153,6 +166,7 @@ th {
 }
 
 pre {
+  position: relative;
   font-size: 21px;
   line-height: 1.1;
   border: solid 1px #d4d4d4;
@@ -170,44 +184,53 @@ code {
 
 .columns-2 pre code {
   display: inline-block;
-  columns: 2 500px;
+  columns: 2 auto;
+  column-gap: 2rem;
 }
 
-.language-html::before,
-.language-html .language-javascript::before {
+pre::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #a1a1a1;
+  padding: 0.4rem 0.6rem;
+  /* border-top: 1px solid #d4d4d4;
+  border-left: 1px solid #d4d4d4; */
+}
+
+pre:has(.language-css)::before {
+  content: "css";
+}
+pre:has(.language-javascript)::before {
+  content: "javascript";
+}
+pre:has(.language-json)::before {
+  content: "json";
+}
+pre:has(.language-html)::before {
+  content: "html";
+}
+
+/* .language-html::before,
+.language-html .language-javascript::before,
+.language-html .language-css::before {
   position: absolute;
   right: 0;
   bottom: 0;
   content: "html";
   color: #a1a1a1;
-}
-
-.language-css::before {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  content: "css";
-  color: #a1a1a1;
-}
-
-.language-javascript::before {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  content: "javascript";
-  color: #a1a1a1;
-}
-.language-json::before {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  content: "json";
-  color: #a1a1a1;
-}
-
+} */
 
 img {
   border-radius: 16px;
+}
+
+.py-0 {
+  padding-block: 0 !important;
+}
+
+.leading-none {
+  line-height: 1;
 }
 
 .flex {
